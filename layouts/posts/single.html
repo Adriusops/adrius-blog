@@ -1,0 +1,38 @@
+{{ define "body_classes" }}page-blog-single{{ end }}
+
+{{ define "main" }}
+  <div class="blog">
+
+    <div class="breadcrumb">
+      <a href="/">~</a>
+      <span class="sep">/</span>
+      <a href="/posts/">write-ups</a>
+      <span class="sep">/</span>
+      <span>{{ .File.ContentBaseName }}</span>
+    </div>
+
+    <div class="article-header">
+      <div class="art-meta">
+        <span class="art-date">{{ dateFormat "2006-01-02" .Date }}</span>
+        {{ range .Params.tags }}
+        <span class="tag {{ if or (eq . "CloudGoat") (eq . "write-up") }}tag-red{{ end }}">[{{ . }}]</span>
+        {{ end }}
+        <span class="art-time">{{ math.Round (div (countwords .Content) 200.0) }} min read</span>
+      </div>
+      <h1 class="art-title">{{ .Title }}</h1>
+      {{ with .Params.description }}
+      <div class="art-desc">{{ . }}</div>
+      {{ end }}
+    </div>
+
+    <div class="content">
+      {{ .Content }}
+    </div>
+
+    <div class="meme-slot" style="margin-top: 40px;">
+      <img src="/alderiate-bresil.gif" alt="end of post gif">
+      <div class="meme-caption">// fin du write-up · adrius@blog:~$</div>
+    </div>
+
+  </div>
+{{ end }}

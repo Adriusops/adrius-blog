@@ -1,0 +1,77 @@
+{{ define "body_classes" }}page-home{{ end }}
+
+{{ define "main" }}
+
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    <span class="status-label">currently:</span>
+    <span class="status-text">IAM enumeration + privilege escalation sur CloudGoat</span>
+    <span class="status-tag">#CloudSec</span>
+    <span class="status-tag">#TempsLibre</span>
+  </div>
+
+  <div class="hero">
+    <div class="prompt-line">
+      <span class="p-char">❯</span>
+      <span class="p-path">~/adrius</span>
+      <span>$</span>
+      <span>whoami</span>
+    </div>
+
+    <div class="hero-title">
+      En alternance en sécu.<br>Sur mon temps libre,<br><span class="accent">je mange du cloud.</span>
+    </div>
+
+    <div class="hero-output">
+      <div class="line"><span class="key">role</span><span class="val red">security_apprentice</span></div>
+      <div class="line"><span class="key">alternance</span><span class="val">sécurité · le vrai job</span></div>
+      <div class="line"><span class="key">passion</span><span class="val">AWS · IAM · VPC · cloud offensive</span></div>
+      <div class="line"><span class="key">labs</span><span class="val">CloudGoat · TryHackMe · HackTheBox</span></div>
+      <div class="line"><span class="key">blog</span><span class="val">journal de bord — pas de tuto lissé.</span></div>
+    </div>
+  </div>
+
+  {{ $posts := where .Site.RegularPages "Type" "posts" }}
+  {{ $sorted := ($posts.ByParam "date").Reverse }}
+
+  <div class="section-header">
+    <div class="s-cmd">
+      <span class="char">❯</span>&nbsp;<span style="color:#1a1a1a">ls</span>&nbsp;<span class="arg">./write-ups/</span>
+    </div>
+    <div class="s-div"></div>
+    <div class="s-count">{{ len $sorted }} articles</div>
+  </div>
+
+  <div class="cards">
+    {{ range $i, $post := $sorted }}
+    <a class="card" href="{{ $post.RelPermalink }}">
+      {{ if eq $i 0 }}<span class="badge-new">NEW</span>{{ end }}
+      <div class="card-meta">
+        <span class="card-date">{{ dateFormat "2006-01-02" $post.Date }}</span>
+        <div class="card-tags">
+          {{ range $post.Params.tags }}
+          <span class="tag {{ if or (eq . "CloudGoat") (eq . "write-up") }}tag-red{{ end }}">[{{ . }}]</span>
+          {{ end }}
+        </div>
+      </div>
+      <div class="card-title">{{ $post.Title }}</div>
+      {{ with $post.Params.description }}
+      <div class="card-desc">{{ . }}</div>
+      {{ end }}
+      <div class="card-footer">
+        <span class="card-read">./lire →</span>
+        <span class="card-sep">|</span>
+        <span class="card-time">{{ math.Round (div (countwords $post.Content) 200.0) }} min read</span>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+
+  <div class="meme-slot">
+    <img src="/alderiate-alderiate-chan.gif" alt="meme">
+    <div class="meme-caption">// moi après avoir enfin compris pourquoi mon subnet était pas routable</div>
+  </div>
+
+{{ end }}
+
+{{ define "footer_js" }}{{ end }}

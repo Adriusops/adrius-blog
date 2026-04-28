@@ -1,0 +1,11 @@
+<div class="footer">
+  <span>adrius@blog:~$</span>
+  {{ if .Site.Data.social.links }}
+  <div class="footer-social">
+    {{ range .Site.Data.social.links }}
+    <a href="{{ .url }}" target="_blank" rel="noopener">[{{ .name | lower }}]</a>
+    {{ end }}
+  </div>
+  {{ end }}
+  <span class="footer-cursor"></span>
+</div>

@@ -1,0 +1,19 @@
+<div class="crt-glow" id="crt-glow"></div>
+<script>
+  const glow = document.getElementById('crt-glow');
+  let visible = false;
+
+  document.addEventListener('mousemove', (e) => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+    if (!visible) {
+      glow.style.opacity = '1';
+      visible = true;
+    }
+  });
+
+  document.addEventListener('mouseleave', () => {
+    glow.style.opacity = '0';
+    visible = false;
+  });
+</script>
