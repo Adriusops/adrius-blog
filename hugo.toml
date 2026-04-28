@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://adriusops.github.io/adrius-blog/'
 languageCode = 'fr-FR'
 title = 'Security Write-ups'
 theme = 'hugo-fraktur-theme'
