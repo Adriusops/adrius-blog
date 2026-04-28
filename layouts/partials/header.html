@@ -1,6 +1,6 @@
 <div class='header'>
   <div class="menu-main">
-    <a class="header-logo" href="{{ "/" | relURL }}">adrius</a>
+    <a class="header-logo" href="{{ .Site.BaseURL }}">adrius</a>
     <ul>
       {{ $currentPage := . }}
       {{ range .Site.Menus.main }}
