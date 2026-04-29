@@ -1,7 +1,7 @@
 baseURL = 'https://adriusops.github.io/adrius-blog/'
 languageCode = 'fr-FR'
 title = 'Security Write-ups'
-theme = 'hugo-fraktur-theme'
+theme = 'adrius-theme'
 
 # Disable pagination and taxonomies for clean simplicity
 disableKinds = ["taxonomy", "term"]

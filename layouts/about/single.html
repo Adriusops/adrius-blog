@@ -1,0 +1,140 @@
+{{ define "body_classes" }}page-single{{ end }}
+
+{{ define "main" }}
+<div class="page-about">
+    <div class="breadcrumb">
+        <a href="/">~</a>
+        <span class="sep">/</span>
+        <span>{{ .Title | lower | urlize }}</span>
+    </div>
+
+    <div class="page-prompt">
+        <div class="prompt-line">
+            <span class="p-char">❯</span>
+            <span>~/adrius $</span>
+            <span>cat about.txt</span>
+        </div>
+        <h1 class="page-title">{{ .Title }}</h1>
+    </div>
+
+    <div class="whoami-block">
+        <div class="info-box">
+            <div class="ib-label">WHOAMI</div>
+            <div class="info-line">
+                <span class="k">nom</span><span class="v">adrius</span>
+            </div>
+            <div class="info-line">
+                <span class="k">statut</span><span class="v red">apprenti sécu · actif</span>
+            </div>
+            <div class="info-line">
+                <span class="k">alternance</span><span class="v">sécurité (pas cloud)</span>
+            </div>
+            <div class="info-line">
+                <span class="k">passion</span><span class="v">cloud offensive · AWS</span>
+            </div>
+        </div>
+        <div class="info-box">
+            <div class="ib-label">CURRENT_PROCESS</div>
+            <div class="info-line">
+                <span class="k">lab</span><span class="v">CloudGoat iam_enum</span>
+            </div>
+            <div class="info-line">
+                <span class="k">outil</span><span class="v">aws-cli · pacu</span>
+            </div>
+            <div class="info-line">
+                <span class="k">cert</span><span class="v">prep AWS SAA-C03</span>
+            </div>
+            <div class="info-line">
+                <span class="k">mood</span><span class="v red">cafféiné · confus · motivé</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-section-title">Ce blog</div>
+    <p>
+        C'est mon journal de bord. Je suis en alternance en sécurité — pas
+        cloud, la sécu normale. Mais le cloud offensive c'est ce qui m'intéresse
+        vraiment, alors je le fais sur mon temps libre.
+    </p>
+    <p>
+        Ce blog c'est l'endroit où je documente ce que je fais, ce que je rate,
+        et ce que j'en retiens. Pas de tutoriels lisses. Juste ce qui se passe
+        vraiment quand on apprend à casser des trucs sur AWS.
+    </p>
+
+    <div class="page-section-title">Parcours</div>
+    <div class="timeline">
+        <div class="tl-item">
+            <div class="tl-left">
+                <div class="tl-date">2026 →</div>
+                <div class="tl-badge">NOW</div>
+            </div>
+            <div class="tl-line">
+                <div class="tl-dot active"></div>
+                <div class="tl-connector"></div>
+            </div>
+            <div class="tl-content">
+                <div class="tl-title">Alternance — Sécurité</div>
+                <div class="tl-desc">
+                    Le vrai boulot en sécu le jour. Le cloud offensive sur mon
+                    temps libre le soir.
+                </div>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-left"><div class="tl-date">2025</div></div>
+            <div class="tl-line">
+                <div class="tl-dot"></div>
+                <div class="tl-connector"></div>
+            </div>
+            <div class="tl-content">
+                <div class="tl-title">Premiers labs CTF &amp; CloudGoat</div>
+                <div class="tl-desc">
+                    TryHackMe, HackTheBox, découverte du cloud offensive.
+                    Premier <code>aws sts get-caller-identity</code>.
+                </div>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-left"><div class="tl-date">2024</div></div>
+            <div class="tl-line"><div class="tl-dot"></div></div>
+            <div class="tl-content">
+                <div class="tl-title">Formation initiale — réseau &amp; sys</div>
+                <div class="tl-desc">
+                    Les bases. TCP/IP, Linux, scripting bash. L'époque où
+                    <code>chmod 777</code> semblait une bonne idée.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-section-title">Stack</div>
+    <div class="stack-grid">
+        <span class="stack-item highlight">AWS</span>
+        <span class="stack-item highlight">IAM</span>
+        <span class="stack-item highlight">CloudGoat</span>
+        <span class="stack-item">Pacu</span>
+        <span class="stack-item">aws-cli</span>
+        <span class="stack-item">Terraform</span>
+        <span class="stack-item">Python</span>
+        <span class="stack-item">bash</span>
+        <span class="stack-item">Linux</span>
+        <span class="stack-item">Hugo</span>
+    </div>
+
+    <div class="page-section-title">Contact</div>
+    <div class="links-block">
+        {{ range .Site.Data.social.links }}
+        <div class="link-item">
+            <span class="li-icon">[{{ .name | lower | truncate 2 "" }}]</span>
+            <a href="{{ .url }}" target="_blank" rel="noopener">{{ .url }}</a>
+        </div>
+        {{ end }}
+    </div>
+
+    <div class="disclaimer">
+        // Disclaimer — Tous les labs et techniques présentés sont à des fins éducatives uniquement.<br />
+        // Testez uniquement sur vos propres environnements ou des labs dédiés.
+    </div>
+</div>
+{{ end }}
