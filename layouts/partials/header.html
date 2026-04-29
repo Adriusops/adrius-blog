@@ -11,7 +11,31 @@
       {{end}}
     </ul>
   </div>
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">[☀]</button>
   <div id="toggle-menu-main-mobile" class="hamburger-trigger">
     <button class="hamburger">Menu</button>
   </div>
 </div>
+
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var saved = localStorage.getItem('theme');
+    var isDark = saved ? saved === 'dark' : prefersDark;
+
+    function apply(dark) {
+      document.body.classList.toggle('theme-dark', dark);
+      document.body.classList.toggle('theme-light', !dark);
+      btn.textContent = dark ? '[☀]' : '[☾]';
+    }
+
+    apply(isDark);
+
+    btn.addEventListener('click', function() {
+      isDark = !isDark;
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      apply(isDark);
+    });
+  })();
+</script>
