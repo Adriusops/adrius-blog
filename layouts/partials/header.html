@@ -1,6 +1,6 @@
 <div class='header'>
   <div class="menu-main">
-    <a class="header-logo" href="{{ .Site.BaseURL }}">adrius</a>
+    <a class="header-logo" href="{{ .Site.BaseURL }}">adrius<span class="header-logo-blog">.blog</span></a>
     <ul>
       {{ $currentPage := . }}
       {{ range .Site.Menus.main }}
@@ -11,6 +11,11 @@
       {{end}}
     </ul>
   </div>
+
+  <a class="header-logo-ascii" href="{{ .Site.BaseURL }}" aria-label="Accueil">
+    <div class="ascii-logo" id="ascii-logo" aria-hidden="true"></div>
+  </a>
+
   <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">[☀]</button>
   <div id="toggle-menu-main-mobile" class="hamburger-trigger">
     <button class="hamburger">Menu</button>
@@ -18,6 +23,60 @@
 </div>
 
 <script>
+  (function() {
+    // ASCII logo généré depuis le PNG du logo Adrius (yeux + sourire)
+    var base = [
+      "           ........                           ",
+      "      ..................................      ",
+      "    .....''+++'''...............''+''......   ",
+      "   ...'+ooo#ooooo''ooooo+o+o''oooooooo+'....  ",
+      " ....'ooo#o#oooooooo#ooooooo+o#ooooooooo+'... ",
+      " ...'ooooo++''''++#o#ooooo+ooo+'''''+ooooo'...",
+      "...'oo###'''.'.'''o#####o#oo+'......''o#o#+'..",
+      "...'oo##o'''....'''o#ooooooo'........'+oo#o'..",
+      "...'ooooo'''....''+o#ooooo+o'........'+oooo'..",
+      "...'+o##o+''''''''oo###oooooo'......'+ooo#+'..",
+      "....'+##o#oo++++oo######o#oooo++++++oooooo'...",
+      ".....'+oo#o#oooooo+o#ooooooo'+#o#o#ooooo+'... ",
+      "  .....''oooooo+''''+oo+++''..'+o+o+++''....  ",
+      "    .......''''............................   ",
+      "     ....................................     ",
+      "       ...++'.....................'''..       ",
+      "        ..'o++'........ .   ....''o+'.        ",
+      "         ..'+ooo+''''.... ...'++oo+..         ",
+      "          ....''+oooo+++'+'o+oo+'..           ",
+      "            ........'+++'+''...               "
+    ];
+
+    var frames = [base];
+
+    var noiseChars = ['`','~','^','\'',',','.','!','+','o'];
+    var el = document.getElementById('ascii-logo');
+    if (!el) return;
+
+    function glitch(lines) {
+      // Très faible probabilité de glitch par rendu — effet subtil
+      var doGlitch = Math.random() < 0.15;
+      return lines.map(function(line) {
+        if (!doGlitch) return line;
+        var arr = line.split('');
+        for (var i = 0; i < arr.length; i++) {
+          if (arr[i] !== ' ' && Math.random() < 0.03) {
+            arr[i] = noiseChars[Math.floor(Math.random() * noiseChars.length)];
+          }
+        }
+        return arr.join('');
+      });
+    }
+
+    function render() {
+      el.textContent = glitch(base).join('\n');
+    }
+
+    render();
+    setInterval(render, 200);
+  })();
+
   (function() {
     var btn = document.getElementById('theme-toggle');
     var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
