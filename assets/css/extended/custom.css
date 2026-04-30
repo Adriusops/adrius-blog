@@ -270,6 +270,7 @@ body::after {
 }
 .p-char { color: #c0392b; }
 .p-path { color: #1a1a1a; font-weight: 700; }
+.s-ls { color: #1a1a1a; }
 
 .hero-title {
   font-size: 26px; font-weight: 700;
@@ -614,6 +615,36 @@ body::after {
   color: #1a1a1a;
 }
 
+/* ---- POSTS LIST PAGE ---- */
+.summary {
+  font-family: 'Space Mono', monospace !important;
+  border-bottom: 1px solid #d0c8b8 !important;
+}
+
+.summary-date {
+  font-family: 'Space Mono', monospace !important;
+  color: #888 !important;
+  font-size: 12px !important;
+}
+
+.summary-title,
+.summary-title a {
+  font-family: 'Space Mono', monospace !important;
+  font-size: 18px !important;
+  color: #1a1a1a !important;
+  text-decoration: none !important;
+}
+
+.summary-title a:hover,
+.summary-title:hover { color: #c0392b !important; }
+.summary-title a:visited { color: #555 !important; }
+
+.summary-description {
+  font-family: 'Space Mono', monospace !important;
+  font-size: 13px !important;
+  color: #555 !important;
+}
+
 /* ============================================
    THEME TOGGLE BUTTON
    ============================================ */
@@ -807,3 +838,48 @@ body.theme-dark .page-title { color: #d4cfc7; }
 
 @media (prefers-color-scheme: dark) { body:not(.theme-light) .page-section-title { color: #d4cfc7; }}
 body.theme-dark .page-section-title { color: #d4cfc7; }
+
+/* -- Posts list dark mode -- */
+@media (prefers-color-scheme: dark) { body:not(.theme-light) .summary { border-bottom-color: #2a2a2a !important; }}
+body.theme-dark .summary { border-bottom-color: #2a2a2a !important; }
+
+@media (prefers-color-scheme: dark) { body:not(.theme-light) .summary-title,
+body:not(.theme-light) .summary-title a { color: #ffffff !important; }}
+body.theme-dark .summary-title,
+body.theme-dark .summary-title a { color: #ffffff !important; }
+
+@media (prefers-color-scheme: dark) { body:not(.theme-light) .summary-title a:visited { color: #ccc !important; }}
+body.theme-dark .summary-title a:visited { color: #ccc !important; }
+
+@media (prefers-color-scheme: dark) { body:not(.theme-light) .summary-description { color: #777 !important; }}
+body.theme-dark .summary-description { color: #777 !important; }
+
+@media (prefers-color-scheme: dark) { body:not(.theme-light) .intro h1 { color: #d4cfc7 !important; }}
+body.theme-dark .intro h1 { color: #d4cfc7 !important; }
+
+@media (prefers-color-scheme: dark) { body:not(.theme-light) .intro p { color: #777 !important; }}
+body.theme-dark .intro p { color: #777 !important; }
+
+@media (prefers-color-scheme: dark) { body:not(.theme-light) .page-prompt { color: #777; }}
+body.theme-dark .page-prompt { color: #777; }
+
+@media (prefers-color-scheme: dark) { body:not(.theme-light) a:visited { color: #888 !important; }}
+body.theme-dark a:visited { color: #888 !important; }
+
+@media (prefers-color-scheme: dark) { body:not(.theme-light) .content a { color: #c0392b !important; }}
+body.theme-dark .content a { color: #c0392b !important; }
+
+@media (prefers-color-scheme: dark) { body:not(.theme-light) .content a:visited { color: #888 !important; }}
+body.theme-dark .content a:visited { color: #888 !important; }
+
+/* -- Homepage: p-path + ls -- */
+@media (prefers-color-scheme: dark) { body:not(.theme-light) .p-path { color: #d4cfc7; }}
+body.theme-dark .p-path { color: #d4cfc7; }
+
+@media (prefers-color-scheme: dark) { body:not(.theme-light) .s-ls { color: #d4cfc7; }}
+body.theme-dark .s-ls { color: #d4cfc7; }
+
+/* -- About: paragraphes hors .content -- */
+@media (prefers-color-scheme: dark) { body:not(.theme-light) .page-about > p { color: #aaa !important; }}
+body.theme-dark .page-about > p { color: #aaa !important; }
+
