@@ -1,6 +1,6 @@
 baseURL = 'https://adriusops.github.io/adrius-blog/'
 languageCode = 'fr-FR'
-title = 'Security Write-ups'
+title = 'Cloud Sec Write-ups'
 theme = 'adrius-theme'
 
 # Disable pagination and taxonomies for clean simplicity
