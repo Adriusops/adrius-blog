@@ -1,5 +1,5 @@
 ---
-title: "CloudGoat — IAM Enum Basics : quand Bob en sait trop"
+title: "CloudGoat > IAM Enum Basics : quand Bob en sait trop"
 date: 2026-04-28
 description: "Enumération IAM AWS avec CloudGoat : récupérer des credentials et trouver 5 flags cachés dans les métadonnées des ressources."
 tags: ["aws", "iam", "cloudgoat", "enumeration", "write-up"]
