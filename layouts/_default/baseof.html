@@ -55,9 +55,9 @@
     {{ if and (eq .Type "posts") .File }}<meta name="twitter:image" content="{{ partial "og-image.html" . }}"/>{{ end }}
   {{ end }}
 
-  {{/* JetBrains Mono — police unique */}}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
   {{ partial "extend-head.html" . }}
 
