@@ -1,33 +1,38 @@
 baseURL = 'https://adriusops.github.io/adrius-blog/'
 languageCode = 'fr-FR'
-title = 'Cloud Sec Write-ups'
+title = 'adrius.blog — Cloud Sec Write-ups'
 theme = 'adrius-theme'
 
-# Disable pagination and taxonomies for clean simplicity
 disableKinds = ["taxonomy", "term"]
 
 [params]
-  # Display options
-  showIntroContentOnHomepage = true
+  showIntroContentOnHomepage = false
   showPostsOnHomepage = true
+  author      = "adrius"
+  description = "Journal de bord d'un mec qui apprend la sécu cloud. Write-ups CloudGoat, labs AWS IAM/VPC, et les loupés que personne ne montre."
+  keywords    = ["cloud security", "AWS", "CloudGoat", "IAM", "VPC", "write-up", "pentest cloud"]
 
-  # Fonts
-  enableGoogleFonts = true
-  googleFontsUrl = "https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=UnifrakturCook:wght@700&display=swap"
+  enableGoogleFonts = false
 
-  # Analytics (optional)
-  # google_analytics_id = "G-XXXXXXXXXX"
-  # plausible_analytics_domain = "yourdomain.com"
+[markup]
+  [markup.highlight]
+    codeFences         = true
+    guessSyntax        = true
+    noClasses          = false
+    style              = "monokai"
+    tabWidth           = 2
+    lineNos            = false
+    lineNumbersInTable = false
 
 [menu]
   [[menu.main]]
     identifier = "posts"
-    name = "Write-ups"
+    name = "write-ups"
     url = "/posts/"
     weight = 10
 
   [[menu.main]]
     identifier = "about"
-    name = "À propos"
+    name = "à propos"
     url = "/about/"
     weight = 20

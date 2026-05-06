@@ -7,7 +7,7 @@ categories: ["journal-apprentissage"]
 draft: false
 ---
 
-Je me forme en alternance à la cloud security avec pour objectif d'intégrer une grosse ESN dans les 6-12 prochains mois. Ce blog c'est mon journal de bord — pas des tutoriels lisses, mais ce que j'apprends vraiment, avec les galères incluses.
+Je me forme en alternance à la cloud security avec pour objectif d'intégrer une grosse ESN dans les 6-12 prochains mois. Ce blog c'est mon journal de bord : pas des tutoriels lisses, mais ce que j'apprends vraiment, avec les galères incluses.
 
 Après deux sessions théoriques sur le subnetting CIDR et l'architecture VPC, mon tuteur m'a envoyé sur la console AWS avec un seul brief : **déploie cette architecture toi-même, sans tutoriel**. Voici ce qui s'est passé.
 
@@ -36,7 +36,7 @@ VPC 172.16.0.0/20
 
 ## VPC + subnets : ça démarre bien... puis ça coince
 
-Créer le VPC c'est simple — tu donnes un bloc CIDR, tu valides. Mais la vraie difficulté arrive avec les subnets.
+Créer le VPC c'est simple : tu donnes un bloc CIDR, tu valides. Mais la vraie difficulté arrive avec les subnets.
 
 **Erreur n°1 : sortir du bloc parent.**
 J'ai écrit `172.16.241.0` comme adresse de départ pour mon premier subnet. Sauf que le `/20` s'arrête à `172.16.15.255`. J'étais complètement en dehors du bloc. À retenir : avec un `/20`, le troisième octet va de **0 à 15 uniquement**.
@@ -52,7 +52,7 @@ Après correction, voici l'aperçu dans la console :
 
 ## Ce qui rend un subnet "public" : la route table
 
-Voilà quelque chose que j'aurais pas compris sans pratiquer. Un subnet n'est pas "public" par nature — c'est sa route table qui fait la différence. Un subnet public, c'est juste un subnet avec une règle `0.0.0.0/0 → IGW`.
+Voilà quelque chose que j'aurais pas compris sans pratiquer. Un subnet n'est pas "public" par nature : c'est sa route table qui fait la différence. Un subnet public, c'est juste un subnet avec une règle `0.0.0.0/0 → IGW`.
 
 Une fois l'IGW créé et attaché au VPC, la route table publique ressemble à ça :
 
@@ -70,7 +70,7 @@ En creusant, j'ai compris ce que c'était :
 
 ![Détails du VPC Endpoint S3](../../images/lab1-vpc-aws/vpce-s3.png)
 
-Un **VPC Endpoint S3** — un tunnel privé vers S3 qui évite que le trafic passe par internet. C'est en réalité une bonne pratique sécurité : les données qui transitent vers S3 depuis les subnets privés restent dans le réseau interne AWS. Je l'ai laissé en place.
+Un **VPC Endpoint S3** : un tunnel privé vers S3 qui évite que le trafic passe par internet. C'est en réalité une bonne pratique sécurité : les données qui transitent vers S3 depuis les subnets privés restent dans le réseau interne AWS. Je l'ai laissé en place.
 
 ## NAT Gateway : la partie qui coûte
 
@@ -100,15 +100,15 @@ Et le résultat une fois sauvegardé :
 
 Trois routes actives : le trafic local, l'accès S3 via l'endpoint privé, et la sortie internet via le NAT Gateway.
 
-La route table de la BDD, elle, ne change pas — aucune route internet, subnet complètement isolé. Une base de données n'a aucune raison de communiquer avec internet. Si un attaquant compromet un autre composant de l'infra, il ne peut pas atteindre la BDD directement.
+La route table de la BDD, elle, ne change pas : aucune route internet, subnet complètement isolé. Une base de données n'a aucune raison de communiquer avec internet. Si un attaquant compromet un autre composant de l'infra, il ne peut pas atteindre la BDD directement.
 
 ## Ce que ce lab m'a vraiment appris
 
 Au-delà des commandes, voilà ce que j'ai compris en le faisant :
 
-- **Un subnet n'est public que si sa route table pointe vers un IGW** — pas par défaut, pas par magie
+- **Un subnet n'est public que si sa route table pointe vers un IGW** : pas par défaut, pas par magie
 - **Le subnetting sur papier c'est facile**, rester dans le bon bloc en pratique demande de l'attention
-- **Le NAT Gateway doit être dans un subnet public** — sinon il ne peut pas atteindre l'IGW
+- **Le NAT Gateway doit être dans un subnet public** : sinon il ne peut pas atteindre l'IGW
 - **Un VPC Endpoint c'est une bonne pratique**, pas un bug à corriger
 - **Toujours nettoyer après un lab** : supprimer le NAT Gateway et libérer l'EIP pour éviter les frais
 
@@ -130,6 +130,6 @@ resource "aws_route" "private_nat" {
 }
 ```
 
-Je couvre Terraform dans quelques semaines — je ferai un article quand j'y serai.
+Je couvre Terraform dans quelques semaines : je ferai un article quand j'y serai.
 
-*Prochain lab : Security Groups vs NACLs — comment filtrer le trafic à l'intérieur du VPC.*
+*Prochain lab : Security Groups vs NACLs : comment filtrer le trafic à l'intérieur du VPC.*

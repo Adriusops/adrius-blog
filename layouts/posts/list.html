@@ -1,0 +1,28 @@
+{{ define "body_classes" }}page-blog-list{{ end }}
+
+{{ define "main" }}
+  <div class="intro">
+    <h1>{{ .Title }}</h1>
+    {{ if .Params.description }}<p>{{ .Params.description }}</p>{{ end }}
+  </div>
+  {{ .Content }}
+  {{ $posts := where .Pages "Type" "posts" }}
+  {{ $sorted := ($posts.ByParam "date").Reverse }}
+  {{ range $i, $post := $sorted }}
+    {{ $daysSince := div (sub now.Unix $post.Date.Unix) 86400 }}
+    <a class="summary" href="{{ $post.RelPermalink }}">
+      <div class="summary-meta">
+        {{ if and (eq $i 0) (lt $daysSince 14) }}<span class="summary-badge-new">NEW</span>{{ end }}
+        <span class="summary-date">{{ dateFormat "2006-01-02" $post.Date }}</span>
+        {{ range $post.Params.tags }}<span class="summary-tag">{{ . }}</span>{{ end }}
+      </div>
+      <h2 class="summary-title">{{ $post.Title }}</h2>
+      <p class="summary-description">{{ $post.Params.description }}</p>
+      <div class="summary-footer">
+        <span class="sf-link">./lire →</span>
+        <span class="sf-sep">|</span>
+        <span class="sf-meta">{{ math.Round (div (countwords $post.Content) 200.0) }} min read</span>
+      </div>
+    </a>
+  {{ end }}
+{{ end }}

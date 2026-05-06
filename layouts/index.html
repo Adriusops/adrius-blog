@@ -2,6 +2,9 @@
 
 {{ define "main" }}
 
+  {{ $posts := where .Site.RegularPages "Type" "posts" }}
+  {{ $sorted := ($posts.ByParam "date").Reverse }}
+
   <div class="status-bar">
     <div class="status-dot"></div>
     <span class="status-label">currently:</span>
@@ -10,58 +13,96 @@
     <span class="status-tag">#TempsLibre</span>
   </div>
 
-  <div class="hero">
-    <div class="prompt-line">
-      <span class="p-char">❯</span>
-      <span class="p-path">~/adrius</span>
-      <span>$</span>
-      <span>whoami</span>
+  <!-- Terminal interactif -->
+  <div class="home-terminal" id="home-terminal">
+    <div class="ht-dots">
+      <span class="ht-dot ht-dot-red"></span>
+      <span class="ht-dot ht-dot-grey"></span>
+      <span class="ht-dot ht-dot-grey"></span>
     </div>
-
-    <div class="hero-title">
-      En alternance en sécu.<br>Sur mon temps libre,<br><span class="accent">je fais du cloud.</span>
-    </div>
-
-    <div class="hero-output">
-      <div class="line"><span class="key">role</span><span class="val red">security_apprentice</span></div>
-      <div class="line"><span class="key">alternance</span><span class="val">sécurité · le vrai job</span></div>
-      <div class="line"><span class="key">passion</span><span class="val">AWS · IAM · VPC · cloud security</span></div>
-      <div class="line"><span class="key">labs</span><span class="val">CloudGoat · HackTricks · flAWS</span></div>
-      <div class="line"><span class="key">blog</span><span class="val">journal de bord d'un mec qui apprend la sécu cloud</span></div>
+    <div class="ht-body" id="ht-body">
+      <div class="ht-intro-line">
+        <span class="ht-prompt-char">❯</span>
+        <span class="ht-prompt-path">~/adrius $</span>
+        <span class="ht-typed" id="ht-typed"></span><span class="ht-cursor" id="ht-cursor">▊</span>
+      </div>
+      <div class="ht-output" id="ht-intro-output" style="display:none">
+        en alternance en sécu · sur mon temps libre, je fais du cloud.<br>
+        tape <span class="ht-accent">help</span> pour explorer · ou scroll si tu préfères.
+      </div>
+      <div id="ht-history"></div>
+      <div class="ht-input-row" id="ht-input-row" style="display:none">
+        <span class="ht-prompt-char">❯</span>
+        <span class="ht-prompt-path">~/adrius $</span>
+        <input id="ht-input" class="ht-input" type="text" spellcheck="false" autocomplete="off" autocorrect="off">
+      </div>
     </div>
   </div>
 
-  {{ $posts := where .Site.RegularPages "Type" "posts" }}
-  {{ $sorted := ($posts.ByParam "date").Reverse }}
+  <!-- Hero statique -->
+  <div class="home-prompt-line">
+    <span class="p-char">❯</span>
+    <span class="p-path">~/adrius $</span>
+    <span class="p-cmd">cat readme.md</span>
+  </div>
+
+  <h1 class="hero-title">
+    en alternance en sécu.<br>
+    sur mon temps libre,<br>
+    <span class="accent">je fais du cloud.</span>
+  </h1>
+
+  <p class="home-pitch">
+    journal de bord d'un mec qui apprend la sécu cloud. write-ups CloudGoat
+    détaillés, labs IAM/VPC montés from scratch, et les loupés que personne ne
+    montre. zéro hype, juste le chemin réel.
+  </p>
+
+  <!-- Profile block -->
+  <div class="home-profile">
+    <div class="hp-row"><span class="hp-key">role</span><span class="hp-val hp-accent">security_apprentice</span></div>
+    <div class="hp-row"><span class="hp-key">alternance</span><span class="hp-val">sécurité · le vrai job</span></div>
+    <div class="hp-row"><span class="hp-key">passion</span><span class="hp-val">AWS · IAM · VPC · cloud security</span></div>
+    <div class="hp-row"><span class="hp-key">labs</span><span class="hp-val">CloudGoat · HackTricks · flAWS</span></div>
+    <div class="hp-row"><span class="hp-key">location</span><span class="hp-val">marseille, fr</span></div>
+  </div>
+
+  <!-- Flags counter -->
+  <div class="home-flags">
+    <span>flags captured</span>
+    <span><span class="hf-count">12</span><span class="hf-total"> / ∞</span></span>
+  </div>
+
+  <!-- Section header -->
+  <div class="home-prompt-line" style="margin-top: 40px;">
+    <span class="p-char">❯</span>
+    <span class="p-path">~/adrius $</span>
+    <span class="p-cmd">ls ./write-ups/</span>
+  </div>
 
   <div class="section-header">
-    <div class="s-cmd">
-      <span class="char">❯</span>&nbsp;<span class="s-ls">ls</span>&nbsp;<span class="arg">./write-ups/</span>
-    </div>
-    <div class="s-div"></div>
-    <div class="s-count">{{ len $sorted }} articles</div>
+    <span><span class="accent">{{ len $sorted }}</span> articles · tri: récent → ancien</span>
+    <span class="s-rss">rss.xml</span>
   </div>
 
-  <div class="cards">
+  <!-- Post list -->
+  <div class="post-list">
     {{ range $i, $post := $sorted }}
-    <a class="card" href="{{ $post.RelPermalink }}">
-      {{ if eq $i 0 }}<span class="badge-new">NEW</span>{{ end }}
-      <div class="card-meta">
-        <span class="card-date">{{ dateFormat "2006-01-02" $post.Date }}</span>
-        <div class="card-tags">
-          {{ range $post.Params.tags }}
-          <span class="tag {{ if or (eq . "CloudGoat") (eq . "write-up") }}tag-red{{ end }}">[{{ . }}]</span>
-          {{ end }}
-        </div>
+    {{ $daysSince := div (sub now.Unix $post.Date.Unix) 86400 }}
+    <a class="post-item" href="{{ $post.RelPermalink }}">
+      <div class="pi-header">
+        {{ if and (eq $i 0) (lt $daysSince 14) }}<span class="badge-new">NEW</span>{{ end }}
+        <span class="pi-date">{{ dateFormat "2006-01-02" .Date }}</span>
+        {{ range .Params.tags }}
+        <span class="tag {{ if or (eq . "CloudGoat") (eq . "write-up") }}tag-red{{ end }}">[{{ . }}]</span>
+        {{ end }}
       </div>
-      <div class="card-title">{{ $post.Title }}</div>
-      {{ with $post.Params.description }}
-      <div class="card-desc">{{ . }}</div>
-      {{ end }}
-      <div class="card-footer">
-        <span class="card-read">./lire →</span>
-        <span class="card-sep">|</span>
-        <span class="card-time">{{ math.Round (div (countwords $post.Content) 200.0) }} min read</span>
+      <div class="pi-title">{{ .Title }}</div>
+      {{ with .Params.description }}<p class="pi-excerpt">{{ . }}</p>{{ end }}
+      <div class="pi-footer">
+        <span class="pi-read">./lire →</span>
+        <span class="pi-sep">|</span>
+        <span class="pi-time">{{ math.Round (div (countwords .Content) 200.0) }} min read</span>
       </div>
     </a>
     {{ end }}
@@ -74,4 +115,134 @@
 
 {{ end }}
 
-{{ define "footer_js" }}{{ end }}
+{{ define "footer_js" }}
+<script>
+(function() {
+  var POSTS = [
+    {{ $posts := where .Site.RegularPages "Type" "posts" }}
+    {{ range ($posts.ByParam "date").Reverse }}
+    { slug: "{{ .File.ContentBaseName }}", date: "{{ dateFormat "2006-01-02" .Date }}", title: {{ .Title | jsonify }}, tags: {{ .Params.tags | jsonify }} },
+    {{ end }}
+  ];
+
+  var typed = document.getElementById('ht-typed');
+  var cursor = document.getElementById('ht-cursor');
+  var introOutput = document.getElementById('ht-intro-output');
+  var inputRow = document.getElementById('ht-input-row');
+  var historyEl = document.getElementById('ht-history');
+  var input = document.getElementById('ht-input');
+  var terminal = document.getElementById('home-terminal');
+
+  /* Focus terminal on click */
+  terminal.addEventListener('click', function() { input && input.focus(); });
+
+  /* Typewriter intro — guard contre double-run livereload */
+  if (!typed.dataset.done) {
+    var text = 'whoami';
+    var i = 0;
+    var typer = setInterval(function() {
+      if (i >= text.length) { clearInterval(typer); return; }
+      i++;
+      typed.textContent = text.slice(0, i);
+      if (i >= text.length) {
+        clearInterval(typer);
+        typed.dataset.done = '1';
+        cursor.style.display = 'none';
+        setTimeout(function() {
+          introOutput.style.display = 'block';
+          inputRow.style.display = 'flex';
+          input.focus();
+        }, 300);
+      }
+    }, 70);
+  } else {
+    /* Déjà joué — affiche directement l'état final */
+    cursor.style.display = 'none';
+    introOutput.style.display = 'block';
+    inputRow.style.display = 'flex';
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function addHistory(cmd, outputHtml) {
+    var entry = document.createElement('div');
+    entry.className = 'ht-history-entry';
+
+    /* Cmd line — textContent pour le input utilisateur, jamais innerHTML */
+    var cmdLine = document.createElement('div');
+    cmdLine.className = 'ht-history-cmd';
+    cmdLine.innerHTML = '<span class="ht-prompt-char">❯</span><span class="ht-prompt-path">~/adrius $</span>';
+    var cmdText = document.createElement('span');
+    cmdText.textContent = cmd; /* textContent : XSS impossible */
+    cmdLine.appendChild(cmdText);
+    entry.appendChild(cmdLine);
+
+    /* Output — HTML statique hardcodé, jamais construit depuis l'input */
+    if (outputHtml) {
+      var out = document.createElement('div');
+      out.className = 'ht-output';
+      out.innerHTML = outputHtml;
+      entry.appendChild(out);
+    }
+
+    historyEl.appendChild(entry);
+    entry.scrollIntoView({ block: 'nearest' });
+  }
+
+  function runCommand(cmd) {
+    var c = cmd.trim().toLowerCase();
+    if (c === '') return;
+
+    if (c === 'clear' || c === 'cls') {
+      historyEl.innerHTML = '';
+      introOutput.style.display = 'none';
+      return;
+    }
+
+    var out = '';
+    if (c === 'help' || c === '?') {
+      out = '<div class="ht-muted">commandes disponibles :</div>' +
+        '<div><span class="ht-accent">ls</span>           → liste les write-ups</div>' +
+        '<div><span class="ht-accent">cat about.md</span>  → à propos</div>' +
+        '<div><span class="ht-accent">flags</span>        → flags capturés</div>' +
+        '<div><span class="ht-accent">now</span>          → ce sur quoi je bosse</div>' +
+        '<div><span class="ht-accent">contact</span>      → me joindre</div>' +
+        '<div><span class="ht-accent">clear</span>        → effacer le terminal</div>' +
+        '<div><span class="ht-accent">sudo rm -rf /</span> → essaie pour voir</div>';
+    } else if (c === 'ls' || c === 'ls ./write-ups/' || c === 'ls write-ups') {
+      out = POSTS.map(function(p) {
+        return '<div><span class="ht-muted">' + p.date + '</span>  <span class="ht-accent">' + p.slug + '.md</span></div>';
+      }).join('') + '<div class="ht-muted" style="margin-top:6px">' + POSTS.length + ' fichiers</div>';
+    } else if (c === 'cat about.md' || c === 'cat about') {
+      out = '<div class="ht-soft"># adrius<br>en alternance en sécu, basé à lausanne.<br>sur mon temps libre, je casse des labs aws (cloudgoat, flaws).<br>ce blog = mon journal de bord. zéro hype, juste le chemin réel.</div>';
+    } else if (c === 'flags') {
+      out = '<div class="ht-muted">flags captured: <span class="ht-accent" style="font-weight:700">12</span> / ∞</div><div class="ht-accent" style="margin-top:4px">🚩🚩🚩🚩🚩🚩🚩🚩🚩🚩🚩🚩</div>';
+    } else if (c === 'now') {
+      out = '<div><span class="ht-accent">●</span> spamming cloudgoat labs</div>' +
+        '<div><span class="ht-muted">○</span> reading: hacktricks aws</div>' +
+        '<div><span class="ht-muted">○</span> next: privilege escalation by group</div>';
+    } else if (c === 'contact') {
+      out = '<div>github   → <span class="ht-accent">@Adriusops</span></div>' +
+        '<div>linkedin → <span class="ht-accent">amery-costa</span></div>';
+    } else if (c === 'whoami') {
+      out = '<span>cg-start-user (en cours d\'élévation de privilèges...)</span>';
+    } else if (c === 'sudo rm -rf /') {
+      out = '<span class="ht-accent">nice try.</span>';
+    } else {
+      out = '<span class="ht-dim">zsh: command not found: ' + escHtml(cmd) + ' · tape <span class="ht-accent">help</span></span>';
+    }
+
+    addHistory(cmd, out);
+  }
+
+  input && input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      runCommand(input.value);
+      input.value = '';
+    }
+  });
+})();
+</script>
+{{ end }}

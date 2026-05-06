@@ -50,7 +50,7 @@ On est `cg-start-user`. Un user avec quasiment aucune permission visible. La sui
 
 ## Phase attaque
 
-### Étape 1 — Enumération avec PACU
+### Étape 1 : Enumération avec PACU
 
 On lance PACU et on crée une session dédiée :
 
@@ -87,9 +87,9 @@ run ec2__enum --regions us-east-1
 Une instance EC2 avec une IP publique. On note deux détails dans les métadonnées :
 
 - **IP publique** : `32.192.37.251`
-- **MetadataOptions** : `HttpTokens: optional` — IMDSv1 activé *(on y reviendra)*
+- **MetadataOptions** : `HttpTokens: optional` : IMDSv1 activé *(on y reviendra)*
 
-### Étape 2 — User Data : le mot de passe en clair
+### Étape 2 : User Data : le mot de passe en clair
 
 Le User Data c'est un script qui s'exécute au démarrage d'une instance EC2 pour l'initialiser. Il est lisible par quiconque a `ec2:DescribeInstanceAttribute` une permission très courante.
 
@@ -121,7 +121,7 @@ Credentials SSH en clair dans le User Data. `ec2-user` / `CloudGoatInstancePassw
 
 > **Leçon :** Le User Data est lisible par n'importe qui ayant `ec2:DescribeInstanceAttribute`. Ne jamais y mettre de credentials, même "temporairement". La bonne pratique : utiliser AWS Secrets Manager et faire lire le secret par l'instance au démarrage via son rôle IAM.
 
-### Étape 3 — SSH + vol de credentials via IMDS
+### Étape 3 : SSH + vol de credentials via IMDS
 
 On se connecte :
 
@@ -132,7 +132,7 @@ ssh ec2-user@32.192.37.251
 
 ![Connexion SSH réussie sur l'instance Amazon Linux 2](../../images/writeup-data-secrets/ssh_connection.png)
 
-On est sur l'instance. Elle a un **IAM Instance Profile** attaché — un rôle IAM avec des credentials temporaires exposés via l'**IMDS** (Instance Metadata Service), une API interne à l'adresse `169.254.169.254`.
+On est sur l'instance. Elle a un **IAM Instance Profile** attaché : un rôle IAM avec des credentials temporaires exposés via l'**IMDS** (Instance Metadata Service), une API interne à l'adresse `169.254.169.254`.
 
 On récupère le nom du rôle :
 
@@ -165,11 +165,11 @@ aws configure --profile ec2-role
 aws configure set aws_session_token "IQoJb3Jp..." --profile ec2-role
 ```
 
-![Profil ec2-role configuré — on est maintenant le rôle de l'instance](../../images/writeup-data-secrets/ec2_role_profile.png)
+![Profil ec2-role configuré : on est maintenant le rôle de l'instance](../../images/writeup-data-secrets/ec2_role_profile.png)
 
 L'ARN `assumed-role/cg-ec2-role` confirme qu'on utilise les credentials volés via IMDS. On a pivoté du user de départ vers le rôle EC2.
 
-### Étape 4 — Lambda : clés hardcodées dans les variables d'environnement
+### Étape 4 : Lambda : clés hardcodées dans les variables d'environnement
 
 Avec le rôle EC2 on peut énumérer les Lambda :
 
@@ -193,7 +193,7 @@ Des clés AWS hardcodées en clair dans les variables d'environnement de la Lamb
 
 > **Leçon :** Une Lambda n'a jamais besoin de clés AWS dans ses variables d'environnement. Elle a déjà un rôle IAM d'exécution, elle peut accéder directement aux services AWS via ce rôle. Les env vars c'est pour la config applicative, pas pour les credentials.
 
-### Étape 5 — Flag final : Secrets Manager
+### Étape 5 : Flag final : Secrets Manager
 
 On configure le profil avec les clés récupérées dans la Lambda :
 
@@ -209,7 +209,7 @@ On liste les secrets disponibles :
 aws secretsmanager list-secrets --region us-east-1 --profile user-db
 ```
 
-![Liste des secrets — cg-final-flag visible](../../images/writeup-data-secrets/secrets_list.png)
+![Liste des secrets : cg-final-flag visible](../../images/writeup-data-secrets/secrets_list.png)
 
 On récupère la valeur :
 
@@ -243,7 +243,7 @@ Cinq étapes. Chaque vulnérabilité seule serait presque anodine. Ensemble elle
 
 ## Remédiation
 
-### Vulnérabilité 1 — Credentials dans le User Data
+### Vulnérabilité 1 : Credentials dans le User Data
 
 **Réponse immédiate** verrouiller le compte SSH depuis l'instance :
 
@@ -276,7 +276,7 @@ PASSWORD=$(aws secretsmanager get-secret-value \
 echo "ec2-user:$PASSWORD" | chpasswd
 ```
 
-### Vulnérabilité 2 — IMDSv1 activé
+### Vulnérabilité 2 : IMDSv1 activé
 
 Forcer IMDSv2 sur l'instance :
 
@@ -288,7 +288,7 @@ aws ec2 modify-instance-metadata-options \
   --profile cloudgoat
 ```
 
-![IMDSv2 forcé — HttpTokens: required. Le curl IMDSv1 tourne dans le vide.](../../images/writeup-data-secrets/imdsv2_remediation.png)
+![IMDSv2 forcé : HttpTokens: required. Le curl IMDSv1 tourne dans le vide.](../../images/writeup-data-secrets/imdsv2_remediation.png)
 
 L'ancienne attaque ne reçoit plus aucune réponse. IMDSv2 exige désormais un token :
 
@@ -300,7 +300,7 @@ curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/cg-ec2-
   -H "X-aws-ec2-metadata-token: $TOKEN"
 ```
 
-### Vulnérabilité 3 — Clés AWS hardcodées dans les env vars Lambda
+### Vulnérabilité 3 : Clés AWS hardcodées dans les env vars Lambda
 
 Supprimer les variables d'environnement :
 

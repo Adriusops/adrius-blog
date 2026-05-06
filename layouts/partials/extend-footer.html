@@ -1,19 +1,93 @@
 <div class="crt-glow" id="crt-glow"></div>
+<div class="page-transition" id="page-transition"></div>
 <script>
+  /* ── Transitions smooth entre pages ── */
+  (function() {
+    var overlay = document.getElementById('page-transition');
+
+    /* Fade-in à l'arrivée */
+    overlay.classList.add('pt-out');
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        overlay.classList.remove('pt-out');
+      });
+    });
+
+    /* Fade-out au clic sur lien interne */
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('a');
+      if (!a) return;
+      var href = a.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') || a.target === '_blank') return;
+      try { if (new URL(href, location.href).origin !== location.origin) return; } catch(err) { return; }
+
+      e.preventDefault();
+      overlay.classList.add('pt-out');
+      setTimeout(function() { location.href = href; }, 240);
+    });
+  })();
+
+  /* CRT mouse glow */
   const glow = document.getElementById('crt-glow');
   let visible = false;
-
   document.addEventListener('mousemove', (e) => {
     glow.style.left = e.clientX + 'px';
     glow.style.top = e.clientY + 'px';
-    if (!visible) {
-      glow.style.opacity = '1';
-      visible = true;
-    }
+    if (!visible) { glow.style.opacity = '1'; visible = true; }
   });
+  document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; visible = false; });
 
-  document.addEventListener('mouseleave', () => {
-    glow.style.opacity = '0';
-    visible = false;
-  });
+  if (!window.__adrBlocksInit) {
+    window.__adrBlocksInit = true;
+
+    /* Colorise les commandes shell connues en rouge */
+    var CMD_RE = /\b(aws|cat|grep|find|curl|echo|ls|cd|cp|mv|rm|mkdir|chmod|chown|sudo|ssh|scp|python|python3|pip|pip3|git|docker|kubectl|jq|wget|sed|awk|cut|sort|uniq|head|tail|env|export|source|bash|sh|zsh|set|tee|xargs|file|strings|base64|openssl|nc|nmap|ncat|dig|host|whoami|id|uname|ps|kill|pkill|systemctl|service|apt|yum|brew|make|go|node|npm|yarn|cargo|ruby|java|javac)\b/g;
+
+    document.querySelectorAll('.highlight code[data-lang="bash"], .highlight code[data-lang="sh"], .highlight code[data-lang="shell"], .highlight code[data-lang="fallback"]').forEach(function(code) {
+      code.querySelectorAll('span.cl').forEach(function(cl) {
+        cl.childNodes.forEach(function(node) {
+          if (node.nodeType !== 3) return;
+          var text = node.textContent;
+          CMD_RE.lastIndex = 0;
+          if (!CMD_RE.test(text)) return;
+          CMD_RE.lastIndex = 0;
+          var span = document.createElement('span');
+          span.innerHTML = text.replace(CMD_RE, '<span class="sh-cmd">$1</span>');
+          node.parentNode.replaceChild(span, node);
+        });
+      });
+    });
+
+    /* Code blocks — barre langue + copy */
+    document.querySelectorAll('.highlight').forEach(function(block) {
+      if (block.querySelector('.code-header')) return;
+
+      var code = block.querySelector('code[data-lang]');
+      var lang = code ? code.getAttribute('data-lang') : '';
+      if (!lang || lang === 'fallback') lang = '';
+
+      var header = document.createElement('div');
+      header.className = 'code-header';
+
+      var langSpan = document.createElement('span');
+      langSpan.className = 'code-lang';
+      langSpan.textContent = lang || 'code';
+      header.appendChild(langSpan);
+
+      var copyBtn = document.createElement('button');
+      copyBtn.className = 'code-copy';
+      copyBtn.textContent = 'copy';
+      copyBtn.addEventListener('click', function() {
+        var pre = block.querySelector('pre');
+        var text = pre ? pre.innerText : block.innerText;
+        navigator.clipboard.writeText(text).then(function() {
+          copyBtn.textContent = 'ok';
+          setTimeout(function() { copyBtn.textContent = 'copy'; }, 1400);
+        });
+      });
+      header.appendChild(copyBtn);
+
+      block.insertBefore(header, block.firstChild);
+    });
+  }
 </script>

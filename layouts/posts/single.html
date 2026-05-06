@@ -13,6 +13,8 @@
 
     <div class="article-header">
       <div class="art-meta">
+        {{ $daysSince := div (sub now.Unix .Date.Unix) 86400 }}
+        {{ if lt $daysSince 30 }}<span class="badge-new">NEW</span>{{ end }}
         <span class="art-date">{{ dateFormat "2006-01-02" .Date }}</span>
         {{ range .Params.tags }}
         <span class="tag {{ if or (eq . "CloudGoat") (eq . "write-up") }}tag-red{{ end }}">[{{ . }}]</span>
@@ -24,6 +26,17 @@
       <div class="art-desc">{{ . }}</div>
       {{ end }}
     </div>
+
+    {{ with .Params.prereqs }}
+    <div class="prereqs-block">
+      <div class="prereqs-label">// prérequis</div>
+      <ul class="prereqs-list">
+        {{ range . }}
+        <li>{{ . }}</li>
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
 
     <div class="content">
       {{ .Content }}

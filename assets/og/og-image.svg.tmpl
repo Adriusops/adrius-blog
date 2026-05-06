@@ -36,7 +36,7 @@
 
   <!-- Tags -->
   {{ $tagX := 32 }}
-  {{ range first 5 .Params.tags }}
+  {{ range first 5 (default slice .Params.tags) }}
     {{ $w := add (mul (len .) 8) 22 }}
     <rect x="{{ $tagX }}" y="88" width="{{ $w }}" height="24" fill="transparent" stroke="#c0392b" stroke-width="1"/>
     <text x="{{ add $tagX 11 }}" y="104" font-family="'Courier New', monospace" font-size="11" fill="#c0392b" letter-spacing="0.5">{{ upper . }}</text>
