@@ -5,6 +5,14 @@
 /* Reset & base */
 *, *::before, *::after { box-sizing: border-box; }
 
+:root {
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'Space Mono', monospace;
+  --font-family-monospace: 'Space Mono', monospace;
+  --font-family-heading: 'Space Mono', monospace;
+  --font-family-paragraph: 'Space Mono', monospace;
+}
+
 body {
   background: #f5f0e8 !important;
   color: #1a1a1a !important;
