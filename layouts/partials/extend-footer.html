@@ -5,12 +5,19 @@
   (function() {
     var overlay = document.getElementById('page-transition');
 
-    /* Fade-in à l'arrivée */
-    overlay.classList.add('pt-out');
-    requestAnimationFrame(function() {
+    function fadeIn() {
+      overlay.classList.add('pt-out');
       requestAnimationFrame(function() {
-        overlay.classList.remove('pt-out');
+        requestAnimationFrame(function() {
+          overlay.classList.remove('pt-out');
+        });
       });
+    }
+
+    /* Fade-in à l'arrivée — y compris retour/avance (bfcache) */
+    fadeIn();
+    window.addEventListener('pageshow', function(e) {
+      if (e.persisted) fadeIn();
     });
 
     /* Fade-out au clic sur lien interne */
