@@ -854,6 +854,7 @@ body.theme-dark.page-blog-single .breadcrumb .sep { color: #2a2a2a; }
   border-radius: 3px !important;
   margin: 18px 0 !important;
   overflow: hidden !important;
+  overflow-x: auto !important;
 }
 
 .content .highlight pre,
@@ -867,7 +868,9 @@ pre.chroma {
   font-family: 'Space Mono', monospace !important;
   font-size: 13px !important;
   line-height: 1.65 !important;
-  overflow-x: auto;
+  overflow-x: auto !important;
+  white-space: pre !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 .chroma { color: #1a1a1a; background: #ece8df; }
@@ -903,11 +906,13 @@ pre.chroma {
 body:not(.theme-light) .content .highlight {
   background: #1a1a1a !important;
   border-color: #2a2a2a !important;
+  overflow-x: auto !important;
 }}
 body.theme-dark .highlight,
 body.theme-dark .content .highlight {
   background: #1a1a1a !important;
   border-color: #2a2a2a !important;
+  overflow-x: auto !important;
 }
 
 @media (prefers-color-scheme: dark) { body:not(.theme-light) .highlight pre,
@@ -1811,4 +1816,230 @@ body.theme-dark .aln-item a { color: #c0392b; }
 body.theme-dark .about-text a,
 body.theme-dark .about-text a:visited { color: #c0392b !important; }
 body.theme-dark .about-disclaimer { color: #777; border-color: #2a2a2a; }
+
+/* ============================================
+   RESPONSIVE — mobile (< 768px)
+   ============================================ */
+@media (max-width: 767px) {
+
+  /* ── Wrapper ── */
+  .wrapper {
+    padding: 16px 16px 40px !important;
+  }
+
+  /* ── Header ── */
+  .header {
+    margin-top: 0 !important;
+    padding: 12px 0 10px !important;
+  }
+
+  /* ASCII logo : caché sur mobile (déborde hors viewport) */
+  .header-logo-ascii {
+    display: none !important;
+  }
+
+  /* Liens nav + toggle thème : cachés sur mobile (dans le burger) */
+  .header-nav,
+  .theme-toggle {
+    display: none !important;
+  }
+
+  /* header-right vide : on le vire pour ne pas occuper d'espace */
+  .header-right {
+    display: none !important;
+  }
+
+  /* Burger : visible sur mobile */
+  .hamburger-trigger {
+    display: flex !important;
+  }
+
+  /* Logo "adrius.blog" visible et à gauche — le menu-main le contient */
+  .menu-main {
+    display: block !important;
+  }
+
+  /* ── Hero title (homepage) ── */
+  .hero-title {
+    font-size: 22px !important;
+    letter-spacing: -0.5px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* ── Pitch ── */
+  .home-pitch {
+    font-size: 12px !important;
+  }
+
+  /* ── Terminal ── */
+  .home-terminal {
+    margin: 16px 0 0 !important;
+  }
+  .ht-body {
+    padding: 12px 14px 14px !important;
+    font-size: 12px !important;
+  }
+  .ht-input {
+    font-size: 12px !important;
+  }
+
+  /* ── Status bar ── */
+  .status-bar {
+    font-size: 11px !important;
+    padding: 8px 12px !important;
+    gap: 8px !important;
+  }
+
+  /* ── Profile block (homepage) ── */
+  .home-profile {
+    padding: 12px 14px !important;
+    font-size: 12px !important;
+  }
+  .hp-row {
+    grid-template-columns: 90px 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* ── Flags block ── */
+  .home-flags {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    padding: 10px 14px !important;
+  }
+
+  /* ── Section header ── */
+  .home-prompt-line {
+    margin: 24px 0 6px !important;
+  }
+
+  /* ── Post items (homepage) ── */
+  .pi-title {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+  }
+  .pi-excerpt {
+    font-size: 12px !important;
+  }
+
+  /* ── Intro h1 (article + liste) ── */
+  .intro h1,
+  .art-title,
+  .page-title {
+    font-size: 20px !important;
+    letter-spacing: -0.5px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* ── Article: wrapper page single ── */
+  .page-blog-single .wrapper {
+    padding: 16px 16px 48px !important;
+  }
+
+  /* ── Article: lede ── */
+  .art-desc {
+    font-size: 14px !important;
+    padding: 12px 14px !important;
+  }
+
+  /* ── Article: contenu body ── */
+  .page-blog-single .content {
+    font-size: 14px !important;
+  }
+  .page-blog-single .content p,
+  .page-blog-single .content li {
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+  }
+  .page-blog-single .content h2 {
+    font-size: 16px !important;
+    margin: 28px 0 12px !important;
+  }
+  .page-blog-single .content h3 {
+    font-size: 13px !important;
+    margin: 20px 0 10px !important;
+  }
+
+  /* ── Code blocks : scroll horizontal, taille réduite ── */
+  .highlight,
+  .content .highlight {
+    margin: 12px 0 !important;
+  }
+  .content .highlight pre,
+  .highlight pre,
+  pre.chroma {
+    font-size: 11.5px !important;
+    padding: 10px 12px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* ── Blockquote / leçon ── */
+  .page-blog-single .content blockquote {
+    padding: 12px 14px !important;
+    margin: 16px 0 !important;
+  }
+
+  /* ── Tables : scroll horizontal sur mobile ── */
+  .content table,
+  .page-blog-single .content table {
+    display: block !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    white-space: nowrap !important;
+    font-size: 12px !important;
+  }
+  .content th,
+  .content td,
+  .page-blog-single .content th,
+  .page-blog-single .content td {
+    padding: 6px 10px !important;
+  }
+
+  /* ── About page ── */
+  .whoami-block {
+    grid-template-columns: 1fr !important;
+  }
+  .atl-item {
+    grid-template-columns: 70px 20px 1fr !important;
+    gap: 0 8px !important;
+  }
+  .atl-left {
+    align-items: flex-start !important;
+  }
+  .atl-date {
+    font-size: 11px !important;
+  }
+  .ab-key {
+    min-width: 90px !important;
+  }
+  .about-ascii-logo {
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+  }
+  .about-profile {
+    padding: 12px 14px !important;
+    font-size: 12px !important;
+  }
+
+  /* ── Summary list (posts page) ── */
+  .summary-title,
+  .summary-title a {
+    font-size: 15px !important;
+  }
+  .summary-description {
+    font-size: 12px !important;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    padding: 10px 12px !important;
+    font-size: 11px !important;
+  }
+  .footer-social {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+}
 
