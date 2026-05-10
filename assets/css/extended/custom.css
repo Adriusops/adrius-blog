@@ -1295,6 +1295,47 @@ body.theme-dark .summary-footer { color: #666; }
 .theme-toggle:hover { color: #c0392b; border-color: #c0392b; }
 
 /* ============================================
+   BACK TO TOP BUTTON
+   ============================================ */
+#back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: none;
+  border: 1px solid #d0c8b8;
+  color: #888;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  padding: 3px 8px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, color 0.15s ease, border-color 0.15s ease;
+  z-index: 999;
+  line-height: 1;
+}
+#back-to-top:hover {
+  color: #c0392b;
+  border-color: #c0392b;
+}
+#back-to-top.btt-glitch {
+  color: #c0392b;
+  border-color: #c0392b;
+  text-shadow: 0 0 6px rgba(192,57,43,0.7), 0 0 14px rgba(192,57,43,0.3);
+  animation: btt-scanline 0.4s ease forwards;
+}
+@keyframes btt-scanline {
+  0%   { box-shadow: none; }
+  30%  { box-shadow: 0 0 0 1px rgba(192,57,43,0.5), inset 0 0 8px rgba(192,57,43,0.15); }
+  100% { box-shadow: none; }
+}
+
+@media (prefers-color-scheme: dark) { body:not(.theme-light) #back-to-top { border-color: #2a2a2a; color: #555; }}
+body.theme-dark #back-to-top { border-color: #2a2a2a; color: #555; }
+@media (prefers-color-scheme: dark) { body:not(.theme-light) #back-to-top:hover { color: #c0392b; border-color: #c0392b; }}
+body.theme-dark #back-to-top:hover { color: #c0392b; border-color: #c0392b; }
+
+/* ============================================
    DARK MODE — via class ou prefers-color-scheme
    (theme-light force le light même si système dark)
    ============================================ */

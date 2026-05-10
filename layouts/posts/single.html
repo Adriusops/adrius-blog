@@ -2,8 +2,10 @@
 
 {{ define "footer_js" }}
 <div id="read-progress" aria-hidden="true"></div>
+<button id="back-to-top" aria-label="Back to top">[^]</button>
 <script>
 (function() {
+  // --- Read progress bar ---
   var bar = document.getElementById('read-progress');
   if (!bar) return;
 
@@ -51,6 +53,49 @@
   window.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', function() { charWidth = null; lastFill = -1; update(); }, { passive: true });
   update();
+})();
+
+// --- Back to top button ---
+(function() {
+  var btn = document.getElementById('back-to-top');
+  if (!btn) return;
+
+  var frames = ['[^]', '[↑]', '[^]', '[!]', '[^]', '[↑]', '[^]'];
+  var noiseChars = ['#', '%', '/', '|', '+', '~', '^'];
+  var animating = false;
+
+  // Show/hide on scroll
+  window.addEventListener('scroll', function() {
+    var scrolled = window.scrollY || window.pageYOffset;
+    btn.style.opacity = scrolled > 300 ? '1' : '0';
+    btn.style.pointerEvents = scrolled > 300 ? 'auto' : 'none';
+  }, { passive: true });
+
+  // Glitch animation then scroll
+  btn.addEventListener('click', function() {
+    if (animating) return;
+    animating = true;
+
+    var seq = ['[' + noiseChars[Math.floor(Math.random()*noiseChars.length)] + ']',
+               '[↑]',
+               '[' + noiseChars[Math.floor(Math.random()*noiseChars.length)] + ']',
+               '[↑]',
+               '[^]'];
+    var i = 0;
+    btn.classList.add('btt-glitch');
+
+    var interval = setInterval(function() {
+      btn.textContent = seq[i];
+      i++;
+      if (i >= seq.length) {
+        clearInterval(interval);
+        btn.classList.remove('btt-glitch');
+        btn.textContent = '[^]';
+        animating = false;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 80);
+  });
 })();
 </script>
 {{ end }}
