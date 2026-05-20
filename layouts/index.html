@@ -108,11 +108,6 @@
     {{ end }}
   </div>
 
-  <div class="meme-slot">
-    <img src="{{ "alderiate-alderiate-chan.gif" | absURL }}" alt="meme">
-    <div class="meme-caption">// yo la team</div>
-  </div>
-
 {{ end }}
 
 {{ define "footer_js" }}
@@ -216,7 +211,7 @@
         return '<div><span class="ht-muted">' + p.date + '</span>  <span class="ht-accent">' + p.slug + '.md</span></div>';
       }).join('') + '<div class="ht-muted" style="margin-top:6px">' + POSTS.length + ' fichiers</div>';
     } else if (c === 'cat about.md' || c === 'cat about') {
-      out = '<div class="ht-soft"># adrius<br>en alternance en sécu, basé à lausanne.<br>sur mon temps libre, je casse des labs aws (cloudgoat, flaws).<br>ce blog = mon journal de bord. zéro hype, juste le chemin réel.</div>';
+      out = '<div class="ht-soft"># adrius<br>en alternance en sécu, basé à marseille.<br>sur mon temps libre, je casse des labs aws (cloudgoat, flaws).<br>ce blog = mon journal de bord. zéro hype, juste le chemin réel.</div>';
     } else if (c === 'flags') {
       out = '<div class="ht-muted">flags captured: <span class="ht-accent" style="font-weight:700">8</span> / ∞</div><div class="ht-accent" style="margin-top:4px">🚩🚩🚩🚩🚩🚩🚩🚩</div>';
     } else if (c === 'now') {
