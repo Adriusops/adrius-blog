@@ -36,7 +36,7 @@
     <meta name="author" content="{{ .Site.Params.author | default "adrius" }}"/>
 
     <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}"/>
-    {{ if eq .Type "posts" }}<meta property="og:type" content="article"/>{{ else }}<meta property="og:type" content="website"/>{{ end }}
+    {{ if and (eq .Type "posts") (not .IsSection) }}<meta property="og:type" content="article"/>{{ else }}<meta property="og:type" content="website"/>{{ end }}
     <meta property="og:url" content="{{ .Permalink }}"/>
     <meta property="og:site_name" content="{{ .Site.Title }}"/>
     {{ if and (eq .Type "posts") .File (not .IsSection) }}

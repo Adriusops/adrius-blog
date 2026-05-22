@@ -34,15 +34,27 @@
     });
   })();
 
-  /* CRT mouse glow */
-  const glow = document.getElementById('crt-glow');
-  let visible = false;
-  document.addEventListener('mousemove', (e) => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top = e.clientY + 'px';
-    if (!visible) { glow.style.opacity = '1'; visible = true; }
-  });
-  document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; visible = false; });
+
+  /* CRT mouse glow — throttlé via rAF */
+  (function() {
+    var glow = document.getElementById('crt-glow');
+    if (!glow) return;
+    var rafPending = false;
+    var mx = 0, my = 0;
+    document.addEventListener('mousemove', function(e) {
+      mx = e.clientX; my = e.clientY;
+      if (!rafPending) {
+        rafPending = true;
+        requestAnimationFrame(function() {
+          glow.style.left = mx + 'px';
+          glow.style.top  = my + 'px';
+          glow.style.opacity = '1';
+          rafPending = false;
+        });
+      }
+    });
+    document.addEventListener('mouseleave', function() { glow.style.opacity = '0'; });
+  })();
 
   if (!window.__adrBlocksInit) {
     window.__adrBlocksInit = true;

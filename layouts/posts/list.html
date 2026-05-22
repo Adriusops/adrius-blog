@@ -14,7 +14,7 @@
       <div class="summary-meta">
         {{ if and (eq $i 0) (lt $daysSince 14) }}<span class="summary-badge-new">NEW</span>{{ end }}
         <span class="summary-date">{{ dateFormat "2006-01-02" $post.Date }}</span>
-        {{ range $post.Params.tags }}<span class="summary-tag">{{ . }}</span>{{ end }}
+        {{ range $post.Params.tags }}<span class="summary-tag">{{ . }}</span> {{ end }}
       </div>
       <h2 class="summary-title">{{ $post.Title }}</h2>
       <p class="summary-description">{{ $post.Params.description }}</p>

@@ -321,3 +321,5 @@ C'est ça la réalité des incidents cloud. Pas des zero-days. Des configuration
 | Cloud Service Discovery | T1526 | Énumération SNS et API Gateway |
 | Unsecured Credentials | T1552 | API key dans les messages SNS |
 | Data from Cloud Storage | T1530 | Exfiltration via endpoint API Gateway |
+
+La phase d'énumération des permissions au départ de ce scénario ressemble à celle de [IAM Enum Basics](/posts/writeup-iam-enum-basics/) — même pattern de credentials inconnus, même réflexe `list-attached-user-policies` pour cartographier ce qu'on peut faire.

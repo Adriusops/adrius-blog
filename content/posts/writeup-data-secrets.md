@@ -333,4 +333,6 @@ aws lambda get-function-configuration \
 
 Ce scénario illustre un principe fondamental : **en cloud, les mauvaises pratiques s'enchaînent**. Chaque vulnérabilité prise isolément semblerait acceptable. Ensemble elles forment un chemin d'attaque complet vers la donnée sensible.
 
+Pour un autre exemple de chaîne courte mais efficace, voir [SNS Secrets](/posts/writeup-sns-secrets/) — un topic SNS mal configuré qui expose une clé d'API en trois étapes.
+
 *Scénario réalisé avec [CloudGoat](https://github.com/RhinoSecurityLabs/cloudgoat) de RhinoSecurityLabs.*

@@ -445,3 +445,5 @@ La condition tag-based était censée être le garde-fou. Mais elle ne vaut rien
 | Account Manipulation | T1098.001 | Création de nouvelles access keys sur un autre user |
 | Abuse Elevation Control Mechanism | T1548 | Assume-role avec MFA pour accéder à un rôle privilégié |
 | Unsecured Credentials | T1552 | Secret stocké dans Secrets Manager, accessible via rôle mal configuré |
+
+La phase d'énumération IAM de ce scénario reprend exactement les techniques de [IAM Enum Basics](/posts/writeup-iam-enum-basics/) — si tu n'as pas encore vu comment `IAMReadOnlyAccess` expose toute la config d'un compte, commence par là.

@@ -289,4 +289,6 @@ Les informations sensibles ne sont pas toujours dans les données, elles sont da
 
 Une seule policy trop permissive (`IAMReadOnlyAccess`) a suffi pour exposer l'ensemble de l'infrastructure IAM du compte. Le principe du moindre privilège n'est pas optionnel.
 
+`IAMReadOnlyAccess` est aussi le point de départ du scénario [IAM Privesc by Key Rotation](/posts/writeup-iam-privesc-key-rotation/) — où cette même visibilité IAM sert à construire une chaîne de privesc complète.
+
 *Scénario réalisé avec [CloudGoat](https://github.com/RhinoSecurityLabs/cloudgoat) de RhinoSecurityLabs.*

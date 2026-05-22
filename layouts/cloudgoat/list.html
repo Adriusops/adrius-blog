@@ -1,0 +1,144 @@
+{{ define "body_classes" }}page-cloudgoat{{ end }}
+
+{{ define "main" }}
+
+{{ $done := slice "iam_enum_basics" "beanstalk_secrets" "data_secrets" "sns_secrets" "iam_privesc_by_key_rotation" }}
+{{ $total := 24 }}
+{{ $doneCount := len $done }}
+
+<div class="cg-wrap">
+
+  <div class="breadcrumb">
+    <a href="/">~</a>
+    <span class="sep">/</span>
+    <span>cloudgoat</span>
+  </div>
+
+  <div class="cg-header">
+    <div class="cg-prompt">
+      <span class="cg-prompt-char">❯</span>
+      <span class="cg-prompt-cmd">cloudgoat status</span>
+    </div>
+    <h1 class="cg-title">CloudGoat Roadmap</h1>
+    <p class="cg-subtitle">
+      Scénarios AWS vulnérables de RhinoSecurityLabs. Je les fais dans l'ordre de difficulté,
+      write-up complet à chaque fois.
+    </p>
+  </div>
+
+  <!-- Progress -->
+  <div class="cg-progress-block">
+    <div class="cg-progress-header">
+      <span class="cg-progress-label">progression</span>
+      <span class="cg-progress-count"><span class="cg-done-num">{{ $doneCount }}</span> / {{ $total }} scénarios</span>
+    </div>
+    <div class="cg-progress-bar-wrap">
+      <div class="cg-progress-bar" style="width: {{ mul (div (float $doneCount) (float $total)) 100 | printf "%.1f" }}%"></div>
+    </div>
+    <div class="cg-progress-pct">{{ mul (div (float $doneCount) (float $total)) 100 | printf "%.0f" }}% complete</div>
+  </div>
+
+  <!-- EASY -->
+  <div class="cg-section-label">
+    <span class="cg-diff cg-diff-easy">EASY</span>
+    <span class="cg-section-line"></span>
+  </div>
+
+  <div class="cg-grid">
+
+    {{ $easyScenarios := slice
+      (dict "slug" "iam_enum_basics"             "title" "IAM Enum Basics"              "desc" "Énumération IAM avec credentials inconnus. 5 flags dans les métadonnées."    "post" "/posts/writeup-iam-enum-basics/")
+      (dict "slug" "data_secrets"                "title" "Data Secrets"                 "desc" "EC2 User Data, IMDSv1, Lambda env vars : trois mauvaises pratiques enchaînées." "post" "/posts/writeup-data-secrets/")
+      (dict "slug" "beanstalk_secrets"           "title" "Beanstalk Secrets"            "desc" "Credentials hardcodés dans Beanstalk + iam:CreateAccessKey trop large."       "post" "/posts/writeup-beanstalk-secrets/")
+      (dict "slug" "sns_secrets"                 "title" "SNS Secrets"                  "desc" "Topic SNS public qui broadcast une API key à tous ses abonnés."               "post" "/posts/writeup-sns-secrets/")
+      (dict "slug" "iam_privesc_by_key_rotation" "title" "IAM Privesc by Key Rotation"  "desc" "Tags IAM, CreateAccessKey conditionné, MFA bypass vers Secrets Manager."     "post" "/posts/writeup-iam-privesc-key-rotation/")
+      (dict "slug" "iam_privesc_by_rollback"     "title" "IAM Privesc by Rollback"      "desc" "Rollback de policy pour restaurer des permissions supprimées."               "post" "")
+      (dict "slug" "lambda_privesc"              "title" "Lambda Privesc"               "desc" "Privilege escalation via les rôles d'exécution Lambda mal configurés."        "post" "")
+      (dict "slug" "sqs_flag_shop"               "title" "SQS Flag Shop"                "desc" "Manipulation de messages SQS pour obtenir des flags sans payer."              "post" "")
+    }}
+
+    {{ range $easyScenarios }}
+    {{ $isDone := in $done .slug }}
+    <div class="cg-card {{ if $isDone }}cg-card-done{{ else }}cg-card-todo{{ end }}">
+      <div class="cg-card-top">
+        <span class="cg-card-slug">{{ .slug }}</span>
+        {{ if $isDone }}<span class="cg-status cg-status-done">✓ done</span>{{ else }}<span class="cg-status cg-status-todo">○ à faire</span>{{ end }}
+      </div>
+      <div class="cg-card-title">{{ .title }}</div>
+      <p class="cg-card-desc">{{ .desc }}</p>
+      {{ if $isDone }}
+      <a class="cg-card-link" href="{{ .post }}">./lire le write-up →</a>
+      {{ end }}
+    </div>
+    {{ end }}
+
+  </div>
+
+  <!-- MEDIUM -->
+  <div class="cg-section-label" style="margin-top: 40px;">
+    <span class="cg-diff cg-diff-medium">MEDIUM</span>
+    <span class="cg-section-line"></span>
+  </div>
+
+  <div class="cg-grid">
+
+    {{ $mediumScenarios := slice
+      (dict "slug" "cloud_breach_s3"          "title" "Cloud Breach S3"           "desc" "SSRF vers IMDSv1, exfiltration depuis un bucket S3 mal configuré.")
+      (dict "slug" "ec2_ssrf"                 "title" "EC2 SSRF"                  "desc" "SSRF sur une webapp EC2 pour voler des credentials via IMDS.")
+      (dict "slug" "iam_privesc_by_attachment" "title" "IAM Privesc by Attachment" "desc" "Attacher une policy admin à son propre user via des permissions mal scopées.")
+      (dict "slug" "vulnerable_lambda"        "title" "Vulnerable Lambda"          "desc" "Injection de commandes dans une Lambda pour pivoter vers d'autres ressources.")
+      (dict "slug" "vulnerable_cognito"       "title" "Vulnerable Cognito"         "desc" "Exploitation d'un User Pool Cognito mal configuré.")
+      (dict "slug" "rds_snapshot"             "title" "RDS Snapshot"               "desc" "Accès à des données sensibles via un snapshot RDS public.")
+      (dict "slug" "ecs_takeover"             "title" "ECS Takeover"               "desc" "Prise de contrôle d'un cluster ECS via des permissions container trop larges.")
+      (dict "slug" "glue_privesc"             "title" "Glue Privesc"               "desc" "Privilege escalation via AWS Glue et des rôles IAM mal configurés.")
+      (dict "slug" "static"                   "title" "Static"                     "desc" "Credentials statiques exposés dans des ressources accessibles publiquement.")
+      (dict "slug" "agentcore_identity_confusion" "title" "AgentCore Identity Confusion" "desc" "Confusion d'identité dans AWS AgentCore pour élever ses privilèges.")
+      (dict "slug" "bedrock_agent_hijacking"  "title" "Bedrock Agent Hijacking"    "desc" "Détournement d'un agent Bedrock via des permissions mal configurées.")
+      (dict "slug" "ecs_privesc_evade_protection" "title" "ECS Privesc Evade Protection" "desc" "Escalade de privilèges ECS en contournant les protections en place.")
+    }}
+
+    {{ range $mediumScenarios }}
+    <div class="cg-card cg-card-todo">
+      <div class="cg-card-top">
+        <span class="cg-card-slug">{{ .slug }}</span>
+        <span class="cg-status cg-status-todo">○ à faire</span>
+      </div>
+      <div class="cg-card-title">{{ .title }}</div>
+      <p class="cg-card-desc">{{ .desc }}</p>
+    </div>
+    {{ end }}
+
+  </div>
+
+  <!-- HARD -->
+  <div class="cg-section-label" style="margin-top: 40px;">
+    <span class="cg-diff cg-diff-hard">HARD</span>
+    <span class="cg-section-line"></span>
+  </div>
+
+  <div class="cg-grid">
+
+    {{ $hardScenarios := slice
+      (dict "slug" "rce_web_app"              "title" "RCE Web App"               "desc" "RCE sur une webapp pour pivoter dans l'infra AWS.")
+      (dict "slug" "codebuild_secrets"        "title" "CodeBuild Secrets"         "desc" "Exfiltration de secrets depuis un pipeline CodeBuild.")
+      (dict "slug" "ecs_efs_attack"           "title" "ECS EFS Attack"            "desc" "Attaque combinée ECS + EFS pour accéder à des données persistantes.")
+      (dict "slug" "ecs_privesc_evade_protection_hard" "title" "ECS Privesc (Hard)" "desc" "Version hard : escalade ECS avec évasion de détection.")
+      (dict "slug" "detection_evasion"        "title" "Detection Evasion"         "desc" "Compromettre un compte AWS en évitant les détections GuardDuty/CloudTrail.")
+      (dict "slug" "secrets_in_the_cloud"     "title" "Secrets in the Cloud"      "desc" "Chasse aux secrets disséminés dans plusieurs services AWS.")
+    }}
+
+    {{ range $hardScenarios }}
+    <div class="cg-card cg-card-todo">
+      <div class="cg-card-top">
+        <span class="cg-card-slug">{{ .slug }}</span>
+        <span class="cg-status cg-status-todo">○ à faire</span>
+      </div>
+      <div class="cg-card-title">{{ .title }}</div>
+      <p class="cg-card-desc">{{ .desc }}</p>
+    </div>
+    {{ end }}
+
+  </div>
+
+</div>
+{{ end }}

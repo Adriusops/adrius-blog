@@ -15,7 +15,6 @@
       <a href="{{.URL}}" class="header-nav-link {{ if $active }}active{{ end }}">{{ .Name }}</a>
       {{end}}
     </nav>
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">[☀]</button>
   </div>
 
   <div id="toggle-menu-main-mobile" class="hamburger-trigger">
@@ -49,53 +48,26 @@
       "            ........'+++'+''...               "
     ];
 
-    var frames = [base];
-
-    var noiseChars = ['`','~','^','\'',',','.','!','+','o'];
+    var noiseChars = ['`','~','^','\'','+','o'];
     var el = document.getElementById('ascii-logo');
     if (!el) return;
 
-    function glitch(lines) {
-      // Très faible probabilité de glitch par rendu — effet subtil
-      var doGlitch = Math.random() < 0.15;
-      return lines.map(function(line) {
-        if (!doGlitch) return line;
+    el.textContent = base.join('\n');
+
+    setInterval(function() {
+      if (Math.random() > 0.4) return;
+      var glitched = base.map(function(line) {
         var arr = line.split('');
         for (var i = 0; i < arr.length; i++) {
-          if (arr[i] !== ' ' && Math.random() < 0.03) {
+          if (arr[i] !== ' ' && Math.random() < 0.02) {
             arr[i] = noiseChars[Math.floor(Math.random() * noiseChars.length)];
           }
         }
         return arr.join('');
       });
-    }
-
-    function render() {
-      el.textContent = glitch(base).join('\n');
-    }
-
-    render();
-    setInterval(render, 200);
+      el.textContent = glitched.join('\n');
+      setTimeout(function() { el.textContent = base.join('\n'); }, 80);
+    }, 3000);
   })();
 
-  (function() {
-    var btn = document.getElementById('theme-toggle');
-    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var saved = localStorage.getItem('theme');
-    var isDark = saved ? saved === 'dark' : prefersDark;
-
-    function apply(dark) {
-      document.body.classList.toggle('theme-dark', dark);
-      document.body.classList.toggle('theme-light', !dark);
-      btn.textContent = dark ? '[☀]' : '[☾]';
-    }
-
-    apply(isDark);
-
-    btn.addEventListener('click', function() {
-      isDark = !isDark;
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      apply(isDark);
-    });
-  })();
 </script>

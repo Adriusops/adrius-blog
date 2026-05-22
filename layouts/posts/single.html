@@ -5,7 +5,6 @@
 <button id="back-to-top" aria-label="Back to top">[^]</button>
 <script>
 (function() {
-  // --- Read progress bar ---
   var bar = document.getElementById('read-progress');
   if (!bar) return;
 
@@ -13,7 +12,6 @@
   var charWidth = null;
   var lastFill = -1;
 
-  // Mesure exacte de la largeur d'un caractère Space Mono 13px
   function measureCharWidth() {
     var canvas = document.createElement('canvas');
     var ctx = canvas.getContext('2d');
@@ -25,29 +23,27 @@
     return chars[Math.min(Math.floor(ratio * chars.length), chars.length - 1)];
   }
 
+  var rafPending = false;
   function update() {
-    var scrollTop = window.scrollY || window.pageYOffset;
-    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    var progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
-
-    if (!charWidth) measureCharWidth();
-    var totalCols = Math.floor(window.innerWidth / charWidth);
-    var filled = Math.round(progress * totalCols);
-
-    if (filled !== lastFill) {
+    if (rafPending) return;
+    rafPending = true;
+    requestAnimationFrame(function() {
+      rafPending = false;
+      var scrollTop = window.scrollY || window.pageYOffset;
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
+      if (!charWidth) measureCharWidth();
+      var totalCols = Math.floor(window.innerWidth / charWidth);
+      var filled = Math.round(progress * totalCols);
+      if (filled === lastFill) return;
       lastFill = filled;
       var text = '';
       for (var i = 0; i < totalCols; i++) {
-        if (i < filled) {
-          var ratio = i / Math.max(filled - 1, 1);
-          text += getChar(ratio);
-        } else {
-          text += ' ';
-        }
+        text += i < filled ? getChar(i / Math.max(filled - 1, 1)) : ' ';
       }
       bar.textContent = text;
       bar.style.opacity = progress > 0 ? '1' : '0';
-    }
+    });
   }
 
   window.addEventListener('scroll', update, { passive: true });

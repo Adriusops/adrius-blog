@@ -1,6 +1,6 @@
 baseURL = 'https://adrius.blog/'
 languageCode = 'fr-FR'
-title = 'adrius.blog — Cloud Sec Write-ups'
+title = 'adrius.blog — AWS IAM & Cloud Pentest and Security Write-ups'
 theme = 'adrius-theme'
 
 disableKinds = ["taxonomy", "term"]
@@ -30,6 +30,12 @@ disableKinds = ["taxonomy", "term"]
     name = "write-ups"
     url = "/posts/"
     weight = 10
+
+  [[menu.main]]
+    identifier = "cloudgoat"
+    name = "cloudgoat"
+    url = "/cloudgoat/"
+    weight = 15
 
   [[menu.main]]
     identifier = "about"

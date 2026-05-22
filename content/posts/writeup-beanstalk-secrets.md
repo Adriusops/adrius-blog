@@ -265,6 +265,8 @@ aws iam create-access-key \
 
 Ce scénario illustre quelque chose qu'on voit souvent en vrai : les compromissions cloud ne viennent pas de failles techniques sophistiquées. Elles viennent de décisions de configuration prises trop vite. Des credentials "temporaires" qui restent, une permission copiée-collée sans être restreinte. Chaque mauvaise pratique prise isolément semblerait presque anodine. Ensemble, elles forment un chemin d'attaque complet vers la donnée sensible.
 
+Le même mécanisme — `iam:CreateAccessKey` utilisé comme vecteur de privesc — est au cœur du scénario [IAM Privesc by Key Rotation](/posts/writeup-iam-privesc-key-rotation/), avec une chaîne encore plus tordue autour des tags IAM et du MFA.
+
 ---
 
 ## MITRE ATT&CK
