@@ -39,19 +39,13 @@
     {{ if and (eq .Type "posts") (not .IsSection) }}<meta property="og:type" content="article"/>{{ else }}<meta property="og:type" content="website"/>{{ end }}
     <meta property="og:url" content="{{ .Permalink }}"/>
     <meta property="og:site_name" content="{{ .Site.Title }}"/>
+    <meta property="og:image" content="{{ .Site.BaseURL }}og-home.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
     {{ if and (eq .Type "posts") .File (not .IsSection) }}
-      <meta property="og:image" content="{{ partial "og-image.html" . }}"/>
-      <meta property="og:image:width" content="1200"/>
-      <meta property="og:image:height" content="630"/>
       <meta property="og:article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}"/>
-    {{ else if .Params.image }}
-      <meta property="og:image" content="{{ .Params.image | absURL }}"/>
-    {{ else }}
-      <meta property="og:image" content="{{ .Site.BaseURL }}og-home.png"/>
-      <meta property="og:image:width" content="1200"/>
-      <meta property="og:image:height" content="630"/>
     {{ end }}
-    {{ if and (eq .Type "posts") .File }}<meta name="twitter:image" content="{{ partial "og-image.html" . }}"/>{{ else }}<meta name="twitter:image" content="{{ .Site.BaseURL }}og-home.png"/>{{ end }}
+    <meta name="twitter:image" content="{{ .Site.BaseURL }}og-home.png"/>
     {{ if .Params.description }}
       <meta property="og:description" content="{{ .Params.description }}"/>
     {{ else }}
