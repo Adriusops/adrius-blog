@@ -1969,3 +1969,262 @@ pre.chroma {
 }
 .cg-prompt-char { color: #c0392b; font-family: 'Space Mono', monospace; font-size: 12px; }
 .cg-prompt-cmd  { color: var(--adr-ink-muted);    font-family: 'Space Mono', monospace; font-size: 12px; }
+
+/* ============================================
+   GISCUS COMMENTS
+   ============================================ */
+.giscus-wrap {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px dashed var(--adr-border);
+}
+
+.giscus-header {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.giscus-prompt-char { color: #c0392b; }
+.giscus-prompt-path { color: var(--adr-ink-muted); }
+.giscus-prompt-cmd  { color: var(--adr-ink); }
+
+.giscus-wrap .giscus,
+.giscus-wrap iframe.giscus-frame {
+  width: 100% !important;
+  border: none !important;
+}
+
+/* ============================================
+   DARK MODE OVERRIDES — [data-theme="dark"]
+   ============================================ */
+
+/* Featured cards */
+[data-theme="dark"] .fcard { background: #111; border-color: #2a2a2a; }
+[data-theme="dark"] .fcard-topbar { background: #1a1a1a; border-bottom-color: #2a2a2a; }
+[data-theme="dark"] .fcard-dot-grey { background: #333; }
+[data-theme="dark"] .fcard-title { color: #d4cfc7; }
+[data-theme="dark"] .fcard-desc { color: #666; }
+[data-theme="dark"] .fcard-path { color: #555; }
+[data-theme="dark"] .fcard-date { color: #555; }
+[data-theme="dark"] .fcard-tag { color: #555; }
+[data-theme="dark"] .fcard:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.4); }
+
+/* Homepage profile block */
+[data-theme="dark"] .home-profile { background: #161616; border-color: #2a2a2a; }
+[data-theme="dark"] .hp-val { color: #d4cfc7; }
+[data-theme="dark"] .hero-title { color: #d4cfc7; }
+[data-theme="dark"] .home-pitch { color: #777; }
+[data-theme="dark"] .p-cmd { color: #d4cfc7; }
+[data-theme="dark"] .p-path { color: #777; }
+[data-theme="dark"] .section-header { color: #555; border-bottom-color: #2a2a2a; }
+[data-theme="dark"] .post-item { border-bottom-color: #2a2a2a; }
+[data-theme="dark"] .pi-title { color: #d4cfc7; }
+[data-theme="dark"] .pi-excerpt { color: #666; }
+[data-theme="dark"] .tag { border-color: #333; color: #666; }
+
+/* Article body text */
+[data-theme="dark"] .content p { color: #aaa49d; }
+[data-theme="dark"] .content h2 { color: #d4cfc7; }
+[data-theme="dark"] .content h3 { color: #d4cfc7; }
+[data-theme="dark"] .content li { color: #aaa49d; }
+[data-theme="dark"] .content table td { color: #aaa49d; }
+[data-theme="dark"] .art-desc { color: #aaa49d; }
+
+/* Inline code dark */
+[data-theme="dark"] :not(pre) > code {
+  background: #1e1e1e !important;
+  color: #c0392b !important;
+  border-color: #2a2a2a !important;
+}
+
+/* Code blocks header dark */
+[data-theme="dark"] .code-header { background: #1a1a1a; border-bottom-color: #2a2a2a; color: #666; }
+
+/* CloudGoat page */
+[data-theme="dark"] .cg-title { color: #d4cfc7; }
+[data-theme="dark"] .cg-progress-block { background: #111; border-color: #2a2a2a; }
+[data-theme="dark"] .cg-progress-bar-wrap { background: #2a2a2a; }
+[data-theme="dark"] .cg-progress-count { color: #777; }
+[data-theme="dark"] .cg-section-line { background: #2a2a2a; }
+[data-theme="dark"] .cg-card { border-color: #2a2a2a; }
+[data-theme="dark"] .cg-card-done { background: #111; }
+[data-theme="dark"] .cg-card-todo { background: #0d0d0d; }
+[data-theme="dark"] .cg-card-title { color: #d4cfc7; }
+[data-theme="dark"] .cg-card-desc { color: #555; }
+
+/* About page */
+[data-theme="dark"] .about-profile { background: #1a1a1a; border-color: #2a2a2a; }
+[data-theme="dark"] .ab-header { color: #555; }
+[data-theme="dark"] .ab-key { color: #666; }
+[data-theme="dark"] .ab-val { color: #d4cfc7; }
+[data-theme="dark"] .about-section-label { color: #555; }
+[data-theme="dark"] .an-key { color: #d4cfc7; }
+[data-theme="dark"] .an-val { color: #777; }
+[data-theme="dark"] .about-text { color: #aaa49d; }
+[data-theme="dark"] .about-text p { color: #aaa49d; }
+[data-theme="dark"] .atl-title { color: #d4cfc7; }
+[data-theme="dark"] .atl-desc { color: #777; }
+[data-theme="dark"] .atl-date { color: #666; }
+[data-theme="dark"] .atl-dot { background: #111; border-color: #333; }
+[data-theme="dark"] .atl-connector { background: #2a2a2a; }
+[data-theme="dark"] .ast-item { background: #1a1a1a; border-color: #2a2a2a; color: #777; }
+[data-theme="dark"] .ast-item.ast-highlight { background: transparent; border-color: #c0392b; color: #c0392b; }
+
+/* Giscus */
+[data-theme="dark"] .giscus-wrap { border-top-color: #2a2a2a; }
+[data-theme="dark"] .giscus-prompt-path { color: #555; }
+[data-theme="dark"] .giscus-prompt-cmd { color: #d4cfc7; }
+
+/* Footer */
+[data-theme="dark"] .footer { background: #111 !important; border-color: #2a2a2a !important; color: #555 !important; }
+[data-theme="dark"] .footer-social a { color: #555 !important; }
+
+/* Breadcrumb */
+[data-theme="dark"] .breadcrumb { color: #555; }
+[data-theme="dark"] .breadcrumb a { color: #666; }
+
+/* Article body — lisibilité dark mode */
+[data-theme="dark"] .content p,
+[data-theme="dark"] .content li,
+[data-theme="dark"] .content td,
+[data-theme="dark"] .blog > p,
+[data-theme="dark"] p { color: #c8c0ad !important; }
+
+[data-theme="dark"] .content h2,
+[data-theme="dark"] .content h3,
+[data-theme="dark"] .art-title { color: #ede6d6 !important; }
+
+[data-theme="dark"] .art-desc,
+[data-theme="dark"] .post-description { color: #8a8472 !important; }
+
+[data-theme="dark"] .art-date,
+[data-theme="dark"] .art-time,
+[data-theme="dark"] .breadcrumb,
+[data-theme="dark"] .breadcrumb a { color: #666 !important; }
+
+[data-theme="dark"] .tag { border-color: #333 !important; color: #777 !important; }
+[data-theme="dark"] .tag-red { border-color: #c0392b !important; color: #c0392b !important; }
+
+/* Séparateurs dark mode */
+[data-theme="dark"] hr,
+[data-theme="dark"] .content hr { border-color: #2a2a2a !important; }
+
+[data-theme="dark"] .about-disclaimer { border-color: #2a2a2a !important; color: #555 !important; }
+
+[data-theme="dark"] .home-profile { background: #161616 !important; border-color: #2a2a2a !important; }
+[data-theme="dark"] .hp-row { border-bottom-color: #2a2a2a !important; }
+
+/* HR global — cohérent avec le design system */
+.content hr {
+  border: none;
+  border-top: 1px solid var(--adr-border);
+  margin: 32px 0;
+}
+
+/* Cards featured — footer pointillés dark mode */
+[data-theme="dark"] .fcard-footer { border-top-color: #2a2a2a; }
+[data-theme="dark"] .fcard { border-color: #2a2a2a; }
+
+/* Premier séparateur sous le header article */
+[data-theme="dark"] .article-header + hr,
+[data-theme="dark"] .art-desc + hr,
+[data-theme="dark"] .blog hr { border-color: #2a2a2a !important; }
+
+/* Texte dans tous les blocs de code — dark mode */
+[data-theme="dark"] .highlight pre,
+[data-theme="dark"] pre.chroma,
+[data-theme="dark"] .highlight code { color: #c8c0ad !important; }
+
+/* Tokens génériques non colorés (texte plain dans code blocks) */
+[data-theme="dark"] .chroma .n,
+[data-theme="dark"] .chroma .nx,
+[data-theme="dark"] .chroma .p,
+[data-theme="dark"] .chroma .o,
+[data-theme="dark"] .chroma .go { color: #c8c0ad !important; }
+
+/* HR dans .content — force dark */
+[data-theme="dark"] .content hr {
+  border: none !important;
+  border-top: 1px solid #2a2a2a !important;
+}
+
+/* Override browser default hr — max spécificité */
+[data-theme="dark"] hr {
+  border: 0 !important;
+  border-top: 1px solid #2a2a2a !important;
+  background: none !important;
+}
+
+/* HR dans les articles — discret, respecte le dark mode */
+.content hr,
+.blog hr {
+  border: 0 !important;
+  border-top: 1px solid var(--adr-border) !important;
+  margin: 28px 0 !important;
+}
+
+/* Tables dark mode */
+[data-theme="dark"] .content table th,
+[data-theme="dark"] .content table td,
+[data-theme="dark"] .bilan-table th,
+[data-theme="dark"] .bilan-table td {
+  border-color: #2a2a2a !important;
+  color: #c8c0ad !important;
+}
+[data-theme="dark"] .content table th,
+[data-theme="dark"] .bilan-table th {
+  color: #666 !important;
+  background: #111 !important;
+}
+[data-theme="dark"] .content table {
+  border: 1px solid #2a2a2a !important;
+}
+
+/* Tables — supprime les pointillés en dark mode */
+[data-theme="dark"] .content table td {
+  border-bottom: 1px solid #2a2a2a !important;
+}
+[data-theme="dark"] .content table th {
+  border-bottom: 1px solid #333 !important;
+}
+
+/* Supprime tout séparateur visible sous le header article en dark mode */
+[data-theme="dark"] .article-header {
+  border-bottom: none !important;
+}
+[data-theme="dark"] .art-desc {
+  background: #161616 !important;
+  border-left-color: #c0392b !important;
+}
+
+/* art-desc — fond transparent en dark pour éviter le contraste avec le body */
+[data-theme="dark"] .art-desc {
+  background: transparent !important;
+  border-left-color: #c0392b !important;
+  color: #8a8472 !important;
+}
+
+/* Fix Firefox hr — border-style inset ignoré */
+[data-theme="dark"] .content hr {
+  border-style: solid !important;
+  border-width: 1px 0 0 0 !important;
+  border-color: #2a2a2a !important;
+  border-top-color: #2a2a2a !important;
+  color: #2a2a2a !important;
+}
+
+/* Firefox dark mode hr — force color-scheme */
+[data-theme="dark"] .content hr {
+  color-scheme: light !important;
+  border-color: #2a2a2a !important;
+  border-top: 1px solid #2a2a2a !important;
+}
+
+/* hr invisible en dark mode — Firefox ignore border/color, on cache l'élément */
+[data-theme="dark"] .content hr {
+  opacity: 0 !important;
+}

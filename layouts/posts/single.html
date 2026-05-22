@@ -143,5 +143,66 @@
       <div class="meme-caption">// fin du write-up · adrius@blog:~$</div>
     </div>
 
+    <!-- ── Commentaires Giscus ───────────────────────────────────────────── -->
+    <div class="giscus-wrap">
+      <div class="giscus-header">
+        <span class="giscus-prompt-char">❯</span>
+        <span class="giscus-prompt-path">~/adrius $</span>
+        <span class="giscus-prompt-cmd">cat commentaires</span>
+      </div>
+
+      <!--
+        CONFIGURATION GISCUS
+        ─────────────────────────────────────────────────────────────────────
+        Avant de mettre en prod :
+          1. Créer le repo GitHub "Adriusops/adrius-blog-comments"
+          2. Activer les Discussions sur ce repo (Settings → Features → Discussions)
+          3. Aller sur https://giscus.app et configurer le repo
+          4. Remplacer les deux valeurs ci-dessous :
+             - data-repo-id       → valeur "Repository ID" fournie par giscus.app
+             - data-category-id   → valeur "Category ID" fournie par giscus.app
+        ─────────────────────────────────────────────────────────────────────
+      -->
+      <script src="https://giscus.app/client.js"
+        data-repo="Adriusops/adrius-blog"
+        data-repo-id="R_kgDOSPA4Eg"
+        data-category="General"
+        data-category-id="DIC_kwDOSPA4Es4C9oqh"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="https://adrius.blog/css/giscus-light.css"
+        data-lang="fr"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+      </script>
+      <script>
+      (function() {
+        function setGiscusTheme(dark) {
+          var theme = dark
+            ? 'https://adrius.blog/css/giscus-dark.css'
+            : 'https://adrius.blog/css/giscus-light.css';
+          var iframe = document.querySelector('iframe.giscus-frame');
+          if (iframe) {
+            iframe.contentWindow.postMessage(
+              { giscus: { setConfig: { theme: theme } } },
+              'https://giscus.app'
+            );
+          }
+        }
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
+        // Attendre que l'iframe soit chargée
+        window.addEventListener('message', function(e) {
+          if (e.origin !== 'https://giscus.app') return;
+          if (e.data && e.data.giscus) setGiscusTheme(mq.matches);
+        }, { once: true });
+        mq.addEventListener('change', function(e) { setGiscusTheme(e.matches); });
+      })();
+      </script>
+    </div>
+
   </div>
 {{ end }}
