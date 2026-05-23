@@ -542,10 +542,6 @@ body {
   margin-right: auto;
 }
 
-/* Le H1 markdown est dupliqué — le titre est déjà dans .art-title */
-.page-blog-single .content h1 {
-  display: none !important;
-}
 
 
 .page-blog-single .content h2 {

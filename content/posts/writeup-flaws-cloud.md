@@ -8,8 +8,6 @@ readtime: 14
 draft: false
 ---
 
-# flaws.cloud walkthrough : 6 misconfiguration AWS à ne pas reproduire
-
 Six niveaux. Six erreurs de configuration différentes. Toutes réelles, toutes documentées dans des incidents qui ont coûté cher à de vraies entreprises.
 
 [flaws.cloud](http://flaws.cloud) est un challenge créé par Scott Piper pour apprendre les misconfiguration AWS par la pratique. Le principe est simple : chaque niveau expose une vulnérabilité classique, et pour passer au suivant il faut l'exploiter. Ce write-up couvre les 6 niveaux avec les fausses pistes, les moments de confusion, et les fois où j'ai cherché dans la mauvaise direction pendant trop longtemps. Parce que c'est là que l'apprentissage se passe vraiment.
@@ -416,3 +414,7 @@ La suite : [flaws2.cloud](http://flaws2.cloud) qui couvre d'autres scénarios. R
 | Cloud Instance Metadata API | T1552.005 | L5 |
 | Cloud Infrastructure Discovery | T1580 | L4, L6 |
 | Valid Accounts (Cloud) | T1078.004 | L2, L3, L5, L6 |
+
+---
+
+Vous avez fait flaws.cloud ? Le level qui vous a bloqué le plus longtemps, c'était lequel ? Dites-moi en commentaires.
