@@ -1,4 +1,0 @@
-{{- $template := resources.Get "og/og-image.svg.tmpl" -}}
-{{- $slug := .File.ContentBaseName | default (.Title | urlize) -}}
-{{- $svg := $template | resources.ExecuteAsTemplate (printf "og/%s.svg" $slug) . -}}
-{{- $svg.Permalink -}}

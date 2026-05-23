@@ -1,28 +1,259 @@
-{{ define "body_classes" }}page-blog-list{{ end }}
+{{ define "body_classes" }}page-posts-list{{ end }}
 
 {{ define "main" }}
-  <div class="intro">
-    <h1>{{ .Title }}</h1>
-    {{ if .Params.description }}<p>{{ .Params.description }}</p>{{ end }}
+
+{{ $posts := where .Pages "Type" "posts" }}
+{{ $sorted := ($posts.ByParam "date").Reverse }}
+
+{{/* Collecter tous les tags uniques */}}
+{{ $allTags := slice }}
+{{ range $sorted }}
+  {{ range .Params.tags }}
+    {{ $allTags = $allTags | append . }}
+  {{ end }}
+{{ end }}
+{{ $uniqueTags := $allTags | uniq | sort }}
+
+<div class="wl-wrap">
+
+  <!-- En-tête prompt -->
+  <div class="wl-prompt">
+    <span class="p-char">❯</span>
+    <span class="p-path">~/adrius/write-ups $</span>
+    <span class="p-cmd">grep <span class="wl-cmd-arg" id="wl-cmd-display">--all</span></span>
   </div>
-  {{ .Content }}
-  {{ $posts := where .Pages "Type" "posts" }}
-  {{ $sorted := ($posts.ByParam "date").Reverse }}
-  {{ range $i, $post := $sorted }}
+
+  <div class="wl-header">
+    <h1 class="wl-title">write-ups</h1>
+    <span class="wl-count" id="wl-count">{{ len $sorted }} articles</span>
+  </div>
+
+  <!-- Search bar -->
+  <div class="wl-search-wrap">
+    <span class="wl-search-prompt">grep</span>
+    <input
+      type="text"
+      id="wl-search"
+      class="wl-search-input"
+      placeholder="rechercher titre ou description..."
+      autocomplete="off"
+      spellcheck="false"
+    >
+    <span class="wl-search-cursor" aria-hidden="true">█</span>
+  </div>
+
+  <!-- Filtres par tag -->
+  <div class="wl-tags" id="wl-tags" role="group" aria-label="Filtrer par tag">
+    <span class="wl-tags-label">--tag=</span>
+    <button class="wl-tag wl-tag-active" data-tag="*" aria-pressed="true">all</button>
+    {{ range $uniqueTags }}
+    <button class="wl-tag" data-tag="{{ . }}" aria-pressed="false">{{ . }}</button>
+    {{ end }}
+  </div>
+
+  <!-- Liste des articles -->
+  <div class="wl-list" id="wl-list">
+    {{ range $i, $post := $sorted }}
     {{ $daysSince := div (sub now.Unix $post.Date.Unix) 86400 }}
-    <a class="summary" href="{{ $post.RelPermalink }}">
-      <div class="summary-meta">
-        {{ if and (eq $i 0) (lt $daysSince 14) }}<span class="summary-badge-new">NEW</span>{{ end }}
-        <span class="summary-date">{{ dateFormat "2006-01-02" $post.Date }}</span>
-        {{ range $post.Params.tags }}<span class="summary-tag">{{ . }}</span> {{ end }}
+    <a
+      class="wl-item"
+      href="{{ $post.RelPermalink }}"
+      data-title="{{ $post.Title | lower }}"
+      data-desc="{{ $post.Params.description | lower }}"
+      data-tags="{{ delimit $post.Params.tags "," }}"
+    >
+      <div class="wl-item-meta">
+        {{ if and (eq $i 0) (lt $daysSince 14) }}<span class="badge-new">NEW</span>{{ end }}
+        <span class="wl-item-date">{{ dateFormat "2006-01-02" $post.Date }}</span>
+        <span class="wl-item-tags">
+          {{ range $post.Params.tags }}<span class="wl-item-tag">[{{ . }}]</span>{{ end }}
+        </span>
       </div>
-      <h2 class="summary-title">{{ $post.Title }}</h2>
-      <p class="summary-description">{{ $post.Params.description }}</p>
-      <div class="summary-footer">
-        <span class="sf-link">./lire →</span>
-        <span class="sf-sep">|</span>
-        <span class="sf-meta">{{ math.Round (div (countwords $post.Content) 200.0) }} min read</span>
+      <div class="wl-item-title">{{ $post.Title }}</div>
+      {{ with $post.Params.description }}
+      <p class="wl-item-desc">{{ . }}</p>
+      {{ end }}
+      <div class="wl-item-footer">
+        <span class="wl-item-read">./lire →</span>
+        <span class="wl-item-sep">|</span>
+        <span class="wl-item-time">{{ math.Round (div (countwords $post.Content) 200.0) }} min read</span>
       </div>
     </a>
-  {{ end }}
+    {{ end }}
+
+    <!-- Empty state -->
+    <div class="wl-empty" id="wl-empty" style="display:none;">
+      <span class="p-char">❯</span>
+      <span class="wl-empty-msg">aucun résultat — <button class="wl-reset-link" id="wl-reset">reset</button></span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var search     = document.getElementById('wl-search');
+  var tagBtns    = document.querySelectorAll('.wl-tag');
+  var items      = document.querySelectorAll('.wl-item');
+  var count      = document.getElementById('wl-count');
+  var empty      = document.getElementById('wl-empty');
+  var cmdDisplay = document.getElementById('wl-cmd-display');
+  var reset      = document.getElementById('wl-reset');
+
+  var activeTag = '*';
+  var searchVal = '';
+  var filterPending = false;
+
+  /* ── Glitch flash sur un item ──────────────────────────────────────────
+     hide=true  → flicker puis display:none
+     hide=false → display:block puis flicker d'entrée               */
+  function glitchItem(item, hide, done) {
+    var flickers = hide ? [0.6, 1, 0.3, 1, 0] : [0, 0.4, 1, 0.7, 1];
+    var step = 0;
+    var interval = setInterval(function() {
+      item.style.opacity = flickers[step];
+      step++;
+      if (step >= flickers.length) {
+        clearInterval(interval);
+        if (hide) {
+          item.style.display  = 'none';
+          item.style.opacity  = '';
+        } else {
+          item.style.opacity = '1';
+        }
+        if (done) done();
+      }
+    }, 28); /* 28ms par frame = ~5 frames = 140ms total */
+  }
+
+  /* ── Fade compteur ─────────────────────────────────────────────────── */
+  function updateCount(n) {
+    count.style.transition = 'opacity 0.15s ease';
+    count.style.opacity    = '0';
+    setTimeout(function() {
+      count.textContent  = n + ' article' + (n !== 1 ? 's' : '');
+      count.style.opacity = '1';
+    }, 150);
+  }
+
+  /* ── Filtre principal ──────────────────────────────────────────────── */
+  function filter() {
+    if (filterPending) return;
+    filterPending = true;
+
+    var toShow = [], toHide = [];
+
+    items.forEach(function(item) {
+      var title = item.getAttribute('data-title') || '';
+      var desc  = item.getAttribute('data-desc')  || '';
+      var tags  = item.getAttribute('data-tags')  || '';
+
+      var matchTag    = activeTag === '*' || tags.split(',').some(function(t) { return t.trim() === activeTag; });
+      var matchSearch = searchVal === '' || title.indexOf(searchVal) !== -1 || desc.indexOf(searchVal) !== -1;
+
+      if (matchTag && matchSearch) {
+        toShow.push(item);
+      } else {
+        toHide.push(item);
+      }
+    });
+
+    /* Mettre à jour le prompt */
+    var parts = [];
+    if (activeTag !== '*') parts.push('--tag=' + activeTag);
+    if (searchVal !== '')   parts.push('"' + searchVal + '"');
+    cmdDisplay.textContent = parts.length ? parts.join(' ') : '--all';
+
+    /* Compter et animer le compteur */
+    updateCount(toShow.length);
+    empty.style.display = toShow.length === 0 ? 'flex' : 'none';
+
+    /* Cacher en glitch */
+    var hideCount = toHide.length;
+    if (hideCount === 0) {
+      /* Rien à cacher — juste afficher */
+      toShow.forEach(function(item) {
+        if (item.style.display === 'none') {
+          item.style.opacity = '0';
+          item.style.display = 'block';
+          glitchItem(item, false, null);
+        }
+      });
+      filterPending = false;
+      return;
+    }
+
+    var hidden = 0;
+    toHide.forEach(function(item) {
+      if (item.style.display === 'none') {
+        /* Déjà caché, pas besoin d'animer */
+        hidden++;
+        if (hidden === hideCount) afterHide();
+        return;
+      }
+      glitchItem(item, true, function() {
+        hidden++;
+        if (hidden === hideCount) afterHide();
+      });
+    });
+
+    function afterHide() {
+      toShow.forEach(function(item) {
+        if (item.style.display === 'none') {
+          item.style.opacity = '0';
+          item.style.display = 'block';
+          glitchItem(item, false, null);
+        }
+      });
+      filterPending = false;
+    }
+  }
+
+  /* ── Events ────────────────────────────────────────────────────────── */
+  search.addEventListener('input', function() {
+    searchVal = this.value.toLowerCase().trim();
+    filter();
+  });
+
+  tagBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      activeTag = this.getAttribute('data-tag');
+      tagBtns.forEach(function(b) {
+        b.classList.remove('wl-tag-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      this.classList.add('wl-tag-active');
+      this.setAttribute('aria-pressed', 'true');
+      filter();
+    });
+  });
+
+  if (reset) {
+    reset.addEventListener('click', function(e) {
+      e.preventDefault();
+      search.value = '';
+      searchVal    = '';
+      activeTag    = '*';
+      tagBtns.forEach(function(b) {
+        b.classList.remove('wl-tag-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      tagBtns[0].classList.add('wl-tag-active');
+      tagBtns[0].setAttribute('aria-pressed', 'true');
+      filter();
+    });
+  }
+
+  /* ── Animation d'entrée au chargement ─────────────────────────────── */
+  items.forEach(function(item, i) {
+    item.style.opacity = '0';
+    item.style.display = 'block';
+    setTimeout(function() {
+      glitchItem(item, false, null);
+    }, i * 60); /* stagger : chaque item apparaît 60ms après le précédent */
+  });
+
+})();
+</script>
+
 {{ end }}
