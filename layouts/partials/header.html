@@ -3,10 +3,6 @@
     <a class="header-logo" href="{{ .Site.BaseURL }}">adrius<span class="header-logo-blog">.blog</span></a>
   </div>
 
-  <a class="header-logo-ascii" href="{{ .Site.BaseURL }}" aria-label="Accueil">
-    <div class="ascii-logo" id="ascii-logo" aria-hidden="true"></div>
-  </a>
-
   <div class="header-right">
     <nav class="header-nav">
       {{ $currentPage := . }}
@@ -22,52 +18,3 @@
   </div>
 </div>
 
-<script>
-  (function() {
-    // ASCII logo généré depuis le PNG du logo Adrius (yeux + sourire)
-    var base = [
-      "           ........                           ",
-      "      ..................................      ",
-      "    .....''+++'''...............''+''......   ",
-      "   ...'+ooo#ooooo''ooooo+o+o''oooooooo+'....  ",
-      " ....'ooo#o#oooooooo#ooooooo+o#ooooooooo+'... ",
-      " ...'ooooo++''''++#o#ooooo+ooo+'''''+ooooo'...",
-      "...'oo###'''.'.'''o#####o#oo+'......''o#o#+'..",
-      "...'oo##o'''....'''o#ooooooo'........'+oo#o'..",
-      "...'ooooo'''....''+o#ooooo+o'........'+oooo'..",
-      "...'+o##o+''''''''oo###oooooo'......'+ooo#+'..",
-      "....'+##o#oo++++oo######o#oooo++++++oooooo'...",
-      ".....'+oo#o#oooooo+o#ooooooo'+#o#o#ooooo+'... ",
-      "  .....''oooooo+''''+oo+++''..'+o+o+++''....  ",
-      "    .......''''............................   ",
-      "     ....................................     ",
-      "       ...++'.....................'''..       ",
-      "        ..'o++'........ .   ....''o+'.        ",
-      "         ..'+ooo+''''.... ...'++oo+..         ",
-      "          ....''+oooo+++'+'o+oo+'..           ",
-      "            ........'+++'+''...               "
-    ];
-
-    var noiseChars = ['`','~','^','\'','+','o'];
-    var el = document.getElementById('ascii-logo');
-    if (!el) return;
-
-    el.textContent = base.join('\n');
-
-    setInterval(function() {
-      if (Math.random() > 0.4) return;
-      var glitched = base.map(function(line) {
-        var arr = line.split('');
-        for (var i = 0; i < arr.length; i++) {
-          if (arr[i] !== ' ' && Math.random() < 0.02) {
-            arr[i] = noiseChars[Math.floor(Math.random() * noiseChars.length)];
-          }
-        }
-        return arr.join('');
-      });
-      el.textContent = glitched.join('\n');
-      setTimeout(function() { el.textContent = base.join('\n'); }, 80);
-    }, 3000);
-  })();
-
-</script>

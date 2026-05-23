@@ -1,54 +1,17 @@
 {{ define "body_classes" }}page-blog-single{{ end }}
 
 {{ define "footer_js" }}
-<div id="read-progress" aria-hidden="true"></div>
+<div id="reading-progress" aria-hidden="true"></div>
 <button id="back-to-top" aria-label="Back to top">[^]</button>
 <script>
 (function() {
-  var bar = document.getElementById('read-progress');
+  var bar = document.getElementById('reading-progress');
   if (!bar) return;
-
-  var chars = ['.', "'", '+', 'o', '#'];
-  var charWidth = null;
-  var lastFill = -1;
-
-  function measureCharWidth() {
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
-    ctx.font = '13px "Space Mono", monospace';
-    charWidth = ctx.measureText('x').width;
-  }
-
-  function getChar(ratio) {
-    return chars[Math.min(Math.floor(ratio * chars.length), chars.length - 1)];
-  }
-
-  var rafPending = false;
-  function update() {
-    if (rafPending) return;
-    rafPending = true;
-    requestAnimationFrame(function() {
-      rafPending = false;
-      var scrollTop = window.scrollY || window.pageYOffset;
-      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      var progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
-      if (!charWidth) measureCharWidth();
-      var totalCols = Math.floor(window.innerWidth / charWidth);
-      var filled = Math.round(progress * totalCols);
-      if (filled === lastFill) return;
-      lastFill = filled;
-      var text = '';
-      for (var i = 0; i < totalCols; i++) {
-        text += i < filled ? getChar(i / Math.max(filled - 1, 1)) : ' ';
-      }
-      bar.textContent = text;
-      bar.style.opacity = progress > 0 ? '1' : '0';
-    });
-  }
-
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', function() { charWidth = null; lastFill = -1; update(); }, { passive: true });
-  update();
+  window.addEventListener('scroll', function() {
+    var doc = document.documentElement;
+    var scrolled = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+    bar.style.width = Math.round(Math.min(scrolled, 1) * 100) + '%';
+  }, { passive: true });
 })();
 
 // --- Back to top button ---

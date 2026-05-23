@@ -66,7 +66,7 @@
         {{ if and (eq $i 0) (lt $daysSince 14) }}<span class="badge-new">NEW</span>{{ end }}
         <span class="wl-item-date">{{ dateFormat "2006-01-02" $post.Date }}</span>
         <span class="wl-item-tags">
-          {{ range $post.Params.tags }}<span class="wl-item-tag">[{{ . }}]</span>{{ end }}
+          {{ range first 4 $post.Params.tags }}<span class="wl-item-tag">[{{ . }}]</span>{{ end }}
         </span>
       </div>
       <div class="wl-item-title">{{ $post.Title }}</div>
@@ -104,26 +104,31 @@
   var searchVal = '';
   var filterPending = false;
 
-  /* ── Glitch flash sur un item ──────────────────────────────────────────
-     hide=true  → flicker puis display:none
-     hide=false → display:block puis flicker d'entrée               */
+  /* ── Fade smooth sur un item ──────────────────────────────────────────
+     hide=true  → fade out puis display:none
+     hide=false → display:block puis fade in                        */
   function glitchItem(item, hide, done) {
-    var flickers = hide ? [0.6, 1, 0.3, 1, 0] : [0, 0.4, 1, 0.7, 1];
-    var step = 0;
-    var interval = setInterval(function() {
-      item.style.opacity = flickers[step];
-      step++;
-      if (step >= flickers.length) {
-        clearInterval(interval);
-        if (hide) {
-          item.style.display  = 'none';
-          item.style.opacity  = '';
-        } else {
-          item.style.opacity = '1';
-        }
+    if (hide) {
+      item.style.transition = 'opacity 0.18s ease';
+      item.style.opacity    = '0';
+      setTimeout(function() {
+        item.style.display    = 'none';
+        item.style.opacity    = '';
+        item.style.transition = '';
         if (done) done();
-      }
-    }, 28); /* 28ms par frame = ~5 frames = 140ms total */
+      }, 180);
+    } else {
+      item.style.opacity    = '0';
+      item.style.display    = 'block';
+      item.style.transition = '';
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          item.style.transition = 'opacity 0.22s ease';
+          item.style.opacity    = '1';
+          if (done) setTimeout(done, 220);
+        });
+      });
+    }
   }
 
   /* ── Fade compteur ─────────────────────────────────────────────────── */

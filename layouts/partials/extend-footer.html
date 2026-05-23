@@ -1,38 +1,4 @@
-<div class="crt-glow" id="crt-glow"></div>
-<div class="crt-screen" id="crt-screen" aria-hidden="true"></div>
 <div class="page-transition" id="page-transition"></div>
-
-<!-- SVG filters for CRT chromatic aberration — hidden, GPU-composited -->
-<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;pointer-events:none;">
-  <defs>
-    <!-- Aberration chromatique sur les bords : décale légèrement R et B -->
-    <filter id="crt-aberration" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
-      <feImage href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E" result="blank"/>
-      <!-- Canal rouge décalé vers le haut-gauche -->
-      <feOffset in="SourceGraphic" dx="-0.8" dy="-0.5" result="r-shifted"/>
-      <!-- Canal bleu décalé vers le bas-droite -->
-      <feOffset in="SourceGraphic" dx="0.8" dy="0.5" result="b-shifted"/>
-      <!-- Recombiner : extraire et re-mixer les canaux -->
-      <feColorMatrix in="r-shifted" type="matrix"
-        values="1 0 0 0 0
-                0 0 0 0 0
-                0 0 0 0 0
-                0 0 0 1 0" result="r-only"/>
-      <feColorMatrix in="SourceGraphic" type="matrix"
-        values="0 0 0 0 0
-                0 1 0 0 0
-                0 0 0 0 0
-                0 0 0 1 0" result="g-only"/>
-      <feColorMatrix in="b-shifted" type="matrix"
-        values="0 0 0 0 0
-                0 0 0 0 0
-                0 0 1 0 0
-                0 0 0 1 0" result="b-only"/>
-      <feBlend in="r-only" in2="g-only" mode="screen" result="rg"/>
-      <feBlend in="rg" in2="b-only" mode="screen"/>
-    </filter>
-  </defs>
-</svg>
 <script>
   /* ── Transitions smooth entre pages ── */
   (function() {
@@ -67,27 +33,6 @@
     });
   })();
 
-
-  /* CRT mouse glow — throttlé via rAF */
-  (function() {
-    var glow = document.getElementById('crt-glow');
-    if (!glow) return;
-    var rafPending = false;
-    var mx = 0, my = 0;
-    document.addEventListener('mousemove', function(e) {
-      mx = e.clientX; my = e.clientY;
-      if (!rafPending) {
-        rafPending = true;
-        requestAnimationFrame(function() {
-          glow.style.left = mx + 'px';
-          glow.style.top  = my + 'px';
-          glow.style.opacity = '1';
-          rafPending = false;
-        });
-      }
-    });
-    document.addEventListener('mouseleave', function() { glow.style.opacity = '0'; });
-  })();
 
   if (!window.__adrBlocksInit) {
     window.__adrBlocksInit = true;
@@ -128,13 +73,21 @@
 
       var copyBtn = document.createElement('button');
       copyBtn.className = 'code-copy';
-      copyBtn.textContent = 'copy';
+      copyBtn.setAttribute('aria-label', 'Copier le code');
+      copyBtn.innerHTML =
+        '<svg class="icon-copy" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+          '<rect x="9" y="9" width="13" height="13" rx="2"/>' +
+          '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>' +
+        '</svg>' +
+        '<svg class="icon-check" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+          '<polyline points="20 6 9 17 4 12"/>' +
+        '</svg>';
       copyBtn.addEventListener('click', function() {
         var pre = block.querySelector('pre');
         var text = pre ? pre.innerText : block.innerText;
         navigator.clipboard.writeText(text).then(function() {
-          copyBtn.textContent = 'ok';
-          setTimeout(function() { copyBtn.textContent = 'copy'; }, 1400);
+          copyBtn.classList.add('copied');
+          setTimeout(function() { copyBtn.classList.remove('copied'); }, 1600);
         });
       });
       header.appendChild(copyBtn);
