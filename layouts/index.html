@@ -87,7 +87,7 @@
         {{ if and (eq $i 0) (lt $daysSince 14) }}<span class="badge-new">NEW</span>{{ end }}
         <span class="pi-date">{{ dateFormat "2006-01-02" .Date }}</span>
         {{ range first 4 .Params.tags }}
-        <span class="tag {{ if or (eq . "CloudGoat") (eq . "write-up") }}tag-red{{ end }}">[{{ . }}]</span>
+        <span class="tag {{ if or (eq . "CloudGoat") (eq . "write-up") (eq . "flaws.cloud") }}tag-red{{ end }}">[{{ . }}]</span>
         {{ end }}
       </div>
       <div class="pi-title">{{ .Title }}</div>
