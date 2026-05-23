@@ -1,7 +1,7 @@
 ---
 title: "CloudGoat > IAM Enum Basics : quand Bob en sait trop"
 date: 2026-04-28
-description: "Enumération IAM AWS avec CloudGoat : récupérer des credentials et trouver 5 flags cachés dans les métadonnées des ressources."
+description: "Premier contact avec CloudGoat : énumérer un compte AWS à l'aveugle depuis des credentials leaked, et trouver 5 flags cachés dans les métadonnées."
 tags: ["aws", "iam", "cloudgoat", "enumeration", "write-up"]
 categories: ["write-up"]
 slug: "writeup-iam-enum-basics"

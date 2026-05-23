@@ -3,7 +3,7 @@ title: "CloudGoat > Beanstalk Secrets : quand les variables d'environnement devi
 date: 2026-05-07
 tags: ["aws", "iam", "elastic-beanstalk", "privilege-escalation", "secrets-manager", "cloudgoat", "write-up"]
 categories: ["write-up"]
-description: "Des credentials hardcodés dans Beanstalk, un CreateAccessKey trop large : deux mauvaises pratiques IAM qui suffisent à prendre le contrôle d'un compte AWS."
+description: "Beanstalk expose les env vars à quiconque peut décrire l'environnement. Avec un CreateAccessKey sans restriction, c'est suffisant pour devenir admin."
 draft: false
 ---
 

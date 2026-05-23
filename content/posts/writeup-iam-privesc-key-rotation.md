@@ -2,7 +2,7 @@
 title: "CloudGoat > IAM Privesc by Key Rotation : le manager tagger"
 date: 2026-05-10
 tags: [cloudgoat, aws, iam, privesc, key-rotation, mfa, secrets-manager, cloud-pentest, write-up]
-description: "Un manager qui peut tagger des users et créer des access keys. Une condition sur un tag. Une rotation de clé sur le mauvais compte. C'est tout ce qu'il faut pour atteindre Secrets Manager."
+description: "Une condition IAM sur un tag, un CreateAccessKey permissif, et une rotation sur le mauvais compte. C'est tout ce qu'il faut pour atteindre Secrets Manager."
 readtime: 8
 ---
 

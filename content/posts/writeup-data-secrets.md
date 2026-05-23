@@ -1,7 +1,7 @@
 ---
 title: "CloudGoat > Data Secrets : la chaîne de vulns sympa"
 date: 2026-05-05
-description: "EC2 User Data, IMDSv1, Lambda env vars : comment enchaîner trois mauvaises pratiques AWS pour compromettre un secret en cinq étapes."
+description: "IMDSv1 sans token, User Data en clair, secrets dans les env vars Lambda : trois services AWS, un secret à la fin. Walkthrough du scénario data_secrets."
 tags: ["aws", "ec2", "imds", "lambda", "secrets-manager", "cloudgoat", "write-up"]
 categories: ["write-up"]
 draft: false
