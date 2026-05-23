@@ -319,9 +319,9 @@ body {
   padding: 4px 0;
   align-items: baseline;
 }
-.hp-key { color: var(--adr-ink-muted); }
+.hp-key { color: var(--adr-ink-soft); }
 .hp-val { color: var(--adr-ink); }
-.hp-accent { color: #c0392b; }
+.hp-accent { color: #9b2335; }
 
 /* Section header */
 .section-header {
@@ -1711,7 +1711,7 @@ pre.chroma {
 
 .fcard-path {
   font-size: 10px;
-  color: var(--adr-ink-muted);
+  color: var(--adr-ink-soft);
   margin-left: 4px;
   flex: 1;
   overflow: hidden;
