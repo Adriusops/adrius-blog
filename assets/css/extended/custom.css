@@ -1093,6 +1093,12 @@ pre.chroma {
    IMAGE ZOOM — GLightbox
    ============================================ */
 
+/* Empêche le décalage de layout quand GLightbox retire la scrollbar */
+html {
+  scrollbar-gutter: stable;
+}
+
+
 .content img:not(.no-zoom) {
   cursor: zoom-in;
   display: block;

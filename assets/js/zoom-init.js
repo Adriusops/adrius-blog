@@ -16,7 +16,7 @@
     a.appendChild(img);
   });
 
-  GLightbox({
+  var lightbox = GLightbox({
     selector: '.glightbox',
     touchNavigation: true,
     loop: false,
@@ -26,4 +26,5 @@
     closeEffect: 'fade',
     slideEffect: 'slide',
   });
+
 })();
