@@ -116,7 +116,8 @@
 
   {{ $scripts := resources.Get "js/scripts.js" }}
   {{ $mediumZoom := resources.Get "js/medium-zoom.min.js" }}
-  {{ $js := slice $mediumZoom $scripts | resources.Concat "js/bundle.js" }}
+  {{ $zoomInit := resources.Get "js/zoom-init.js" }}
+  {{ $js := slice $mediumZoom $scripts $zoomInit | resources.Concat "js/bundle.js" }}
   {{- if hugo.IsProduction | or (eq site.Params.env "production") }}
     <script type="text/javascript" src="{{ ($js | minify | fingerprint).RelPermalink }}"></script>
   {{ else }}
