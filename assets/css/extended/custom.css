@@ -1105,18 +1105,51 @@ pre.chroma {
 }
 
 .hamburger-trigger .hamburger {
-  background: none;
-  border: 1px solid var(--adr-border);
+  background: transparent;
+  border: none;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
   color: var(--adr-ink) !important;
-  font-family: 'Space Mono', monospace;
-  font-size: 12px;
-  padding: 3px 8px;
+  font-size: 0;
+  width: 20px;
+  height: 14px;
   cursor: pointer;
+  position: relative;
+  display: block;
+  padding: 0;
+  transition: all 0.25s ease-in-out;
+}
+
+.hamburger-trigger .hamburger::before,
+.hamburger-trigger .hamburger::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+  transition: transform 0.25s ease-in-out;
 }
 
 .hamburger-trigger .hamburger:hover {
   color: #c0392b !important;
-  border-color: #c0392b;
+  opacity: 0.7;
+}
+
+.hamburger-trigger .hamburger.is-active {
+  border-color: transparent;
+  color: var(--adr-ink) !important;
+}
+
+.hamburger-trigger .hamburger.is-active::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.hamburger-trigger .hamburger.is-active::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /* Menu mobile overlay — fond et texte corrects */
