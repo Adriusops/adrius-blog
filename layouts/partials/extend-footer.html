@@ -25,6 +25,7 @@
       if (!a) return;
       var href = a.getAttribute('href');
       if (!href || href.startsWith('#') || href.startsWith('mailto:') || a.target === '_blank') return;
+      if (a.classList.contains('glightbox')) return;
       try { if (new URL(href, location.href).origin !== location.origin) return; } catch(err) { return; }
 
       e.preventDefault();

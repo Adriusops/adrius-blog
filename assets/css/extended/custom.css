@@ -1090,10 +1090,9 @@ pre.chroma {
 }
 
 /* ============================================
-   IMAGE ZOOM (medium-zoom)
+   IMAGE ZOOM — GLightbox
    ============================================ */
 
-/* Images zoomables dans le contenu article */
 .content img:not(.no-zoom) {
   cursor: zoom-in;
   display: block;
@@ -1103,24 +1102,6 @@ pre.chroma {
   border: 1px solid var(--adr-border);
 }
 
-/* Overlay medium-zoom — adapté au design system */
-.medium-zoom-overlay {
-  z-index: 9000;
-}
-
-/* Image clonée pendant le zoom */
-.medium-zoom-image--opened {
-  z-index: 9001;
-  border: none !important;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-}
-
-/* Dark mode */
-[data-theme="dark"] .medium-zoom-image--opened {
-  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-}
-
-/* Mobile — tap-target plus généreux */
 @media (max-width: 767px) {
   .content img:not(.no-zoom) {
     margin: 14px auto;

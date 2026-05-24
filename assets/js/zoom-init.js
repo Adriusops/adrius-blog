@@ -1,15 +1,29 @@
-// Image zoom — articles uniquement, exclut GIFs et images de UI
-if (typeof mediumZoom !== 'undefined') {
-  var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  var zoom = mediumZoom('.content img:not(.no-zoom)', {
-    margin: 16,
-    background: isDark ? 'rgba(15,15,15,0.96)' : 'rgba(245,240,232,0.96)',
-    scrollOffset: 80,
+(function () {
+  if (typeof GLightbox === 'undefined') return;
+
+  // Wrap toutes les images de contenu article dans un lien pour GLightbox
+  document.querySelectorAll('.content img:not(.no-zoom)').forEach(function (img) {
+    if (img.closest('a')) return; // déjà dans un lien
+    var src = img.currentSrc || img.src;
+    if (!src) return;
+
+    var a = document.createElement('a');
+    a.href = src;
+    a.setAttribute('data-gallery', 'article');
+    a.setAttribute('data-alt', img.alt || '');
+    a.setAttribute('class', 'glightbox');
+    img.parentNode.insertBefore(a, img);
+    a.appendChild(img);
   });
 
-  var observer = new MutationObserver(function() {
-    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    zoom.update({ background: dark ? 'rgba(15,15,15,0.96)' : 'rgba(245,240,232,0.96)' });
+  GLightbox({
+    selector: '.glightbox',
+    touchNavigation: true,
+    loop: false,
+    zoomable: true,
+    draggable: true,
+    openEffect: 'fade',
+    closeEffect: 'fade',
+    slideEffect: 'slide',
   });
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-}
+})();
