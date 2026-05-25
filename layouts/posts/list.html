@@ -66,7 +66,7 @@
         {{ if and (eq $i 0) (lt $daysSince 14) }}<span class="badge-new">NEW</span>{{ end }}
         <span class="wl-item-date">{{ dateFormat "2006-01-02" $post.Date }}</span>
         <span class="wl-item-tags">
-          {{ range first 4 $post.Params.tags }}<span class="wl-item-tag">[{{ . }}]</span>{{ end }}
+          {{ range first 4 $post.Params.tags }}<span class="wl-item-tag">{{ . }}</span>{{ end }}
         </span>
       </div>
       <div class="wl-item-title">{{ $post.Title }}</div>

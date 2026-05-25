@@ -1,6 +1,11 @@
 <div class='header'>
   <div class="menu-main">
-    <a class="header-logo" href="{{ .Site.BaseURL }}">adrius<span class="header-logo-blog">.blog</span></a>
+    <a class="header-logo" href="{{ .Site.BaseURL }}" aria-label="adrius — accueil">
+      <picture>
+        <source srcset="/avatar.webp" type="image/webp">
+        <img src="/avatar-128.png" alt="adrius" class="header-avatar">
+      </picture>
+    </a>
   </div>
 
   <div class="header-right">
@@ -8,7 +13,7 @@
       {{ $currentPage := . }}
       {{ range .Site.Menus.main }}
       {{ $active := or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}
-      <a href="{{.URL}}" class="header-nav-link {{ if $active }}active{{ end }}">{{ .Name }}</a>
+      <a href="{{.URL}}" class="header-nav-link {{ if $active }}active{{ end }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name | lower }}</a>
       {{end}}
     </nav>
   </div>
@@ -17,4 +22,3 @@
     <button class="hamburger">Menu</button>
   </div>
 </div>
-

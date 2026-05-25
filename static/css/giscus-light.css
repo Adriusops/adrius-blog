@@ -1,24 +1,24 @@
-/* Giscus theme — adrius.blog light mode */
+/* Giscus theme — adrius.blog light mode — monochrome */
 :root {
-  --color-canvas-default:       #f5f0e8;
-  --color-canvas-subtle:        #ece8df;
-  --color-canvas-inset:         #e8e3da;
-  --color-border-default:       #ccc5b5;
-  --color-border-muted:         #ddd8cc;
-  --color-fg-default:           #111111;
-  --color-fg-muted:             #666666;
-  --color-fg-subtle:            #888888;
-  --color-btn-bg:               #ece8df;
-  --color-btn-border:           #ccc5b5;
-  --color-btn-text:             #111111;
-  --color-btn-primary-bg:       #c0392b;
-  --color-btn-primary-border:   #c0392b;
+  --color-canvas-default:       #FAFAF8;
+  --color-canvas-subtle:        #F2F2F0;
+  --color-canvas-inset:         #EAEAE8;
+  --color-border-default:       #E0E0DC;
+  --color-border-muted:         #E8E8E4;
+  --color-fg-default:           #0C0C0C;
+  --color-fg-muted:             #6B6B6B;
+  --color-fg-subtle:            #9B9B9B;
+  --color-btn-bg:               #F2F2F0;
+  --color-btn-border:           #E0E0DC;
+  --color-btn-text:             #0C0C0C;
+  --color-btn-primary-bg:       #2DA44E;
+  --color-btn-primary-border:   #2DA44E;
   --color-btn-primary-text:     #ffffff;
-  --color-btn-primary-hover-bg: #a93226;
-  --color-accent-fg:            #c0392b;
-  --color-accent-emphasis:      #c0392b;
-  --color-success-fg:           #2e7d32;
-  --color-danger-fg:            #c0392b;
-  --color-social-reaction-bg-hover:   #ece8df;
-  --color-social-reaction-bg-reacted: #f5e6e4;
+  --color-btn-primary-hover-bg: #218838;
+  --color-accent-fg:            #0C0C0C;
+  --color-accent-emphasis:      #0C0C0C;
+  --color-success-fg:           #2DA44E;
+  --color-danger-fg:            #E0392D;
+  --color-social-reaction-bg-hover:   #F2F2F0;
+  --color-social-reaction-bg-reacted: #E8F0E8;
 }

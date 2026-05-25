@@ -13,25 +13,24 @@
   </div>
 
   <div class="featured-grid">
-    {{ range first 3 $sorted }}
-    {{ $daysSince := div (sub now.Unix .Date.Unix) 86400 }}
-    <a class="fcard" href="{{ .RelPermalink }}">
+    {{ range $i, $post := first 3 $sorted }}
+    <a class="fcard" href="{{ $post.RelPermalink }}">
       <div class="fcard-topbar">
         <span class="fcard-dot fcard-dot-red"></span>
         <span class="fcard-dot fcard-dot-grey"></span>
         <span class="fcard-dot fcard-dot-grey"></span>
-        <span class="fcard-path">~/write-ups/{{ .File.ContentBaseName }}</span>
-        {{ if lt $daysSince 14 }}<span class="fcard-badge">NEW</span>{{ end }}
+        <span class="fcard-path">~/write-ups/{{ $post.File.ContentBaseName }}</span>
+        {{ if eq $i 0 }}<span class="fcard-badge">NEW</span>{{ end }}
       </div>
       <div class="fcard-body">
         <div class="fcard-prompt">
           <span class="fcard-prompt-char">❯</span>
-          <span class="fcard-date">{{ dateFormat "2006-01-02" .Date }}</span>
+          <span class="fcard-date">{{ dateFormat "2006-01-02" $post.Date }}</span>
         </div>
-        <div class="fcard-title">{{ .Title }}</div>
-        {{ with .Params.description }}<p class="fcard-desc">{{ . }}</p>{{ end }}
+        <div class="fcard-title">{{ $post.Title }}</div>
+        {{ with $post.Params.description }}<p class="fcard-desc">{{ . }}</p>{{ end }}
         <div class="fcard-footer">
-          <div class="fcard-tags">{{ range first 3 .Params.tags }}<span class="fcard-tag">[{{ . }}]</span>{{ end }}</div>
+          <div class="fcard-tags">{{ range first 3 $post.Params.tags }}<span class="fcard-tag">[{{ . }}]</span>{{ end }}</div>
           <span class="fcard-read">./lire →</span>
         </div>
       </div>
