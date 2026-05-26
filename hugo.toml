@@ -27,7 +27,7 @@ disableKinds = ["taxonomy", "term"]
 [menu]
   [[menu.main]]
     identifier = "posts"
-    name = "write-ups"
+    name = "articles"
     url = "/posts/"
     weight = 10
 

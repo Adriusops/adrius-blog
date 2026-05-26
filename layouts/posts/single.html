@@ -28,9 +28,9 @@
 
     <div class="article-header">
       <div class="art-meta">
-        <span class="art-date">{{ dateFormat "2006-01-02" .Date }}</span>
+        <span class="art-date">{{ dateFormat "02.01.2006" .Date }}</span>
         {{ range .Params.tags }}
-        <span class="tag {{ if or (eq . "CloudGoat") (eq . "write-up") (eq . "flaws.cloud") }}tag-red{{ end }}">{{ . }}</span>
+        <span class="tag">{{ . }}</span>
         {{ end }}
         <span class="art-time">{{ math.Round (div (countwords .Content) 200.0) }} min read</span>
       </div>
@@ -85,7 +85,7 @@
         data-reactions-enabled="1"
         data-emit-metadata="0"
         data-input-position="top"
-        data-theme="https://adrius.blog/css/giscus-light.css"
+        data-theme="{{ "css/giscus-light.css" | absURL }}"
         data-lang="fr"
         data-loading="lazy"
         crossorigin="anonymous"
@@ -93,10 +93,11 @@
       </script>
       <script>
       (function() {
+        var baseURL = {{ .Site.BaseURL | jsonify }};
         function setGiscusTheme(dark) {
           var theme = dark
-            ? 'https://adrius.blog/css/giscus-dark.css'
-            : 'https://adrius.blog/css/giscus-light.css';
+            ? baseURL + 'css/giscus-dark.css'
+            : baseURL + 'css/giscus-light.css';
           var iframe = document.querySelector('iframe.giscus-frame');
           if (iframe) {
             iframe.contentWindow.postMessage(

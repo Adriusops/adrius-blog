@@ -30,28 +30,36 @@
   --ink:                 #1A1510;
 
   /* ── Typographie ──────────────────────────────── */
-  --font-sans:   'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono:   'Commit Mono', 'JetBrains Mono', 'Courier New', monospace;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'Commit Mono', 'JetBrains Mono', 'Courier New', monospace;
 
-  --text-xs:     0.6875rem;
-  --text-sm:     0.8125rem;
-  --text-base:   1.0625rem;
-  --text-md:     1.1875rem;
-  --text-lg:     1.375rem;
-  --text-xl:     1.75rem;
-  --text-2xl:    2.25rem;
-  --text-3xl:    3rem;
+  /* Échelle Apple HIG — base 17px */
+  --text-xs:     0.6875rem;  /* 11px  — captions, tags */
+  --text-sm:     0.8125rem;  /* 13px  — footnotes, dates */
+  --text-base:   1.0625rem;  /* 17px  — body */
+  --text-md:     1.25rem;    /* 20px  — title 3 */
+  --text-lg:     1.375rem;   /* 22px  — title 2 */
+  --text-xl:     1.75rem;    /* 28px  — title 1 */
+  --text-2xl:    2.125rem;   /* 34px  — large title */
+  --text-3xl:    3rem;       /* 48px  — display */
 
+  /* Interlignage Apple */
   --leading-tight:   1.2;
-  --leading-snug:    1.4;
+  --leading-snug:    1.294; /* 22/17 — body Apple exact */
   --leading-normal:  1.6;
   --leading-relaxed: 1.75;
   --leading-loose:   1.9;
 
-  --tracking-tight:  -0.02em;
-  --tracking-normal:  0;
-  --tracking-wide:    0.04em;
-  --tracking-wider:   0.08em;
+  /* Interlettrage Apple — négatif sur les grands, légèrement positif sous 13px */
+  --tracking-display: -0.031em; /* h1 34px → -1.05px */
+  --tracking-title1:  -0.029em; /* h2 28px → -0.80px */
+  --tracking-title2:  -0.032em; /* h3 22px → -0.70px */
+  --tracking-tight:   -0.02em;
+  --tracking-normal:   0;
+  --tracking-caption:  0.012em; /* sous 13px */
+  --tracking-wide:     0.04em;
+  --tracking-wider:    0.08em;
 
   /* ── Espacements — échelle 4px ────────────────── */
   --sp-1:  0.25rem;

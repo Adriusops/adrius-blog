@@ -4,8 +4,8 @@ date: 2026-04-18
 description: "Alternant en cloud security, je documente mon parcours en public : labs CloudGoat, AWS IAM, pentest cloud."
 ---
 
-Alternant en cloud security, je documente mon parcours
-en public : labs CloudGoat, AWS IAM, pentest cloud.
+Alternant en cybersécurité, je documente mon parcours
+en public : labs, AWS, IAM, pentest cloud.
 
 Tout ce que j'apprends finit sur ce blog avant que je l'oublie.
 

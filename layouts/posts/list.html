@@ -19,12 +19,12 @@
   <!-- En-tête prompt -->
   <div class="wl-prompt">
     <span class="p-char">❯</span>
-    <span class="p-path">~/adrius/write-ups $</span>
+    <span class="p-path">~/adrius/articles $</span>
     <span class="p-cmd">grep <span class="wl-cmd-arg" id="wl-cmd-display">--all</span></span>
   </div>
 
   <div class="wl-header">
-    <h1 class="wl-title">write-ups</h1>
+    <h1 class="wl-title">articles</h1>
     <span class="wl-count" id="wl-count">{{ len $sorted }} articles</span>
   </div>
 
@@ -63,18 +63,17 @@
       data-tags="{{ delimit $post.Params.tags "," }}"
     >
       <div class="wl-item-meta">
-        {{ if and (eq $i 0) (lt $daysSince 14) }}<span class="badge-new">NEW</span>{{ end }}
-        <span class="wl-item-date">{{ dateFormat "2006-01-02" $post.Date }}</span>
+        <span class="wl-item-date">{{ dateFormat "02.01.2006" $post.Date }}</span>
         <span class="wl-item-tags">
-          {{ range first 4 $post.Params.tags }}<span class="wl-item-tag">{{ . }}</span>{{ end }}
+          {{ range first 3 $post.Params.tags }}<span class="wl-item-tag">{{ . }}</span>{{ end }}
         </span>
       </div>
-      <div class="wl-item-title">{{ $post.Title }}</div>
+      <div class="wl-item-title{{ if eq $i 0 }} wl-item-title-new{{ end }}">{{ $post.Title }}</div>
       {{ with $post.Params.description }}
       <p class="wl-item-desc">{{ . }}</p>
       {{ end }}
       <div class="wl-item-footer">
-        <span class="wl-item-read">./lire →</span>
+        <span class="wl-item-read">lire →</span>
         <span class="wl-item-sep">|</span>
         <span class="wl-item-time">{{ math.Round (div (countwords $post.Content) 200.0) }} min read</span>
       </div>
@@ -261,6 +260,9 @@
       filter();
     });
   }
+
+  /* ── Focus automatique sur la searchbar ───────────────────────────── */
+  search.focus();
 
   /* ── Animation d'entrée au chargement ─────────────────────────────── */
   items.forEach(function(item, i) {

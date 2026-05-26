@@ -6,120 +6,29 @@
   {{ $posts := where .Site.RegularPages "Type" "posts" }}
   {{ $sorted := ($posts.ByParam "date").Reverse }}
 
-  <!-- Featured cards -->
-  <div class="home-prompt-line">
-    <span class="p-char">❯</span>
-    <span class="p-path">~/adrius $</span>
-    <span class="p-cmd">cat write-ups/<span class="p-cmd-arg">--featured</span></span>
-  </div>
+  <p class="home-tagline">Le cloud security, appris en public.</p>
 
-  <div class="featured-grid">
-    {{ range $i, $post := first 3 $sorted }}
-    <a class="fcard" href="{{ $post.RelPermalink }}">
-      <div class="fcard-topbar">
-        <span class="fcard-dot fcard-dot-red"></span>
-        <span class="fcard-dot fcard-dot-grey"></span>
-        <span class="fcard-dot fcard-dot-grey"></span>
-        <span class="fcard-path">~/write-ups/{{ $post.File.ContentBaseName }}</span>
-        {{ if eq $i 0 }}<span class="fcard-badge">NEW</span>{{ end }}
-      </div>
-      <div class="fcard-body">
-        <div class="fcard-prompt">
-          <span class="fcard-prompt-char">❯</span>
-          <span class="fcard-date">{{ dateFormat "2006-01-02" $post.Date }}</span>
-        </div>
-        <div class="fcard-title">{{ $post.Title }}</div>
-        {{ with $post.Params.description }}<p class="fcard-desc">{{ . }}</p>{{ end }}
-        <div class="fcard-footer">
-          <div class="fcard-tags">{{ range first 3 $post.Params.tags }}<span class="fcard-tag">[{{ . }}]</span>{{ end }}</div>
-          <span class="fcard-read">./lire →</span>
-        </div>
-      </div>
-    </a>
-    {{ end }}
-  </div>
-
-  <!-- Hero -->
-  <div class="home-prompt-line" style="margin-top: 48px;">
-    <span class="p-char">❯</span>
-    <span class="p-path">~/adrius $</span>
-    <span class="p-cmd">cat readme.md</span>
-  </div>
-
-  <!-- SVG liquid-glass filter — distorsion bords uniquement -->
-  <svg style="display:none" aria-hidden="true">
-    <defs>
-      <!-- Distorsion liquide douce sur les bords de la pill -->
-      <filter id="liquid-glass-filter" x="-15%" y="-35%" width="130%" height="170%" color-interpolation-filters="sRGB">
-        <feTurbulence type="fractalNoise" baseFrequency="0.028 0.022" numOctaves="4" seed="12" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
-      </filter>
-      <!-- Aberration chromatique légère — split RGB sur les bords -->
-      <filter id="liquid-glass-aberration" x="-5%" y="-10%" width="110%" height="120%">
-        <feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r"/>
-        <feOffset in="r" dx="0.4" dy="0" result="r-shift"/>
-        <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g"/>
-        <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b"/>
-        <feOffset in="b" dx="-0.4" dy="0" result="b-shift"/>
-        <feBlend in="r-shift" in2="g" mode="screen" result="rg"/>
-        <feBlend in="rg" in2="b-shift" mode="screen"/>
-      </filter>
-    </defs>
-  </svg>
-
-  <div class="hero-title-wrap">
-    <h1 class="hero-title">
-      en alternance en sécu.<br>
-      sur mon temps libre,<br>
-      <span class="hero-glass-text">je fais du cloud.</span>
-    </h1>
-    <div class="hero-glass-bubble" aria-hidden="true">
-      <div class="hero-glass-inner"></div>
-    </div>
-  </div>
-
-  <p class="home-pitch">
-    journal de bord d'un mec qui apprend la sécu cloud. write-ups CloudGoat
-    détaillés, labs IAM/VPC montés from scratch, et les loupés que personne ne
-    montre. zéro hype, juste le chemin réel.
-  </p>
-
-  <!-- Profile block -->
-  <div class="home-profile">
-    <div class="hp-row"><span class="hp-key">role</span><span class="hp-val hp-accent">security_apprentice</span></div>
-    <div class="hp-row"><span class="hp-key">alternance</span><span class="hp-val">sécurité · le vrai job</span></div>
-    <div class="hp-row"><span class="hp-key">passion</span><span class="hp-val">AWS · IAM · VPC · cloud security</span></div>
-    <div class="hp-row"><span class="hp-key">labs</span><span class="hp-val">CloudGoat · HackTricks · flAWS</span></div>
-    <div class="hp-row"><span class="hp-key">location</span><span class="hp-val">marseille, fr</span></div>
-  </div>
-
-  <!-- Full list -->
-  <div class="home-prompt-line" style="margin-top: 48px;">
+  <!-- 3 articles récents -->
+  <div class="home-prompt-line" style="margin-top: var(--sp-16);">
     <span class="p-char">❯</span>
     <span class="p-path">~/adrius $</span>
     <span class="p-cmd">ls ./write-ups/</span>
   </div>
 
-  <div class="section-header">
-    <span><span class="accent">{{ len $sorted }}</span> articles · tri: récent → ancien</span>
-    <a class="s-rss" href="/index.xml">rss.xml</a>
-  </div>
-
   <div class="post-list">
-    {{ range $i, $post := $sorted }}
+    {{ range $i, $post := first 3 $sorted }}
     {{ $daysSince := div (sub now.Unix $post.Date.Unix) 86400 }}
     <a class="post-item" href="{{ $post.RelPermalink }}">
       <div class="pi-header">
-        {{ if and (eq $i 0) (lt $daysSince 14) }}<span class="badge-new">NEW</span>{{ end }}
-        <span class="pi-date">{{ dateFormat "2006-01-02" .Date }}</span>
-        {{ range first 4 .Params.tags }}
-        <span class="tag {{ if or (eq . "CloudGoat") (eq . "write-up") (eq . "flaws.cloud") }}tag-red{{ end }}">[{{ . }}]</span>
+        <span class="pi-date">{{ dateFormat "02.01.2006" .Date }}</span>
+        {{ range first 3 .Params.tags }}
+        <span class="tag">{{ . }}</span>
         {{ end }}
       </div>
-      <div class="pi-title">{{ .Title }}</div>
+      <div class="pi-title{{ if eq $i 0 }} pi-title-new{{ end }}">{{ .Title }}</div>
       {{ with .Params.description }}<p class="pi-excerpt">{{ . }}</p>{{ end }}
       <div class="pi-footer">
-        <span class="pi-read">./lire →</span>
+        <span class="pi-read">lire →</span>
         <span class="pi-sep">|</span>
         <span class="pi-time">{{ math.Round (div (countwords .Content) 200.0) }} min read</span>
       </div>
@@ -127,72 +36,9 @@
     {{ end }}
   </div>
 
+  <a href="/posts/" class="see-all">→ <span class="see-all-text">voir tous les articles</span></a>
+
 {{ end }}
 
 {{ define "footer_js" }}
-<script>
-(function() {
-  var bubble = null;
-  var wrap   = null;
-  var baseTop = 0;      /* distance top wrap → top bulle au repos */
-  var wrapDocTop = 0;   /* position absolue du wrap dans le document */
-  var scrollYAtInit = 0; /* scrollY au moment du positionnement initial */
-  var lineH = 0;        /* hauteur d'une ligne de texte */
-
-  function positionBubble() {
-    var textEl = document.querySelector('.hero-glass-text');
-    bubble = document.querySelector('.hero-glass-bubble');
-    wrap   = document.querySelector('.hero-title-wrap');
-    if (!textEl || !bubble || !wrap) return;
-
-    bubble.style.transform = '';
-
-    var range = document.createRange();
-    range.selectNodeContents(textEl);
-    var rects = range.getClientRects();
-    var tr = rects[rects.length - 1];
-    var wr = wrap.getBoundingClientRect();
-
-    var pH = 14, pT = 8, pB = 6;
-
-    bubble.style.left   = (tr.left - wr.left - pH) + 'px';
-    bubble.style.top    = (tr.top  - wr.top  - pT) + 'px';
-    bubble.style.width  = (tr.width  + pH * 2) + 'px';
-    bubble.style.height = (tr.height + pT + pB) + 'px';
-
-    baseTop       = tr.top - wr.top - pT;
-    wrapDocTop    = wr.top + window.scrollY;
-    scrollYAtInit = window.scrollY;
-    lineH         = tr.height;
-
-    /* Réapplique le parallax courant */
-    onScroll();
-  }
-
-  function onScroll() {
-    if (!bubble) return;
-    /* Parallax démarre quand le bas du wrap quitte le viewport */
-    var wrapBottom = wrapDocTop + wrap.offsetHeight;
-    var triggerY   = wrapBottom - window.innerHeight;
-    /* Sur mobile le hero est sous le fold au chargement : on utilise scrollYAtInit */
-    triggerY = Math.max(triggerY, scrollYAtInit);
-    var scrollPast = window.scrollY - triggerY;
-    var raw    = Math.max(0, scrollPast) * -0.35;
-    /* Limite : remonte au max d'une ligne de texte au-dessus de la position de repos */
-    var isMobile = window.innerWidth < 640;
-    var maxUp  = isMobile ? -(baseTop + 24) : -lineH * 1.6 - 6;
-    var offset = Math.max(raw, maxUp);
-    bubble.style.transform = 'translateY(' + offset + 'px)';
-  }
-
-  document.fonts.ready.then(function() {
-    requestAnimationFrame(function() {
-      requestAnimationFrame(positionBubble);
-    });
-  });
-
-  window.addEventListener('resize', positionBubble);
-  window.addEventListener('scroll', onScroll, { passive: true });
-})();
-</script>
 {{ end }}
