@@ -18,15 +18,14 @@
 {{ define "main" }}
   <div class="blog">
 
-    <div class="breadcrumb">
-      <a href="/">~</a>
-      <span class="sep">/</span>
-      <a href="/posts/">write-ups</a>
-      <span class="sep">/</span>
-      <span>{{ .File.ContentBaseName }}</span>
-    </div>
-
     <div class="article-header">
+      <div class="breadcrumb">
+        <a href="/">~</a>
+        <span class="sep">/</span>
+        <a href="/posts/">articles</a>
+        <span class="sep">/</span>
+        <span>{{ .File.ContentBaseName }}</span>
+      </div>
       <div class="art-meta">
         <span class="art-date">{{ dateFormat "02.01.2006" .Date }}</span>
         {{ range .Params.tags }}
@@ -85,7 +84,7 @@
         data-reactions-enabled="1"
         data-emit-metadata="0"
         data-input-position="top"
-        data-theme="{{ "css/giscus-light.css" | absURL }}"
+        data-theme="{{ .Site.BaseURL }}css/giscus-light.css"
         data-lang="fr"
         data-loading="lazy"
         crossorigin="anonymous"
@@ -93,11 +92,10 @@
       </script>
       <script>
       (function() {
-        var baseURL = {{ .Site.BaseURL | jsonify }};
         function setGiscusTheme(dark) {
           var theme = dark
-            ? baseURL + 'css/giscus-dark.css'
-            : baseURL + 'css/giscus-light.css';
+            ? '{{ .Site.BaseURL }}css/giscus-dark.css'
+            : '{{ .Site.BaseURL }}css/giscus-light.css';
           var iframe = document.querySelector('iframe.giscus-frame');
           if (iframe) {
             iframe.contentWindow.postMessage(

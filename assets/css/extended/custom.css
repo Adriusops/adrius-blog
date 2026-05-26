@@ -605,7 +605,7 @@ a, button {
 }
 
 .breadcrumb {
-  margin: var(--sp-6) 0 0;
+  margin: var(--sp-6) 0 var(--sp-4);
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   color: var(--ink-3);
@@ -620,9 +620,7 @@ a, button {
 .breadcrumb .sep { color: var(--border-mid); }
 
 .page-blog-single .breadcrumb {
-  max-width: var(--width-reading);
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 0;
 }
 
 .article-header {
