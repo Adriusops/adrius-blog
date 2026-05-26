@@ -2,6 +2,7 @@
 
 {{ define "main" }}
 
+
   {{ $posts := where .Site.RegularPages "Type" "posts" }}
   {{ $sorted := ($posts.ByParam "date").Reverse }}
 
@@ -45,11 +46,14 @@
     <span class="p-cmd">cat readme.md</span>
   </div>
 
-  <h1 class="hero-title">
-    en alternance en sécu.<br>
-    sur mon temps libre,<br>
-    <span class="accent">je fais du cloud.</span>
-  </h1>
+  <div class="hero-title-wrap">
+    <h1 class="hero-title">
+      en alternance en sécu.<br>
+      sur mon temps libre,<br>
+      <span class="hero-glass-text">je fais du cloud.</span>
+    </h1>
+    <div class="hero-glass-bubble" aria-hidden="true"></div>
+  </div>
 
   <p class="home-pitch">
     journal de bord d'un mec qui apprend la sécu cloud. write-ups CloudGoat
@@ -100,4 +104,72 @@
     {{ end }}
   </div>
 
+{{ end }}
+
+{{ define "footer_js" }}
+<script>
+(function() {
+  var bubble = null;
+  var wrap   = null;
+  var baseTop = 0;      /* distance top wrap → top bulle au repos */
+  var wrapDocTop = 0;   /* position absolue du wrap dans le document */
+  var scrollYAtInit = 0; /* scrollY au moment du positionnement initial */
+  var lineH = 0;        /* hauteur d'une ligne de texte */
+
+  function positionBubble() {
+    var textEl = document.querySelector('.hero-glass-text');
+    bubble = document.querySelector('.hero-glass-bubble');
+    wrap   = document.querySelector('.hero-title-wrap');
+    if (!textEl || !bubble || !wrap) return;
+
+    bubble.style.transform = '';
+
+    var range = document.createRange();
+    range.selectNodeContents(textEl);
+    var rects = range.getClientRects();
+    var tr = rects[rects.length - 1];
+    var wr = wrap.getBoundingClientRect();
+
+    var pH = 14, pT = 8, pB = 6;
+
+    bubble.style.left   = (tr.left - wr.left - pH) + 'px';
+    bubble.style.top    = (tr.top  - wr.top  - pT) + 'px';
+    bubble.style.width  = (tr.width  + pH * 2) + 'px';
+    bubble.style.height = (tr.height + pT + pB) + 'px';
+
+    baseTop       = tr.top - wr.top - pT;
+    wrapDocTop    = wr.top + window.scrollY;
+    scrollYAtInit = window.scrollY;
+    lineH         = tr.height;
+
+    /* Réapplique le parallax courant */
+    onScroll();
+  }
+
+  function onScroll() {
+    if (!bubble) return;
+    /* Parallax démarre quand le bas du wrap quitte le viewport */
+    var wrapBottom = wrapDocTop + wrap.offsetHeight;
+    var triggerY   = wrapBottom - window.innerHeight;
+    /* Sur mobile le hero est sous le fold au chargement : on utilise scrollYAtInit */
+    triggerY = Math.max(triggerY, scrollYAtInit);
+    var scrollPast = window.scrollY - triggerY;
+    var raw    = Math.max(0, scrollPast) * -0.35;
+    /* Limite : remonte au max d'une ligne de texte au-dessus de la position de repos */
+    var isMobile = window.innerWidth < 640;
+    var maxUp  = isMobile ? -(baseTop + 24) : -lineH * 1.6 - 2;
+    var offset = Math.max(raw, maxUp);
+    bubble.style.transform = 'translateY(' + offset + 'px)';
+  }
+
+  document.fonts.ready.then(function() {
+    requestAnimationFrame(function() {
+      requestAnimationFrame(positionBubble);
+    });
+  });
+
+  window.addEventListener('resize', positionBubble);
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+</script>
 {{ end }}

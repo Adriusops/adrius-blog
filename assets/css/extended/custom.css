@@ -322,6 +322,80 @@ a, button {
 .hero-title .accent,
 .accent { color: var(--accent); }
 
+/* ── Hero glassmorphism ─────────────────────────────────────────
+   Wrapper relatif → bulle absolute positionnée par JS (fonts.ready)
+   z-index: bulle(2) au-dessus du texte(1) mais pointer-events:none
+   filter:blur sur la bulle → bords organiques fondus
+   ─────────────────────────────────────────────────────────────── */
+.hero-title-wrap {
+  position: relative;
+  margin: var(--sp-2) 0 var(--sp-4);
+}
+
+.hero-title {
+  font-family: var(--font-sans);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  margin: 0;
+  color: var(--ink-1);
+}
+
+/* Bulle glass — recette glass.md */
+.hero-glass-bubble {
+  position: absolute;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  z-index: 10;
+  will-change: transform;
+  overflow: hidden;
+}
+
+/* Couche backdrop blur — masquée au centre, visible sur les bords */
+.hero-glass-bubble::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  backdrop-filter: blur(0.6px) saturate(1.15);
+  -webkit-backdrop-filter: blur(0.6px) saturate(1.15);
+  mask-image: radial-gradient(ellipse 55% 50% at 50% 50%, transparent 35%, black 100%);
+  -webkit-mask-image: radial-gradient(ellipse 55% 50% at 50% 50%, transparent 35%, black 100%);
+}
+
+/* Reflet vertical gauche — distorsion lumière */
+.hero-glass-bubble::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.3)
+  );
+}
+
+[data-theme="dark"] .hero-glass-bubble {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.13);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+}
+
+
 .home-pitch {
   font-family: var(--font-sans);
   font-size: var(--text-base);
@@ -369,8 +443,46 @@ a, button {
   border-bottom: 1px solid var(--border);
   text-decoration: none !important;
   color: inherit;
+  cursor: pointer;
 }
 .post-item:hover .pi-title { color: var(--accent); }
+
+/* Main Apple UI kit — à gauche du post-item, pointe vers l'article */
+.post-item {
+  position: relative;
+  overflow: visible;
+}
+
+.post-item::before {
+  content: '';
+  position: absolute;
+  left: -52px;
+  top: 50%;
+  width: 36px;
+  height: 36px;
+  background-image: url('/hand-pointing.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  mix-blend-mode: multiply;
+  /* main vers le haut → rotate -90deg pour pointer à droite */
+  transform: translateY(-50%) translateX(-10px) rotate(90deg);
+  opacity: 0;
+  transition:
+    opacity 220ms var(--ease-out),
+    transform 220ms var(--ease-out);
+  pointer-events: none;
+}
+
+.post-item:hover::before {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0) rotate(90deg);
+}
+
+[data-theme="dark"] .post-item::before {
+  mix-blend-mode: normal;
+  filter: invert(1);
+}
 
 .pi-header {
   display: flex; align-items: center; gap: var(--sp-2);
@@ -388,6 +500,7 @@ a, button {
   margin: 0 0 var(--sp-1);
   line-height: var(--leading-snug);
   transition: color var(--t-fast) var(--ease-out);
+  position: static;
 }
 .pi-excerpt {
   font-family: var(--font-sans);
@@ -921,7 +1034,7 @@ pre.chroma {
   line-height: 1;
 }
 .page-blog-single #back-to-top {
-  right: max(24px, calc(50% - 33ch - 280px));
+  display: none !important;
 }
 #back-to-top:hover {
   color: var(--accent);
@@ -1600,6 +1713,7 @@ pre.chroma {
   background: #0C0C0C !important;
   color: var(--ink-2) !important;
 }
+
 
 [data-theme="dark"] {
   /* Nos tokens — hiérarchie forte sur fond #0C0C0C */
