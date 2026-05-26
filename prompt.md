@@ -1,0 +1,6 @@
+Flexoki utilise des valeurs de base monochromatiques chaudes qui mélangent le noir avec la valeur "paper". Le dark mode utilise 8 valeurs : 3 niveaux de texte, 3 niveaux d'interface, et 2 niveaux de fond. Mitchell Hashimoto
+Les valeurs de fond dark en détail :
+TokenHexUsage dark modeblack#100F0Fbg — fond principalbase-950#1C1B1Abg-2 — fond secondairebase-900#282726ui — surface interfacebase-850#343331ui-2 — hoverbase-800#403E3Cui-3 — active
+
+Ce qui est intéressant pour toi : Flexoki dark utilise #100F0F comme fond principal — un noir très chaud avec une légère teinte brune. C'est exactement la philosophie que je t'appliquais avec #18150F. La différence : ton cream #FAFAF8 est plus chaud que le paper de Flexoki #FFFCF0, donc ton dark devrait être légèrement plus chaud que Flexoki pour rester cohérent.
+#100F0F est une excellente base si tu veux t'aligner sur un système éprouvé. Tu peux l'adopter tel quel ou aller un tout petit peu plus chaud vers #13100A pour coller exactement à ta palette cream.

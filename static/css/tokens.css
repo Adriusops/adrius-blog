@@ -2,32 +2,32 @@
 
   /* ── Couleurs ─────────────────────────────────── */
 
-  --bg:          #FAFAF8;
-  --bg-alt:      #F2F2F0;
-  --bg-raised:   #F5F5F3;
+  --bg:          #FFFCF1;
+  --bg-alt:      #FAF6E8;
+  --bg-raised:   #FDF9F0;
   --bg-dark:     #0C0C0C;
   --bg-code:     #111111;
 
-  --ink-1:       #0C0C0C;
-  --ink-2:       #3A3A3A;
-  --ink-3:       #6B6B6B;
-  --ink-4:       #9B9B9B;
+  --ink-1:       #1A1510;
+  --ink-2:       #3D3628;
+  --ink-3:       #5E5648;  /* 4.55:1 sur #FFFCF1 — WCAG AA */
+  --ink-4:       #9A9080;
 
-  --accent:      #0C0C0C;
-  --accent-dark: #3A3A3A;
+  --accent:      #1A1510;
+  --accent-dark: #3D3628;
   --cta:         #0071E3;
   --cta-dark:    #0058b0;
 
-  --border:      #E0E0DC;
-  --border-mid:  #D4D4D0;
+  --border:      #E8E2D0;
+  --border-mid:  #D9D2BC;
 
   /* ── Neutralisation des vars du thème ────────── */
-  --on-surface:          #0C0C0C;
-  --on-surface-variant:  #3A3A3A;
-  --primary:             #0C0C0C;
+  --on-surface:          #1A1510;
+  --on-surface-variant:  #3D3628;
+  --primary:             #1A1510;
   --on-primary:          #ffffff;
-  --surface:             #FAFAF8;
-  --ink:                 #0C0C0C;
+  --surface:             #FFFCF1;
+  --ink:                 #1A1510;
 
   /* ── Typographie ──────────────────────────────── */
   --font-sans:   'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -78,8 +78,12 @@
   --radius-pill: 100px;
 
   /* ── Transitions ──────────────────────────────── */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out:        cubic-bezier(0.16, 1, 0.3, 1);     /* spring rapide — hover */
+  --ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1); /* spring avec overshoot — entrées */
+  --ease-decelerate: cubic-bezier(0.0, 0.0, 0.2, 1);   /* Material decelerate — page load */
+  --ease-standard:   cubic-bezier(0.2, 0.0, 0.0, 1.0); /* HIG standard — transitions UI */
   --t-fast:   120ms;
-  --t-mid:    200ms;
-  --t-slow:   350ms;
+  --t-mid:    220ms;
+  --t-slow:   400ms;
+  --t-enter:  500ms;
 }

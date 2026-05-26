@@ -131,6 +131,21 @@
   {{ block "footer_js" . }}
   {{ end }}
 
+  <script>
+  (function() {
+    document.addEventListener('mousedown', function(e) {
+      var item = e.target.closest('.post-item, .wl-item');
+      if (!item) return;
+      item.classList.remove('is-clicking');
+      void item.offsetWidth; /* force reflow pour relancer l'animation */
+      item.classList.add('is-clicking');
+      item.addEventListener('animationend', function() {
+        item.classList.remove('is-clicking');
+      }, { once: true });
+    });
+  })();
+  </script>
+
   {{ partial "google-analytics.html" . }}
   {{ partial "plausible-analytics.html" . }}
   {{ partial "extend-footer.html" . }}

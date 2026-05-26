@@ -104,36 +104,58 @@
   var searchVal = '';
   var filterPending = false;
 
-  /* ── Fade smooth sur un item ──────────────────────────────────────────
-     hide=true  → fade out puis display:none
-     hide=false → display:block puis fade in                        */
+  var DUR_OUT = 160;
+  var DUR_IN  = 280;
+
+  /* ── Blur-fade sur un item ─────────────────────────────────────────────
+     hide=true  → blur+fade out puis display:none
+     hide=false → display:block puis blur+fade in                    */
   function glitchItem(item, hide, done) {
     if (hide) {
-      item.style.transition = 'opacity 0.18s ease';
+      item.style.transition = 'opacity ' + DUR_OUT + 'ms cubic-bezier(0.2,0,0,1), filter ' + DUR_OUT + 'ms cubic-bezier(0.2,0,0,1), transform ' + DUR_OUT + 'ms cubic-bezier(0.2,0,0,1)';
       item.style.opacity    = '0';
+      item.style.filter     = 'blur(4px)';
+      item.style.transform  = 'translateY(4px)';
       setTimeout(function() {
         item.style.display    = 'none';
         item.style.opacity    = '';
+        item.style.filter     = '';
+        item.style.transform  = '';
         item.style.transition = '';
         if (done) done();
-      }, 180);
+      }, DUR_OUT);
     } else {
       item.style.opacity    = '0';
+      item.style.filter     = 'blur(6px)';
+      item.style.transform  = 'translateY(8px)';
+      item.style.transition = 'none';
       item.style.display    = 'block';
-      item.style.transition = '';
       requestAnimationFrame(function() {
         requestAnimationFrame(function() {
-          item.style.transition = 'opacity 0.22s ease';
+          item.style.transition = 'opacity ' + DUR_IN + 'ms cubic-bezier(0.0,0.0,0.2,1), filter ' + DUR_IN + 'ms cubic-bezier(0.0,0.0,0.2,1), transform ' + DUR_IN + 'ms cubic-bezier(0.34,1.56,0.64,1)';
           item.style.opacity    = '1';
-          if (done) setTimeout(done, 220);
+          item.style.filter     = 'blur(0px)';
+          item.style.transform  = 'translateY(0)';
+          setTimeout(function() {
+            clearInlineAnim(item);
+            if (done) done();
+          }, DUR_IN);
         });
       });
     }
   }
 
+  /* Nettoie les styles inline après l'animation pour laisser le CSS hover agir */
+  function clearInlineAnim(item) {
+    item.style.opacity    = '';
+    item.style.filter     = '';
+    item.style.transform  = '';
+    item.style.transition = '';
+  }
+
   /* ── Fade compteur ─────────────────────────────────────────────────── */
   function updateCount(n) {
-    count.style.transition = 'opacity 0.15s ease';
+    count.style.transition = 'opacity 0.15s cubic-bezier(0.0,0.0,0.2,1)';
     count.style.opacity    = '0';
     setTimeout(function() {
       count.textContent  = n + ' article' + (n !== 1 ? 's' : '');
@@ -176,13 +198,8 @@
     /* Cacher en glitch */
     var hideCount = toHide.length;
     if (hideCount === 0) {
-      /* Rien à cacher — juste afficher */
       toShow.forEach(function(item) {
-        if (item.style.display === 'none') {
-          item.style.opacity = '0';
-          item.style.display = 'block';
-          glitchItem(item, false, null);
-        }
+        if (item.style.display === 'none') glitchItem(item, false, null);
       });
       filterPending = false;
       return;
@@ -204,11 +221,7 @@
 
     function afterHide() {
       toShow.forEach(function(item) {
-        if (item.style.display === 'none') {
-          item.style.opacity = '0';
-          item.style.display = 'block';
-          glitchItem(item, false, null);
-        }
+        if (item.style.display === 'none') glitchItem(item, false, null);
       });
       filterPending = false;
     }
@@ -251,11 +264,13 @@
 
   /* ── Animation d'entrée au chargement ─────────────────────────────── */
   items.forEach(function(item, i) {
-    item.style.opacity = '0';
-    item.style.display = 'block';
+    item.style.opacity   = '0';
+    item.style.filter    = 'blur(6px)';
+    item.style.transform = 'translateY(8px)';
+    item.style.display   = 'block';
     setTimeout(function() {
       glitchItem(item, false, null);
-    }, i * 60); /* stagger : chaque item apparaît 60ms après le précédent */
+    }, 80 + i * 50);
   });
 
 })();

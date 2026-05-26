@@ -2,7 +2,6 @@
 
 {{ define "footer_js" }}
 <div id="reading-progress" aria-hidden="true"></div>
-<button id="back-to-top" aria-label="Back to top">[^]</button>
 <script>
 (function() {
   var bar = document.getElementById('reading-progress');
@@ -12,49 +11,6 @@
     var scrolled = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
     bar.style.width = Math.round(Math.min(scrolled, 1) * 100) + '%';
   }, { passive: true });
-})();
-
-// --- Back to top button ---
-(function() {
-  var btn = document.getElementById('back-to-top');
-  if (!btn) return;
-
-  var frames = ['[^]', '[↑]', '[^]', '[!]', '[^]', '[↑]', '[^]'];
-  var noiseChars = ['#', '%', '/', '|', '+', '~', '^'];
-  var animating = false;
-
-  // Show/hide on scroll
-  window.addEventListener('scroll', function() {
-    var scrolled = window.scrollY || window.pageYOffset;
-    btn.style.opacity = scrolled > 300 ? '1' : '0';
-    btn.style.pointerEvents = scrolled > 300 ? 'auto' : 'none';
-  }, { passive: true });
-
-  // Glitch animation then scroll
-  btn.addEventListener('click', function() {
-    if (animating) return;
-    animating = true;
-
-    var seq = ['[' + noiseChars[Math.floor(Math.random()*noiseChars.length)] + ']',
-               '[↑]',
-               '[' + noiseChars[Math.floor(Math.random()*noiseChars.length)] + ']',
-               '[↑]',
-               '[^]'];
-    var i = 0;
-    btn.classList.add('btt-glitch');
-
-    var interval = setInterval(function() {
-      btn.textContent = seq[i];
-      i++;
-      if (i >= seq.length) {
-        clearInterval(interval);
-        btn.classList.remove('btt-glitch');
-        btn.textContent = '[^]';
-        animating = false;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }, 80);
-  });
 })();
 </script>
 {{ end }}
@@ -97,11 +53,6 @@
 
     <div class="content">
       {{ .Content }}
-    </div>
-
-    <div class="meme-slot" style="margin-top: 40px;">
-      <img src="{{ "alderiate-bresil.gif" | absURL }}" alt="GIF de fin de write-up adrius.blog">
-      <div class="meme-caption">// fin du write-up · adrius@blog:~$</div>
     </div>
 
     <!-- ── Commentaires Giscus ───────────────────────────────────────────── -->
