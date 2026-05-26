@@ -169,11 +169,6 @@ a.header-logo:hover .header-logo-img {
   opacity: 0.7 !important;
 }
 
-.header-logo-dark { display: none !important; }
-.header-logo-light { display: block !important; }
-
-[data-theme="dark"] .header-logo-dark { display: block !important; }
-[data-theme="dark"] .header-logo-light { display: none !important; }
 
 .header-avatar {
   width: 32px !important;
