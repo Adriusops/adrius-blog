@@ -1,6 +1,6 @@
 baseURL = 'https://adrius.blog/'
 languageCode = 'fr-FR'
-title = 'adrius.blog — AWS IAM & Cloud Pentest and Security Write-ups'
+title = 'adrius.blog — Cloud Pentest · AWS · IAM'
 theme = 'adrius-theme'
 
 disableKinds = ["taxonomy", "term"]

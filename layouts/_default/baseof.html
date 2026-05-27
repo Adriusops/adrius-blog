@@ -56,10 +56,10 @@
     {{ else if .Site.Params.description }}
       <meta name="description" content="{{ .Site.Params.description }}"/>
     {{ end }}
-    <meta name="keywords" content="{{ if .Site.Params.keywords }}{{ delimit .Site.Params.keywords ", " }}{{ else }}cloud security, AWS, CloudGoat, IAM, VPC, write-up, pentest cloud{{ end }}"/>
+    <meta name="keywords" content="{{ if .Params.keywords }}{{ delimit .Params.keywords ", " }}{{ else if .Site.Params.keywords }}{{ delimit .Site.Params.keywords ", " }}{{ else }}cloud security, AWS, CloudGoat, IAM, VPC, write-up, pentest cloud{{ end }}"/>
     <meta name="author" content="{{ .Site.Params.author | default "adrius" }}"/>
 
-    <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}"/>
+    <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}"/>
     {{ if and (eq .Type "posts") (not .IsSection) }}<meta property="og:type" content="article"/>{{ else }}<meta property="og:type" content="website"/>{{ end }}
     <meta property="og:url" content="{{ .Permalink }}"/>
     <meta property="og:site_name" content="{{ .Site.Title }}"/>
@@ -68,6 +68,7 @@
     <meta property="og:image:height" content="630"/>
     {{ if and (eq .Type "posts") .File (not .IsSection) }}
       <meta property="og:article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}"/>
+      <meta property="og:article:author" content="{{ .Site.BaseURL }}about/"/>
     {{ end }}
     <meta name="twitter:image" content="{{ .Site.BaseURL }}og-home.png"/>
     {{ if .Params.description }}
@@ -78,7 +79,7 @@
     <meta property="og:locale" content="fr_FR"/>
 
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}"/>
+    <meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}"/>
     {{ if .Params.description }}<meta name="twitter:description" content="{{ .Params.description }}"/>{{ end }}
   {{ end }}
 

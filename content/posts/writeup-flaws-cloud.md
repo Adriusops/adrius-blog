@@ -2,6 +2,7 @@
 title: "flaws.cloud walkthrough : 6 misconfiguration AWS à ne pas reproduire"
 date: 2026-05-23
 tags: [flaws.cloud, aws, cloud-pentest, débutant]
+keywords: ["flaws.cloud", "s3", "iam", "imds", "ebs", "snapshot", "ssrf", "cloud-pentest", "aws misconfiguration"]
 categories: ["write-up"]
 description: "Du bucket public à l'IMDS en passant par un snapshot EBS et un repo git exposé : six erreurs de configuration AWS réelles, une après-midi de galère, et beaucoup de choses apprises."
 readtime: 14

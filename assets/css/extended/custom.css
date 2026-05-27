@@ -2028,6 +2028,12 @@ pre.chroma {
    ============================================ */
 @media (max-width: 767px) {
 
+  .post-item::before,
+  .wl-item::before { display: none !important; }
+
+  .post-item.is-clicking::before,
+  .wl-item.is-clicking::before { animation: none !important; }
+
   .wrapper {
     padding: var(--sp-4) var(--sp-4) var(--sp-10) !important;
   }
