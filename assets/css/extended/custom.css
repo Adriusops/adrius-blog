@@ -917,31 +917,32 @@ pre.chroma {
 .chroma .kn, .chroma .kp, .chroma .kr { color: #A02F6F; font-weight: 500; }
 .chroma .kt { color: #A02F6F; }
 
-/* Strings */
+/* Strings — #3D8B3D = 3.68:1 FAIL → #2A6B2A = 5.01:1 AA */
 .chroma .s, .chroma .sa, .chroma .sb, .chroma .sc,
 .chroma .sd, .chroma .s2, .chroma .se, .chroma .sh,
 .chroma .si, .chroma .sx, .chroma .sr, .chroma .s1,
-.chroma .ss, .chroma .dl { color: #3D8B3D; }
+.chroma .ss, .chroma .dl { color: #2A6B2A; }
 
-/* Numbers */
+/* Numbers — #D4730A = 2.92:1 FAIL → #9E5200 = 4.52:1 AA */
 .chroma .m, .chroma .mb, .chroma .mf, .chroma .mh,
-.chroma .mi, .chroma .il, .chroma .mo { color: #D4730A; }
+.chroma .mi, .chroma .il, .chroma .mo { color: #9E5200; }
 
-/* Comments */
+/* Comments — #878580 = 3.20:1 FAIL → #5E5C57 = 5.10:1 AA */
 .chroma .c, .chroma .ch, .chroma .cm, .chroma .c1,
-.chroma .cs, .chroma .cp, .chroma .cpf { color: #878580; font-style: italic; }
+.chroma .cs, .chroma .cp, .chroma .cpf { color: #5E5C57; font-style: italic; }
 
 /* Operators / punctuation */
 .chroma .o, .chroma .ow { color: #A02F6F; }
-.chroma .p { color: #6F6E69; }
+/* Punctuation — #6F6E69 = 4.44:1 FAIL → #5E5C57 = 5.10:1 AA */
+.chroma .p { color: #5E5C57; }
 
 /* Functions / builtins */
 .chroma .nb, .chroma .nf, .chroma .fm { color: #205EA6; }
 .chroma .nt { color: #205EA6; }
 
-/* Variables */
+/* Variables — #D4730A = 2.92:1 FAIL → #9E5200 = 4.52:1 AA */
 .chroma .nv, .chroma .vc, .chroma .vg,
-.chroma .vi, .chroma .vm { color: #D4730A; }
+.chroma .vi, .chroma .vm { color: #9E5200; }
 
 /* Names */
 .chroma .n, .chroma .na, .chroma .nc, .chroma .nd,
@@ -949,13 +950,14 @@ pre.chroma {
 .chroma .no, .chroma .nx, .chroma .py, .chroma .bp,
 .chroma .w { color: #100F0F; }
 
-/* Shell prompt */
-.chroma .gp { color: #878580; font-weight: 700; }
+/* Shell prompt — #878580=3.20:1 FAIL → #5E5C57=5.10:1 AA */
+.chroma .gp { color: #5E5C57; font-weight: 700; }
 
 /* Generic */
 .chroma .ge { font-style: italic; }
 .chroma .gs { font-weight: bold; }
-.chroma .gi { color: #3D8B3D; }
+/* diff added — #3D8B3D=3.68:1 FAIL → #2A6B2A=5.01:1 AA */
+.chroma .gi { color: #2A6B2A; }
 .chroma .gr, .chroma .gt { color: #AF3029; }
 .chroma .err { color: #AF3029; }
 
@@ -1474,8 +1476,12 @@ pre.chroma {
   white-space: nowrap;
 }
 
-.cg-diff-easy   { background: #EBF2E9; color: #3AA99F; border: 1px solid #C0DDD8; }
-.cg-diff-medium { background: #FBF5E0; color: #AD8301; border: 1px solid #E8D59A; }
+/* Difficulty — couleurs corrigées WCAG AA */
+/* easy: #3AA99F=2.50:1 FAIL → #1D7269=5.03:1 AA */
+.cg-diff-easy   { background: #EBF2E9; color: #1D7269; border: 1px solid #C0DDD8; }
+/* medium: #AD8301=3.19:1 FAIL → #7A5C00=5.73:1 AA */
+.cg-diff-medium { background: #FBF5E0; color: #7A5C00; border: 1px solid #E8D59A; }
+/* hard light: #AF3029=5.50:1 AA ✓ — inchangé */
 .cg-diff-hard   { background: #FBEAE8; color: #AF3029; border: 1px solid #E8B8B4; }
 
 .cg-section-line {
@@ -1823,7 +1829,7 @@ pre.chroma {
   --ink-1:      #CECDC3;   /* tx  — off-white chaud, ~13:1, pas de halation */
   --ink-2:      #B8B4AE;   /* corps */
   --ink-3:      #878580;   /* secondaire, ~5.8:1 */
-  --ink-4:      #575653;   /* tertiaire */
+  --ink-4:      #8B8886;   /* tertiaire — 5.39:1 sur #13100A, 4.51:1 sur #252219 AA */
   --accent:     #CECDC3;
   --cta:        #3B9EFF;
   --cta-dark:   #5AABFF;
@@ -1889,10 +1895,11 @@ pre.chroma {
 [data-theme="dark"] .chroma .mi, [data-theme="dark"] .chroma .il,
 [data-theme="dark"] .chroma .mo { color: #e5c07b !important; }
 
+/* Comments dark — #555555 = 2.33:1 FAIL → #8A8A8A = 4.61:1 AA */
 [data-theme="dark"] .chroma .c, [data-theme="dark"] .chroma .ch,
 [data-theme="dark"] .chroma .cm, [data-theme="dark"] .chroma .c1,
 [data-theme="dark"] .chroma .cs, [data-theme="dark"] .chroma .cp,
-[data-theme="dark"] .chroma .cpf { color: #555555 !important; }
+[data-theme="dark"] .chroma .cpf { color: #8A8A8A !important; }
 
 [data-theme="dark"] .chroma .k, [data-theme="dark"] .chroma .kc,
 [data-theme="dark"] .chroma .kd, [data-theme="dark"] .chroma .kn,
@@ -1922,9 +1929,13 @@ pre.chroma {
 [data-theme="dark"] .cg-card-slug { color: var(--ink-4) !important; }
 [data-theme="dark"] .cg-card-desc { color: var(--ink-3) !important; }
 [data-theme="dark"] .cg-card-link { color: var(--accent) !important; }
+/* Difficulty dark — couleurs vérifiées WCAG AA */
+/* easy dark: #4DBDAB=7.65:1 AAA ✓ — inchangé */
 [data-theme="dark"] .cg-diff-easy   { background: #0E1C1A; color: #4DBDAB; border-color: #1E3B36; }
+/* medium dark: #D0A215=7.47:1 AAA ✓ — inchangé */
 [data-theme="dark"] .cg-diff-medium { background: #1E1800; color: #D0A215; border-color: #3D3000; }
-[data-theme="dark"] .cg-diff-hard   { background: #1E0C0A; color: #D14D41; border-color: #3D1A17; }
+/* hard dark: #D14D41=4.36:1 FAIL → #E85D50=5.50:1 AA */
+[data-theme="dark"] .cg-diff-hard   { background: #1E0C0A; color: #E85D50; border-color: #3D1A17; }
 [data-theme="dark"] .cg-section-title { color: var(--ink-1) !important; }
 
 [data-theme="dark"] .atl-dot { background: var(--bg); }
