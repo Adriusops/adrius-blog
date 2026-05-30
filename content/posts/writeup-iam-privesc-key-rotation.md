@@ -4,6 +4,7 @@ date: 2026-05-10
 tags: [cloudgoat, aws, iam, privesc, key-rotation, mfa, secrets-manager, cloud-pentest, write-up]
 description: "Une condition IAM sur un tag, un CreateAccessKey permissif, et une rotation sur le mauvais compte. C'est tout ce qu'il faut pour atteindre Secrets Manager."
 readtime: 8
+draft: true
 ---
 
 Un manager qui peut tagger des users et créer des access keys sur ceux qui ont le bon tag. Une condition qui semblait protéger. Un admin qui pouvait assumer un rôle vers Secrets Manager. La chaîne est courte. Elle n'était pas évidente.

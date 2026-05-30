@@ -4,7 +4,7 @@ date: 2026-05-07
 tags: ["aws", "iam", "elastic-beanstalk", "privilege-escalation", "secrets-manager", "cloudgoat", "write-up"]
 categories: ["write-up"]
 description: "Beanstalk expose les env vars à quiconque peut décrire l'environnement. Avec un CreateAccessKey sans restriction, c'est suffisant pour devenir admin."
-draft: false
+draft: true
 ---
 
 Des credentials AWS en clair dans la config d'une appli, et une permission IAM mal scopée. C'est tout ce qu'il faut. Pas de CVE, pas d'exploit exotique : juste deux mauvaises pratiques enchaînées qui mènent droit à Secrets Manager.

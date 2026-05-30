@@ -5,7 +5,7 @@ description: "Premier contact avec CloudGoat : énumérer un compte AWS à l'ave
 tags: ["aws", "iam", "cloudgoat", "enumeration", "write-up"]
 categories: ["write-up"]
 slug: "writeup-iam-enum-basics"
-draft: false
+draft: true
 ---
 
 ## Contexte

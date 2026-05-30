@@ -6,7 +6,7 @@ keywords: ["flaws.cloud", "s3", "iam", "imds", "ebs", "snapshot", "ssrf", "cloud
 categories: ["write-up"]
 description: "Du bucket public à l'IMDS en passant par un snapshot EBS et un repo git exposé : six erreurs de configuration AWS réelles, une après-midi de galère, et beaucoup de choses apprises."
 readtime: 14
-draft: false
+draft: true
 ---
 
 Six niveaux. Six erreurs de configuration différentes. Toutes réelles, toutes documentées dans des incidents qui ont coûté cher à de vraies entreprises.

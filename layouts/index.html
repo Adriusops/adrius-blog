@@ -6,26 +6,27 @@
   {{ $posts := where .Site.RegularPages "Type" "posts" }}
   {{ $sorted := ($posts.ByParam "date").Reverse }}
 
-  <p class="home-tagline">j'apprends la sécu cloud. en public.</p>
+  <p class="home-tagline">je build des trucs cool. en public.</p>
 
   <!-- 3 articles récents -->
   <div class="home-prompt-line" style="margin-top: var(--sp-16);">
     <span class="p-char">❯</span>
     <span class="p-path">~/adrius $</span>
-    <span class="p-cmd">ls ./write-ups/</span>
+    <span class="p-cmd">ls ./articles/</span>
   </div>
 
   <div class="post-list">
     {{ range $i, $post := first 3 $sorted }}
     {{ $daysSince := div (sub now.Unix $post.Date.Unix) 86400 }}
     <a class="post-item" href="{{ $post.RelPermalink }}">
+      <div class="pi-title{{ if eq $i 0 }} pi-title-new{{ end }}">{{ .Title }}</div>
       <div class="pi-header">
+        {{ with index .Params.categories 0 }}<span class="pi-cat">{{ . }}</span>{{ end }}
         <span class="pi-date">{{ dateFormat "02.01.2006" .Date }}</span>
         {{ range first 3 .Params.tags }}
         <span class="tag">{{ . }}</span>
         {{ end }}
       </div>
-      <div class="pi-title{{ if eq $i 0 }} pi-title-new{{ end }}">{{ .Title }}</div>
       {{ with .Params.description }}<p class="pi-excerpt">{{ . }}</p>{{ end }}
       <div class="pi-footer">
         <span class="pi-read">lire →</span>

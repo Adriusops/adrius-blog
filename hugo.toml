@@ -1,6 +1,6 @@
 baseURL = 'https://adrius.blog/'
 languageCode = 'fr-FR'
-title = 'adrius.blog — Cloud Pentest · AWS · IAM'
+title = 'adrius.blog — craft · code · design'
 theme = 'adrius-theme'
 
 disableKinds = ["taxonomy", "term"]
@@ -9,8 +9,8 @@ disableKinds = ["taxonomy", "term"]
   showIntroContentOnHomepage = false
   showPostsOnHomepage = true
   author      = "adrius"
-  description = "Journal de bord d'un mec qui apprend la sécu cloud. Write-ups CloudGoat, labs AWS IAM/VPC, et les loupés que personne ne montre."
-  keywords    = ["cloud security", "AWS", "CloudGoat", "IAM", "VPC", "write-up", "pentest cloud"]
+  description = "Journal d'un créateur. Ce que je construis, ce que j'apprends, ce que ça fait de finir vraiment quelque chose."
+  keywords    = ["craft", "code", "design", "product", "logiciel", "interfaces", "blog"]
 
   enableGoogleFonts = false
 
@@ -31,13 +31,7 @@ disableKinds = ["taxonomy", "term"]
     url = "/posts/"
     weight = 10
 
-  [[menu.main]]
-    identifier = "cloudgoat"
-    name = "cloudgoat"
-    url = "/cloudgoat/"
-    weight = 15
-
-  [[menu.main]]
+[[menu.main]]
     identifier = "about"
     name = "à propos"
     url = "/about/"

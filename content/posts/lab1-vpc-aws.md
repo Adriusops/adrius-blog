@@ -4,7 +4,7 @@ date: 2026-04-26
 description: "Je me forme à la cloud security. Voici exactement ce que j'ai fait, les erreurs que j'ai faites, et ce que j'en ai retenu."
 tags: ["aws", "vpc", "cloud-security", "lab", "réseau"]
 categories: ["journal-apprentissage"]
-draft: false
+draft: true
 ---
 
 Je me forme en alternance à la cloud security avec pour objectif d'intégrer une grosse ESN dans les 6-12 prochains mois. Ce blog c'est mon journal de bord : pas des tutoriels lisses, mais ce que j'apprends vraiment, avec les galères incluses.

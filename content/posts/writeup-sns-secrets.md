@@ -4,6 +4,7 @@ date: 2026-05-08
 tags: [cloudgoat, aws, sns, api-gateway, cloud-pentest, write-up]
 description: "Un topic SNS public qui broadcast une API key à tous ses abonnés. Pas de vuln complexe — juste s'abonner et attendre."
 readtime: 8
+draft: true
 ---
 
 Un topic SNS public qui broadcast une API key en clair à tous ses abonnés. C'est le scénario. Et honnêtement, au départ, on n'imagine pas que ça puisse être aussi simple.

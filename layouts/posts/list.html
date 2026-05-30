@@ -14,13 +14,22 @@
 {{ end }}
 {{ $uniqueTags := $allTags | uniq | sort }}
 
+{{/* Collecter toutes les catégories uniques */}}
+{{ $allCats := slice }}
+{{ range $sorted }}
+  {{ range .Params.categories }}
+    {{ $allCats = $allCats | append . }}
+  {{ end }}
+{{ end }}
+{{ $uniqueCats := $allCats | uniq | sort }}
+
 <div class="wl-wrap">
 
   <!-- En-tête prompt -->
   <div class="wl-prompt">
     <span class="p-char">❯</span>
     <span class="p-path">~/adrius/articles $</span>
-    <span class="p-cmd">grep <span class="wl-cmd-arg" id="wl-cmd-display">--all</span></span>
+    <span class="p-cmd">ls <span class="wl-cmd-arg" id="wl-cmd-display">--all</span></span>
   </div>
 
   <div class="wl-header">
@@ -28,19 +37,16 @@
     <span class="wl-count" id="wl-count">{{ len $sorted }} articles</span>
   </div>
 
-  <!-- Search bar -->
-  <div class="wl-search-wrap">
-    <span class="wl-search-prompt">grep</span>
-    <input
-      type="text"
-      id="wl-search"
-      class="wl-search-input"
-      placeholder="rechercher titre ou description..."
-      autocomplete="off"
-      spellcheck="false"
-    >
-    <span class="wl-search-cursor" aria-hidden="true">█</span>
+  <!-- Filtres par catégorie -->
+  {{ if $uniqueCats }}
+  <div class="wl-cats" id="wl-cats" role="group" aria-label="Filtrer par type">
+    <span class="wl-tags-label">--type=</span>
+    <button class="wl-cat wl-cat-active" data-cat="*" aria-pressed="true">all</button>
+    {{ range $uniqueCats }}
+    <button class="wl-cat" data-cat="{{ . }}" aria-pressed="false">{{ . }}</button>
+    {{ end }}
   </div>
+  {{ end }}
 
   <!-- Filtres par tag -->
   <div class="wl-tags" id="wl-tags" role="group" aria-label="Filtrer par tag">
@@ -61,14 +67,16 @@
       data-title="{{ $post.Title | lower }}"
       data-desc="{{ $post.Params.description | lower }}"
       data-tags="{{ delimit $post.Params.tags "," }}"
+      data-cats="{{ delimit $post.Params.categories "," }}"
     >
+      <div class="wl-item-title{{ if eq $i 0 }} wl-item-title-new{{ end }}">{{ $post.Title }}</div>
       <div class="wl-item-meta">
+        {{ with index $post.Params.categories 0 }}<span class="wl-item-cat">{{ . }}</span>{{ end }}
         <span class="wl-item-date">{{ dateFormat "02.01.2006" $post.Date }}</span>
         <span class="wl-item-tags">
           {{ range first 3 $post.Params.tags }}<span class="wl-item-tag">{{ . }}</span>{{ end }}
         </span>
       </div>
-      <div class="wl-item-title{{ if eq $i 0 }} wl-item-title-new{{ end }}">{{ $post.Title }}</div>
       {{ with $post.Params.description }}
       <p class="wl-item-desc">{{ . }}</p>
       {{ end }}
@@ -91,8 +99,8 @@
 
 <script>
 (function() {
-  var search     = document.getElementById('wl-search');
   var tagBtns    = document.querySelectorAll('.wl-tag');
+  var catBtns    = document.querySelectorAll('.wl-cat');
   var items      = document.querySelectorAll('.wl-item');
   var count      = document.getElementById('wl-count');
   var empty      = document.getElementById('wl-empty');
@@ -100,7 +108,7 @@
   var reset      = document.getElementById('wl-reset');
 
   var activeTag = '*';
-  var searchVal = '';
+  var activeCat = '*';
   var filterPending = false;
 
   var DUR_OUT = 160;
@@ -174,10 +182,11 @@
       var desc  = item.getAttribute('data-desc')  || '';
       var tags  = item.getAttribute('data-tags')  || '';
 
-      var matchTag    = activeTag === '*' || tags.split(',').some(function(t) { return t.trim() === activeTag; });
-      var matchSearch = searchVal === '' || title.indexOf(searchVal) !== -1 || desc.indexOf(searchVal) !== -1;
+      var cats  = item.getAttribute('data-cats')  || '';
+      var matchTag = activeTag === '*' || tags.split(',').some(function(t) { return t.trim() === activeTag; });
+      var matchCat = activeCat === '*' || cats.split(',').some(function(c) { return c.trim() === activeCat; });
 
-      if (matchTag && matchSearch) {
+      if (matchTag && matchCat) {
         toShow.push(item);
       } else {
         toHide.push(item);
@@ -186,8 +195,8 @@
 
     /* Mettre à jour le prompt */
     var parts = [];
+    if (activeCat !== '*') parts.push('--type=' + activeCat);
     if (activeTag !== '*') parts.push('--tag=' + activeTag);
-    if (searchVal !== '')   parts.push('"' + searchVal + '"');
     cmdDisplay.textContent = parts.length ? parts.join(' ') : '--all';
 
     /* Compter et animer le compteur */
@@ -227,11 +236,6 @@
   }
 
   /* ── Events ────────────────────────────────────────────────────────── */
-  search.addEventListener('input', function() {
-    searchVal = this.value.toLowerCase().trim();
-    filter();
-  });
-
   tagBtns.forEach(function(btn) {
     btn.addEventListener('click', function() {
       activeTag = this.getAttribute('data-tag');
@@ -245,24 +249,38 @@
     });
   });
 
+  catBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      activeCat = this.getAttribute('data-cat');
+      catBtns.forEach(function(b) {
+        b.classList.remove('wl-cat-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      this.classList.add('wl-cat-active');
+      this.setAttribute('aria-pressed', 'true');
+      filter();
+    });
+  });
+
   if (reset) {
     reset.addEventListener('click', function(e) {
       e.preventDefault();
-      search.value = '';
-      searchVal    = '';
       activeTag    = '*';
+      activeCat    = '*';
       tagBtns.forEach(function(b) {
         b.classList.remove('wl-tag-active');
         b.setAttribute('aria-pressed', 'false');
       });
       tagBtns[0].classList.add('wl-tag-active');
       tagBtns[0].setAttribute('aria-pressed', 'true');
+      catBtns.forEach(function(b) {
+        b.classList.remove('wl-cat-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      if (catBtns[0]) { catBtns[0].classList.add('wl-cat-active'); catBtns[0].setAttribute('aria-pressed', 'true'); }
       filter();
     });
   }
-
-  /* ── Focus automatique sur la searchbar ───────────────────────────── */
-  search.focus();
 
   /* ── Animation d'entrée au chargement ─────────────────────────────── */
   items.forEach(function(item, i) {
