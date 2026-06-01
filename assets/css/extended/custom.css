@@ -1894,6 +1894,11 @@ pre.chroma {
 
 [data-theme="dark"] html {
   background: #13100A !important;
+  min-height: 100%;
+}
+
+[data-theme="dark"] body {
+  min-height: 100vh;
 }
 
 [data-theme="dark"] .header { border-bottom-color: var(--border) !important; }
@@ -2189,11 +2194,13 @@ pre.chroma {
 }
 
 .content a[href^="http"]::after,
-.content a[href^="https"]::after {
+.content a[href^="https"]::after,
+.about-wrap a[href^="http"]::after,
+.about-wrap a[href^="https"]::after {
   content: "\2197";
   font-size: 0.9em;
   vertical-align: 0em;
   margin-left: 0.1em;
-  opacity: 0.5;
   display: inline-block;
+  color: inherit;
 }
