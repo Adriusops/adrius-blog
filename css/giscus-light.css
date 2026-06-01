@@ -1,0 +1,24 @@
+/* Giscus theme — adrius.blog light — Flexoki cream */
+:root {
+  --color-canvas-default:       #FFFCF1;
+  --color-canvas-subtle:        #FAF6E8;
+  --color-canvas-inset:         #F2EDE0;
+  --color-border-default:       #E8E2D0;
+  --color-border-muted:         #EDE8D8;
+  --color-fg-default:           #1A1510;
+  --color-fg-muted:             #5E5648;
+  --color-fg-subtle:            #9A9080;
+  --color-btn-bg:               #FAF6E8;
+  --color-btn-border:           #E8E2D0;
+  --color-btn-text:             #1A1510;
+  --color-btn-primary-bg:       #1A1510;
+  --color-btn-primary-border:   #1A1510;
+  --color-btn-primary-text:     #FFFCF1;
+  --color-btn-primary-hover-bg: #3D3628;
+  --color-accent-fg:            #1A1510;
+  --color-accent-emphasis:      #1A1510;
+  --color-success-fg:           #3D8B3D;
+  --color-danger-fg:            #C0392B;
+  --color-social-reaction-bg-hover:   #FAF6E8;
+  --color-social-reaction-bg-reacted: #F2EDE0;
+}

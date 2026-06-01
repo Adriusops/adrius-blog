@@ -1,0 +1,105 @@
+---
+layout: default
+body_class: page-blog-single
+---
+
+<div class="blog">
+
+  <div class="article-header">
+    <div class="breadcrumb">
+      <a href="/">~</a>
+      <span class="sep">/</span>
+      <a href="/posts/">articles</a>
+      <span class="sep">/</span>
+      <span>{{ page.slug | default: page.title | downcase | replace: ' ', '-' }}</span>
+    </div>
+    <div class="art-meta">
+      <span class="art-date">{{ page.date | date: "%d.%m.%Y" }}</span>
+      {% for tag in page.tags %}
+      <span class="tag">{{ tag }}</span>
+      {% endfor %}
+      <span class="art-time">{{ content | number_of_words | divided_by: 200 | round }} min read</span>
+    </div>
+    <h1 class="art-title">{{ page.title }}</h1>
+    {% if page.description %}
+    <div class="art-desc">{{ page.description }}</div>
+    {% endif %}
+  </div>
+
+  {% if page.prereqs %}
+  <div class="prereqs-block">
+    <div class="prereqs-label">// prérequis</div>
+    <ul class="prereqs-list">
+      {% for item in page.prereqs %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="content">
+    {{ content }}
+  </div>
+
+  <!-- ── Commentaires Giscus ───────────────────────────────────────────── -->
+  <div class="giscus-wrap">
+    <div class="giscus-header">
+      <span class="giscus-prompt-char">❯</span>
+      <span class="giscus-prompt-path">~/adrius $</span>
+      <span class="giscus-prompt-cmd">cat commentaires</span>
+    </div>
+
+    <script src="https://giscus.app/client.js"
+      data-repo="Adriusops/adrius-blog"
+      data-repo-id="R_kgDOSPA4Eg"
+      data-category="General"
+      data-category-id="DIC_kwDOSPA4Es4C9oqh"
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="https://adrius.blog/css/giscus-light.css"
+      data-lang="fr"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async>
+    </script>
+    <script>
+    (function() {
+      function setGiscusTheme(dark) {
+        var theme = dark
+          ? 'https://adrius.blog/css/giscus-dark.css'
+          : 'https://adrius.blog/css/giscus-light.css';
+        var iframe = document.querySelector('iframe.giscus-frame');
+        if (iframe) {
+          iframe.contentWindow.postMessage(
+            { giscus: { setConfig: { theme: theme } } },
+            'https://giscus.app'
+          );
+        }
+      }
+      var mq = window.matchMedia('(prefers-color-scheme: dark)');
+      window.addEventListener('message', function(e) {
+        if (e.origin !== 'https://giscus.app') return;
+        if (e.data && e.data.giscus) setGiscusTheme(mq.matches);
+      }, { once: true });
+      mq.addEventListener('change', function(e) { setGiscusTheme(e.matches); });
+    })();
+    </script>
+  </div>
+
+</div>
+
+<div id="reading-progress" aria-hidden="true"></div>
+<script>
+(function() {
+  var bar = document.getElementById('reading-progress');
+  if (!bar) return;
+  window.addEventListener('scroll', function() {
+    var doc = document.documentElement;
+    var scrolled = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+    bar.style.width = Math.round(Math.min(scrolled, 1) * 100) + '%';
+  }, { passive: true });
+})();
+</script>

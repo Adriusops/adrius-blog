@@ -1,0 +1,103 @@
+<div class="page-transition" id="page-transition"></div>
+<script>
+  /* ── Transitions smooth entre pages ── */
+  (function() {
+    var overlay = document.getElementById('page-transition');
+
+    function fadeIn() {
+      overlay.classList.add('pt-out');
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          overlay.classList.remove('pt-out');
+        });
+      });
+    }
+
+    fadeIn();
+    window.addEventListener('pageshow', function(e) {
+      if (e.persisted) fadeIn();
+    });
+
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('a');
+      if (!a) return;
+      var href = a.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') || a.target === '_blank') return;
+      if (a.classList.contains('glightbox')) return;
+      try { if (new URL(href, location.href).origin !== location.origin) return; } catch(err) { return; }
+
+      e.preventDefault();
+      overlay.classList.add('pt-out');
+      setTimeout(function() { location.href = href; }, 240);
+    });
+  })();
+
+
+  if (!window.__adrBlocksInit) {
+    window.__adrBlocksInit = true;
+
+    var CMD_RE = /\b(aws|cat|grep|find|curl|echo|ls|cd|cp|mv|rm|mkdir|chmod|chown|sudo|ssh|scp|python|python3|pip|pip3|git|docker|kubectl|jq|wget|sed|awk|cut|sort|uniq|head|tail|env|export|source|bash|sh|zsh|set|tee|xargs|file|strings|base64|openssl|nc|nmap|ncat|dig|host|whoami|id|uname|ps|kill|pkill|systemctl|service|apt|yum|brew|make|go|node|npm|yarn|cargo|ruby|java|javac)\b/g;
+
+    /* Rouge émet class="language-bash" au lieu de data-lang="bash" */
+    document.querySelectorAll('.highlight code').forEach(function(code) {
+      var match = code.className.match(/language-(bash|sh|shell|fallback)/);
+      if (!match) return;
+      code.querySelectorAll('span').forEach(function(span) {
+        span.childNodes.forEach(function(node) {
+          if (node.nodeType !== 3) return;
+          var text = node.textContent;
+          CMD_RE.lastIndex = 0;
+          if (!CMD_RE.test(text)) return;
+          CMD_RE.lastIndex = 0;
+          var wrapper = document.createElement('span');
+          wrapper.innerHTML = text.replace(CMD_RE, '<span class="sh-cmd">$1</span>');
+          node.parentNode.replaceChild(wrapper, node);
+        });
+      });
+    });
+
+    /* Code blocks — barre langue + copy */
+    document.querySelectorAll('.highlight').forEach(function(block) {
+      if (block.querySelector('.code-header')) return;
+
+      var code = block.querySelector('code');
+      var lang = '';
+      if (code) {
+        var m = code.className.match(/language-(\w+)/);
+        lang = m ? m[1] : '';
+      }
+      if (lang === 'fallback') lang = '';
+
+      var header = document.createElement('div');
+      header.className = 'code-header';
+
+      var langSpan = document.createElement('span');
+      langSpan.className = 'code-lang';
+      langSpan.textContent = lang || 'code';
+      header.appendChild(langSpan);
+
+      var copyBtn = document.createElement('button');
+      copyBtn.className = 'code-copy';
+      copyBtn.setAttribute('aria-label', 'Copier le code');
+      copyBtn.innerHTML =
+        '<svg class="icon-copy" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+          '<rect x="9" y="9" width="13" height="13" rx="2"/>' +
+          '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>' +
+        '</svg>' +
+        '<svg class="icon-check" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+          '<polyline points="20 6 9 17 4 12"/>' +
+        '</svg>';
+      copyBtn.addEventListener('click', function() {
+        var pre = block.querySelector('pre');
+        var text = pre ? pre.innerText : block.innerText;
+        navigator.clipboard.writeText(text).then(function() {
+          copyBtn.classList.add('copied');
+          setTimeout(function() { copyBtn.classList.remove('copied'); }, 1600);
+        });
+      });
+      header.appendChild(copyBtn);
+
+      block.insertBefore(header, block.firstChild);
+    });
+  }
+</script>

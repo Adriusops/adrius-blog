@@ -20,22 +20,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
+      - uses: ruby/setup-ruby@v1
         with:
-          hugo-version: '0.160.1'
-          extended: true
+          ruby-version: '3.3'
+          bundler-cache: true
 
       - name: Build
-        run: hugo --minify
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./_site
 
   deploy:
     environment:

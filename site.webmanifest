@@ -1,0 +1,14 @@
+{
+  "name": "adrius.blog",
+  "short_name": "adrius",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#FFFCF1",
+  "background_color": "#FFFCF1",
+  "display": "standalone"
+}

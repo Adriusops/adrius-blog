@@ -1,0 +1,41 @@
+---
+layout: default
+title: "adrius.blog"
+body_class: page-home
+---
+
+{% assign sorted = site.posts | sort: "date" | reverse %}
+
+<p class="home-tagline">je build des trucs cool. en public.</p>
+
+<!-- 3 articles récents -->
+<div class="home-prompt-line" style="margin-top: var(--sp-16);">
+  <span class="p-char">❯</span>
+  <span class="p-path">~/adrius $</span>
+  <span class="p-cmd">ls ./articles/</span>
+</div>
+
+<div class="post-list">
+  {% for post in sorted limit:3 %}
+  {% assign rt = post.content | number_of_words | divided_by: 200 | round %}
+  <a class="post-item" href="{{ post.url }}">
+    <div class="pi-title{% if forloop.first %} pi-title-new{% endif %}">{{ post.title }}</div>
+    <div class="pi-header">
+      {% assign first_cat = post.categories | first %}
+      {% if first_cat %}<span class="pi-cat">{{ first_cat }}</span>{% endif %}
+      <span class="pi-date">{{ post.date | date: "%d.%m.%Y" }}</span>
+      {% for tag in post.tags limit:3 %}
+      <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% if post.description %}<p class="pi-excerpt">{{ post.description }}</p>{% endif %}
+    <div class="pi-footer">
+      <span class="pi-read">lire →</span>
+      <span class="pi-sep">|</span>
+      <span class="pi-time">{{ rt }} min read</span>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+<a href="/posts/" class="see-all">→ <span class="see-all-text">voir tous les articles</span></a>

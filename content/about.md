@@ -1,4 +1,4 @@
 ---
 title: "À propos"
-description: "Alternant en cloud security, je documente mon parcours en public : labs CloudGoat, AWS IAM, pentest cloud."
+description: "Code, design, craft. Je crée des expériences digitales et documente le processus en public."
 ---

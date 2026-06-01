@@ -1,0 +1,21 @@
+<div class='header'>
+  <div class="menu-main">
+    <a class="header-logo" href="/" aria-label="adrius — accueil">
+      <picture>
+        <source srcset="/avatar.webp" type="image/webp">
+        <img src="/avatar-128.png" alt="adrius" class="header-avatar">
+      </picture>
+    </a>
+  </div>
+
+  <div class="header-right">
+    <nav class="header-nav">
+      <a href="/posts/" class="header-nav-link{% if page.url contains '/posts' %} active{% endif %}"{% if page.url contains '/posts' %} aria-current="page"{% endif %}>articles</a>
+      <a href="/about/" class="header-nav-link{% if page.url contains '/about' %} active{% endif %}"{% if page.url contains '/about' %} aria-current="page"{% endif %}>à propos</a>
+    </nav>
+  </div>
+
+  <div id="toggle-menu-main-mobile" class="hamburger-trigger">
+    <button class="hamburger">Menu</button>
+  </div>
+</div>

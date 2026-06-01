@@ -1,0 +1,39 @@
+url: "https://adrius.blog"
+baseurl: ""
+title: "adrius.blog — craft · code · design"
+lang: fr-FR
+description: "Journal d'un créateur. Ce que je construis, ce que j'apprends, ce que ça fait de finir vraiment quelque chose."
+author:
+  name: adrius
+keywords: [craft, code, design, product, logiciel, interfaces, blog]
+
+collections:
+  posts:
+    output: true
+    permalink: /posts/:slug/
+
+include: ["_pages"]
+
+defaults:
+  - scope:
+      path: "_posts"
+      type: posts
+    values:
+      layout: post
+      body_class: page-blog-single
+  - scope:
+      path: "_pages"
+    values:
+      layout: default
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: highlight
+    block:
+      line_numbers: false
+
+plugins: [jekyll-feed, jekyll-seo-tag]
+exclude: [Gemfile, Gemfile.lock, vendor, public, themes, node_modules, layouts, hugo.toml, content, cloudgoat, archetypes, data, static]

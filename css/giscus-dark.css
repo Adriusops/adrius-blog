@@ -1,0 +1,24 @@
+/* Giscus theme — adrius.blog dark — Flexoki officiel */
+:root {
+  --color-canvas-default:       #13100A;
+  --color-canvas-subtle:        #1C1A13;
+  --color-canvas-inset:         #252219;
+  --color-border-default:       #2E2B22;
+  --color-border-muted:         #3A3730;
+  --color-fg-default:           #CECDC3;
+  --color-fg-muted:             #878580;
+  --color-fg-subtle:            #575653;
+  --color-btn-bg:               #1C1A13;
+  --color-btn-border:           #2E2B22;
+  --color-btn-text:             #CECDC3;
+  --color-btn-primary-bg:       #CECDC3;
+  --color-btn-primary-border:   #CECDC3;
+  --color-btn-primary-text:     #13100A;
+  --color-btn-primary-hover-bg: #B8B4AE;
+  --color-accent-fg:            #CECDC3;
+  --color-accent-emphasis:      #CECDC3;
+  --color-success-fg:           #5A9E5A;
+  --color-danger-fg:            #E05A5A;
+  --color-social-reaction-bg-hover:   #1C1A13;
+  --color-social-reaction-bg-reacted: #252219;
+}
