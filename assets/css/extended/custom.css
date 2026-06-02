@@ -69,11 +69,11 @@
    ============================================ */
 html {
   scrollbar-gutter: stable;
-  background: #FFFCF1 !important;
+  background: var(--bg, #FFFCF1);
 }
 
 body {
-  background: #FFFCF1 !important;
+  background: var(--bg, #FFFCF1) !important;
   color: var(--ink-2);
   font-family: var(--font-sans) !important;
   font-size: var(--text-base) !important;
@@ -525,27 +525,11 @@ a, button {
 .pi-sep  { color: var(--border-mid); }
 .pi-time { color: var(--ink-3); }
 
-/* badge-new */
-.pi-title-new,
-.wl-item-title-new { font-weight: 700 !important; }
-
-.fcard-badge {
-  font-family: var(--font-sans);
-  font-size: 9px !important;
-  font-weight: 700;
-  background: #C0312A;  /* 4.56:1 sur #fff — WCAG AA */
-  color: #fff !important;
-  padding: 2px 6px;
-  border-radius: var(--radius-pill);
-  letter-spacing: 0.06em;
-  line-height: 1.4;
-  flex-shrink: 0;
-}
 
 /* Tags */
 .tag {
   font-family: var(--font-sans) !important;
-  font-size: 11px !important;
+  font-size: 12px !important;
   font-weight: 500 !important;
   letter-spacing: 0.04em !important;
   padding: 2px 10px !important;
@@ -1260,7 +1244,7 @@ pre.chroma {
 
 .wl-item-tag {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--ink-3);
   border: 1px solid var(--border);
   border-radius: 100px;
@@ -1895,6 +1879,7 @@ pre.chroma {
 [data-theme="dark"] html {
   background: #13100A !important;
   min-height: 100%;
+  scrollbar-color: #2E2B22 #13100A;
 }
 
 [data-theme="dark"] body {
@@ -2165,9 +2150,22 @@ pre.chroma {
   .about-ascii-logo { font-size: 8px !important; line-height: 1.2 !important; }
   .about-profile { padding: var(--sp-3) var(--sp-4) !important; font-size: var(--text-xs) !important; }
 
+  /* Post-items homepage — lisibilité mobile */
+  .pi-title { font-size: var(--text-md) !important; }
+  .pi-excerpt { font-size: var(--text-base) !important; }
+  .pi-header { font-size: var(--text-sm) !important; }
+  .pi-date { font-size: var(--text-sm) !important; }
+  .pi-footer { font-size: var(--text-sm) !important; }
+  .tag { font-size: var(--text-sm) !important; }
+
+  /* Write-ups list — lisibilité mobile */
   .wl-title { font-size: var(--text-lg) !important; }
-  .wl-item-title { font-size: var(--text-sm) !important; }
-  .wl-item-desc { font-size: var(--text-xs) !important; }
+  .wl-item-title { font-size: var(--text-md) !important; }
+  .wl-item-desc { font-size: var(--text-base) !important; }
+  .wl-item-meta { font-size: var(--text-sm) !important; }
+  .wl-item-date { font-size: var(--text-sm) !important; }
+  .wl-item-tag { font-size: var(--text-sm) !important; }
+  .wl-item-footer { font-size: var(--text-sm) !important; }
 
   .footer {
     flex-wrap: wrap !important;
