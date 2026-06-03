@@ -526,6 +526,10 @@ a, button {
 .pi-sep  { color: var(--border-mid); }
 .pi-time { color: var(--ink-3); }
 
+/* Dernier article — titre en gras */
+.pi-title-new,
+.wl-item-title-new { font-weight: 700 !important; }
+
 /* Tags */
 .tag {
   font-family: var(--font-sans) !important;

@@ -18,6 +18,18 @@
       if (e.persisted) fadeIn();
     });
 
+    /* Liens externes → nouvel onglet */
+    document.querySelectorAll('a[href]').forEach(function(a) {
+      var href = a.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('mailto:')) return;
+      try {
+        if (new URL(href, location.href).origin !== location.origin) {
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+        }
+      } catch(err) {}
+    });
+
     document.addEventListener('click', function(e) {
       var a = e.target.closest('a');
       if (!a) return;
