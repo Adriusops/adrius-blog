@@ -2155,12 +2155,12 @@ pre.highlight {
   .about-profile { padding: var(--sp-3) var(--sp-4) !important; font-size: var(--text-xs) !important; }
 
   /* Post-items homepage — lisibilité mobile */
-  .pi-title { font-size: var(--text-md) !important; }
-  .pi-excerpt { font-size: var(--text-base) !important; }
-  .pi-header { font-size: var(--text-sm) !important; }
-  .pi-date { font-size: var(--text-sm) !important; }
-  .pi-footer { font-size: var(--text-sm) !important; }
-  .tag { font-size: var(--text-sm) !important; }
+  .pi-title { font-size: var(--text-base) !important; }
+  .pi-excerpt { font-size: var(--text-sm) !important; }
+  .pi-header { font-size: var(--text-xs) !important; }
+  .pi-date { font-size: var(--text-xs) !important; }
+  .pi-footer { font-size: var(--text-xs) !important; }
+  .tag { font-size: var(--text-xs) !important; }
 
   /* Write-ups list — lisibilité mobile */
   .wl-title { font-size: var(--text-lg) !important; }
