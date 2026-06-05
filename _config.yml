@@ -1,11 +1,11 @@
 url: "https://adrius.blog"
 baseurl: ""
-title: "adrius.blog — craft · code · design"
+title: "adrius"
 lang: fr-FR
-description: "Journal d'un créateur. Ce que je construis, ce que j'apprends, ce que ça fait de finir vraiment quelque chose."
+description: "Projets, notes et idées d'adrius."
 author:
   name: adrius
-keywords: [craft, code, design, product, logiciel, interfaces, blog]
+keywords: [code, craft, projets, notes, idées, blog, codeur, développement, design]
 
 collections:
   posts:
