@@ -21,11 +21,11 @@ Pas l'usage excessif : la vraie addiction. Recharger la page d'accueil en boucle
 
 Mais quelqu'un savait. Quelqu'un a décidé que c'était exactement ce qu'il fallait déployer.
 
-Ces algorithmes n'ont pas été conçus par des incompétents. Ce sont les meilleurs ingénieurs et psychologues du comportement humain au monde. Chaque détail est optimisé : la durée des pauses, la fréquence des récompenses, la friction d'arrêt quasi-nulle. Ce n'est pas un accident que tu ne puisses pas t'arrêter. C'est le produit.
+Ces algorithmes n'ont pas été conçus par des incompétents. Ce sont les meilleurs ingénieurs et psychologues du comportement humain au monde. Chaque détail est optimisé : la durée des pauses, la fréquence des récompenses, la friction d'arrêt quasi-nulle. Ce n'est pas un accident que tu ne puisses pas t'arrêter. C'est l'objectif.
 
 Du coup j'ai voulu construire quelque chose.
 
-Pas une appli de bien-être. Pas un tracker de temps d'écran. Quelque chose de plus fondamental : une app de lecture où je pourrais consommer tout ce qui m'intéresse, articles, vidéos, podcasts, de façon intentionnelle. Sans algo. Sans inbox qui se remplit pendant que tu dors. Sans cette sensation sourde qu'il faut vider quelque chose.
+Pas une appli de bien-être. Pas un tracker de temps d'écran. Quelque chose de plus fondamental : une app de lecture où je pourrais consommer tout ce qui m'intéresse, articles, vidéos, podcasts, de façon intentionnelle. Sans algo. Sans inbox qui se remplit pendant que tu dors. Sans cette sensation qu'il faut vider quelque chose.
 
 En cherchant comment construire ça, j'ai redécouvert les flux RSS. Technologie des années 90, toujours vivante, complètement ignorée. Minimaliste, presque belle dans sa sobriété, et visiblement faite pour durer : le web a tout changé autour d'elle, elle est restée. Chaque blog, chaque chaîne YouTube, chaque podcast expose un flux RSS. Tu t'abonnes, tu reçois le contenu dans l'ordre chronologique : aucun algorithme au milieu, aucune curation étrangère. C'est le web tel qu'il aurait dû rester.
 
@@ -43,6 +43,6 @@ Aucun compteur. Aucune notification non sollicitée. Aucune suggestion que tu n'
 
 Je construis Still pour moi. J'en ai besoin et j'ai envie de l'utiliser tous les jours. Si ça peut aider d'autres personnes à avoir une relation différente avec leur consommation de contenu, j'en serai ravi.
 
-Ce devlog documente la construction depuis le début. Les décisions, les frictions, ce qui marche et ce qui casse. Le code est [ouvert sur GitHub](https://github.com/Adriusops/Still). [Le blog a changé de direction récemment](/posts/blog-init/), ce projet est une partie du pourquoi. La prochaine entrée sera technique.
+Ce devlog documente la construction depuis le début. Les décisions, les frictions, ce qui marche et ce qui casse. Le code est [ouvert sur GitHub](https://github.com/Adriusops/Still). [Le blog a changé de direction récemment](/posts/blog-init/), ce projet est une partie du pourquoi.
 
-Est-ce qu'on peut construire quelque chose qui résiste à ce que des milliards de dollars ont passé des années à optimiser ? Je ne sais pas encore. Mais ne pas reproduire les mêmes patterns me semble un bon point de départ.
+Est-ce qu'on peut construire quelque chose qui résiste à ce que des milliards de dollars ont passé des années à optimiser ? Je ne sais pas encore. Mais ne pas reproduire les mêmes patterns me semble une bonne idée.
