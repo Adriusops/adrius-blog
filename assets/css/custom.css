@@ -5,15 +5,15 @@
 
 /* Override des vars du thème — chargé après style.css */
 :root {
-  --primary:             #1A1510;
+  --primary:             #1a1208;
   --cta:                 #0071E3;
   --on-primary:          #ffffff;
-  --on-surface:          #1A1510;
-  --on-surface-variant:  #3D3628;
-  --surface:             #FFFCF1;
-  --outline:             #D9D2BC;
-  --outline-variant:     #E8E2D0;
-  --ink:                 #1A1510;
+  --on-surface:          #1a1208;
+  --on-surface-variant:  #373520;
+  --surface:             #f5f1e8;
+  --outline:             #c8bea8;
+  --outline-variant:     #e0d4bc;
+  --ink:                 #1a1208;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -69,7 +69,7 @@
    ============================================ */
 html {
   scrollbar-gutter: stable;
-  background: var(--bg, #FFFCF1);
+  background: var(--bg, #f5f1e8);
 }
 
 body {
@@ -97,26 +97,34 @@ body {
    ANIMATIONS
    ============================================ */
 @keyframes fadeUpBlur {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-    filter: blur(6px);
+  from { opacity: 0; transform: translateY(12px); filter: blur(6px);  }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0px);  }
+}
+
+@keyframes fadeUpBlurDark {
+  from { opacity: 0; transform: translateY(12px); filter: blur(14px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0px);  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #main-content {
+    animation: fadeUpBlur var(--t-enter) var(--ease-decelerate) both;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0px);
+  .page-blog-single #main-content {
+    animation: none;
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Page home et autres : animation globale */
-  #main-content {
-    animation: fadeUpBlur var(--t-enter) var(--ease-decelerate) both;
+  [data-theme="dark"] #main-content {
+    animation-name: fadeUpBlurDark;
   }
-  /* Page article : stagger par blocs, on désactive l'animation du conteneur */
-  .page-blog-single #main-content {
-    animation: none;
+  [data-theme="dark"] .page-blog-single .breadcrumb,
+  [data-theme="dark"] .page-blog-single .article-header,
+  [data-theme="dark"] .page-blog-single .prereqs-block,
+  [data-theme="dark"] .page-blog-single .blog .content,
+  [data-theme="dark"] .page-blog-single .related-posts {
+    animation-name: fadeUpBlurDark;
   }
 }
 
@@ -315,7 +323,6 @@ a.header-logo:hover .header-avatar {
 .fcard,
 .post-item,
 .wl-item {
-  cursor: pointer;
   transition:
     transform var(--t-mid) var(--ease-spring),
     box-shadow var(--t-mid) var(--ease-out),
@@ -440,7 +447,6 @@ a:hover:not(.post-item):not(.post-item *):not(.wl-item):not(.wl-item *):not(.rel
   border-bottom: 1px solid var(--border);
   text-decoration: none !important;
   color: inherit;
-  cursor: pointer;
 }
 .post-item:hover .pi-title { color: var(--accent); }
 
@@ -448,50 +454,6 @@ a:hover:not(.post-item):not(.post-item *):not(.wl-item):not(.wl-item *):not(.rel
 .post-item {
   position: relative;
   overflow: visible;
-}
-
-.post-item::before {
-  content: '';
-  position: absolute;
-  left: -52px;
-  top: 50%;
-  width: 36px;
-  height: 36px;
-  background-image: url('/hand-pointing.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  mix-blend-mode: multiply;
-  /* main vers le haut → rotate -90deg pour pointer à droite */
-  transform: translateY(-50%) translateX(-10px) rotate(90deg);
-  opacity: 0;
-  filter: blur(4px);
-  transition:
-    opacity var(--t-mid) var(--ease-spring),
-    transform var(--t-mid) var(--ease-spring),
-    filter var(--t-mid) var(--ease-out);
-  pointer-events: none;
-}
-
-.post-item:hover::before {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0) rotate(90deg);
-  filter: blur(0px);
-}
-
-@keyframes hand-click {
-  0%   { transform: translateY(-50%) translateX(0)   rotate(90deg) scale(1); }
-  40%  { transform: translateY(-50%) translateX(10px) rotate(90deg) scale(0.88); }
-  100% { transform: translateY(-50%) translateX(0)   rotate(90deg) scale(1); }
-}
-
-.post-item.is-clicking::before {
-  animation: hand-click 280ms var(--ease-spring) forwards;
-}
-
-[data-theme="dark"] .post-item::before {
-  mix-blend-mode: normal;
-  filter: invert(1);
 }
 
 .pi-header {
@@ -879,7 +841,7 @@ h1.art-title-new { font-weight: 700 !important; }
 .highlight {
   position: relative;
   background: #F3EFE2 !important;
-  border: 1px solid #E8E2D0 !important;
+  border: 1px solid #e0d4bc !important;
   border-radius: var(--radius-md) !important;
   margin: var(--sp-6) 0 !important;
   overflow: hidden !important;
@@ -917,7 +879,7 @@ pre.highlight {
   align-items: center;
   padding: var(--sp-1) var(--sp-4);
   background: #EDE8D8;
-  border-bottom: 1px solid #E8E2D0;
+  border-bottom: 1px solid #e0d4bc;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--ink-4);
@@ -1240,46 +1202,6 @@ pre.highlight {
   cursor: pointer;
 }
 
-.wl-item::before {
-  content: '';
-  position: absolute;
-  left: -52px;
-  top: 50%;
-  width: 36px;
-  height: 36px;
-  background-image: url('/hand-pointing.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  mix-blend-mode: multiply;
-  transform: translateY(-50%) translateX(-10px) rotate(90deg);
-  opacity: 0;
-  filter: blur(4px);
-  transition:
-    opacity var(--t-mid) var(--ease-spring),
-    transform var(--t-mid) var(--ease-spring),
-    filter var(--t-mid) var(--ease-out);
-  pointer-events: none;
-}
-
-.wl-item:hover::before {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0) rotate(90deg);
-  filter: blur(0px);
-}
-
-[data-theme="dark"] .wl-item::before {
-  mix-blend-mode: normal;
-  filter: invert(1) blur(4px);
-}
-
-[data-theme="dark"] .wl-item:hover::before {
-  filter: invert(1) blur(0px);
-}
-
-.wl-item.is-clicking::before {
-  animation: hand-click 280ms var(--ease-spring) forwards;
-}
 
 .wl-item:hover .wl-item-title { color: var(--accent); }
 .wl-item:hover * { text-decoration: none !important; }
@@ -1874,42 +1796,42 @@ pre.highlight {
    DARK MODE — [data-theme="dark"]
    ============================================ */
 [data-theme="dark"] body {
-  background: #13100A !important;
+  background: #181916 !important;
   color: var(--ink-2) !important;
 }
 
 [data-theme="dark"] {
-  /* Flexoki dark — valeurs officielles Steph Ango */
-  --bg:         #13100A;   /* noir chaud */
-  --bg-alt:     #1C1A13;
-  --bg-raised:  #252219;
-  --bg-code:    #1C1A13;
-  --ink-1:      #CECDC3;   /* tx  — off-white chaud, ~13:1, pas de halation */
-  --ink-2:      #B8B4AE;   /* corps */
-  --ink-3:      #878580;   /* secondaire, ~5.8:1 */
-  --ink-4:      #8B8886;   /* tertiaire — 5.39:1 sur #13100A, 4.51:1 sur #252219 AA */
-  --accent:     #CECDC3;
+  /* Buisson dark */
+  --bg:         #181916;
+  --bg-alt:     #1f2019;
+  --bg-raised:  #272a1f;
+  --bg-code:    #181916;
+  --ink-1:      #ead6b4;
+  --ink-2:      #d2be9e;
+  --ink-3:      #9e9484;
+  --ink-4:      #6e6558;
+  --accent:     #ead6b4;
   --cta:        #3B9EFF;
   --cta-dark:   #5AABFF;
-  --border:     #2E2B22;
-  --border-mid: #3A3730;
+  --border:     #31342a;
+  --border-mid: #464940;
   /* Vars du thème */
-  --on-surface:         #CECDC3;
-  --on-surface-variant: #B8B4AE;
-  --outline:            #2E2B22;
-  --outline-variant:    #3A3730;
-  --primary:            #CECDC3;
-  --on-primary:         #13100A;
-  --surface:            #13100A;
-  --ink:                #CECDC3;
+  --on-surface:         #ead6b4;
+  --on-surface-variant: #d2be9e;
+  --outline:            #31342a;
+  --outline-variant:    #464940;
+  --primary:            #ead6b4;
+  --on-primary:         #181916;
+  --surface:            #181916;
+  --ink:                #ead6b4;
 }
 
 [data-theme="dark"] body {
-  background: #13100A !important;
+  background: #181916 !important;
 }
 
 [data-theme="dark"] html {
-  background: #13100A !important;
+  background: #181916 !important;
   min-height: 100%;
 }
 
@@ -1922,19 +1844,19 @@ pre.highlight {
 /* Blocs de code en dark mode → fond noir */
 [data-theme="dark"] .content .highlight,
 [data-theme="dark"] .highlight {
-  background: #1C1A13 !important;
+  background: #1f2019 !important;
   border-color: var(--border) !important;
 }
 
 [data-theme="dark"] .content .highlight pre,
 [data-theme="dark"] .highlight pre,
 [data-theme="dark"] pre.highlight {
-  background: #1C1A13 !important;
+  background: #1f2019 !important;
   color: #c9c9c9 !important;
 }
 
-[data-theme="dark"] .highlight { background: #1C1A13; color: #c9c9c9; }
-[data-theme="dark"] .code-header { background: #252219 !important; border-bottom-color: var(--border-mid) !important; }
+[data-theme="dark"] .highlight { background: #1f2019; color: #c9c9c9; }
+[data-theme="dark"] .code-header { background: #272a1f !important; border-bottom-color: var(--border-mid) !important; }
 
 /* Tokens Chroma dark mode */
 [data-theme="dark"] .highlight .n, [data-theme="dark"] .highlight .na,
@@ -1974,20 +1896,20 @@ pre.highlight {
 
 [data-theme="dark"] .highlight .gp { color: #ff4545 !important; font-weight: 700; }
 
-[data-theme="dark"] .fcard { background: #1C1A13; border-color: var(--border); }
-[data-theme="dark"] .fcard-topbar { background: #252219; border-bottom-color: var(--border); }
+[data-theme="dark"] .fcard { background: #1f2019; border-color: var(--border); }
+[data-theme="dark"] .fcard-topbar { background: #272a1f; border-bottom-color: var(--border); }
 [data-theme="dark"] .fcard:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.35); }
 
-[data-theme="dark"] .code-header { background: #252219; border-bottom-color: var(--border); }
+[data-theme="dark"] .code-header { background: #272a1f; border-bottom-color: var(--border); }
 
 [data-theme="dark"] .content hr,
 [data-theme="dark"] .blog hr {
   border-top-color: var(--border) !important;
 }
 
-[data-theme="dark"] .cg-progress-block { background: #1C1A13; border-color: var(--border); }
-[data-theme="dark"] .cg-card { background: #1C1A13; border-color: var(--border); color: var(--ink-2); }
-[data-theme="dark"] .cg-card-todo { background: #1C1A13; }
+[data-theme="dark"] .cg-progress-block { background: #1f2019; border-color: var(--border); }
+[data-theme="dark"] .cg-card { background: #1f2019; border-color: var(--border); color: var(--ink-2); }
+[data-theme="dark"] .cg-card-todo { background: #1f2019; }
 [data-theme="dark"] .cg-card-title { color: var(--ink-1) !important; }
 [data-theme="dark"] .cg-card-slug { color: var(--ink-4) !important; }
 [data-theme="dark"] .cg-card-desc { color: var(--ink-3) !important; }
@@ -2003,7 +1925,7 @@ pre.highlight {
 
 [data-theme="dark"] .atl-dot { background: var(--bg); }
 [data-theme="dark"] .atl-dot.atl-dot-active { background: var(--ink-1); }
-[data-theme="dark"] .ast-item { background: #252219; border-color: var(--border); }
+[data-theme="dark"] .ast-item { background: #272a1f; border-color: var(--border); }
 
 
 [data-theme="dark"] .footer { border-top-color: var(--border) !important; color: var(--ink-3) !important; }
@@ -2013,14 +1935,14 @@ pre.highlight {
 [data-theme="dark"] .header-nav-link { color: var(--ink-3) !important; }
 [data-theme="dark"] .hamburger { color: var(--ink-2) !important; background: transparent !important; }
 
-[data-theme="dark"] .home-profile { background: #1C1A13 !important; border-color: var(--border) !important; }
+[data-theme="dark"] .home-profile { background: #1f2019 !important; border-color: var(--border) !important; }
 
-[data-theme="dark"] .wl-search-wrap { background: #1C1A13; border-color: var(--border); }
+[data-theme="dark"] .wl-search-wrap { background: #1f2019; border-color: var(--border); }
 [data-theme="dark"] .wl-tags,
-[data-theme="dark"] .wl-cats { background: #1C1A13; border-color: var(--border); }
+[data-theme="dark"] .wl-cats { background: #1f2019; border-color: var(--border); }
 [data-theme="dark"] .wl-item { border-bottom-color: var(--border); }
 
-[data-theme="dark"] .art-desc { background: #1C1A13 !important; }
+[data-theme="dark"] .art-desc { background: #1f2019 !important; }
 
 /* Hiérarchie typographique dark mode */
 [data-theme="dark"] h1, [data-theme="dark"] h2,
@@ -2065,7 +1987,7 @@ pre.highlight {
 [data-theme="dark"] .page-blog-single .content a:hover { color: #3B9EFF !important; }
 
 [data-theme="dark"] :not(pre) > code {
-  background: #252219 !important;
+  background: #272a1f !important;
   border-color: var(--border) !important;
 }
 
@@ -2074,7 +1996,7 @@ pre.highlight {
   border-color: var(--border) !important;
 }
 [data-theme="dark"] .content table th {
-  background: #1C1A13 !important;
+  background: #1f2019 !important;
 }
 
 [data-theme="dark"] .fcard-footer { border-top-color: var(--border); }
@@ -2090,12 +2012,6 @@ pre.highlight {
    RESPONSIVE — mobile (< 768px)
    ============================================ */
 @media (max-width: 767px) {
-
-  .post-item::before,
-  .wl-item::before { display: none !important; }
-
-  .post-item.is-clicking::before,
-  .wl-item.is-clicking::before { animation: none !important; }
 
   .wrapper {
     padding: var(--sp-4) var(--sp-4) var(--sp-10) !important;

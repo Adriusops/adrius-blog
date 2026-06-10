@@ -2,32 +2,32 @@
 
   /* ── Couleurs ─────────────────────────────────── */
 
-  --bg:          #FFFCF1;
-  --bg-alt:      #FAF6E8;
-  --bg-raised:   #FDF9F0;
-  --bg-dark:     #0C0C0C;
-  --bg-code:     #111111;
+  --bg:          #f5f1e8;
+  --bg-alt:      #ede8dc;
+  --bg-raised:   #ede8dc;
+  --bg-dark:     #181916;
+  --bg-code:     #181916;
 
-  --ink-1:       #1A1510;
-  --ink-2:       #3D3628;
-  --ink-3:       #5E5648;  /* 4.55:1 sur #FFFCF1 — WCAG AA */
-  --ink-4:       #6B5F52;  /* 6.04:1 sur #FFFCF1, 5.06:1 sur code-header — WCAG AA (était #9A9080 = 3.06:1 FAIL) */
+  --ink-1:       #1a1208;
+  --ink-2:       #373520;
+  --ink-3:       #5c5640;
+  --ink-4:       #7a7060;
 
-  --accent:      #1A1510;
-  --accent-dark: #3D3628;
+  --accent:      #1a1208;
+  --accent-dark: #373520;
   --cta:         #0071E3;
   --cta-dark:    #0058b0;
 
-  --border:      #E8E2D0;
-  --border-mid:  #D9D2BC;
+  --border:      #e0d4bc;
+  --border-mid:  #c8bea8;
 
   /* ── Neutralisation des vars du thème ────────── */
-  --on-surface:          #1A1510;
-  --on-surface-variant:  #3D3628;
-  --primary:             #1A1510;
+  --on-surface:          #1a1208;
+  --on-surface-variant:  #373520;
+  --primary:             #1a1208;
   --on-primary:          #ffffff;
-  --surface:             #FFFCF1;
-  --ink:                 #1A1510;
+  --surface:             #f5f1e8;
+  --ink:                 #1a1208;
 
   /* ── Typographie ──────────────────────────────── */
   --font-display: 'Fraunces', Georgia, serif;

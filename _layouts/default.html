@@ -109,20 +109,6 @@
   <script src="/assets/js/scripts.js"></script>
   <script src="/assets/js/medium-zoom.min.js"></script>
 
-  <script>
-  (function() {
-    document.addEventListener('mousedown', function(e) {
-      var item = e.target.closest('.post-item, .wl-item');
-      if (!item) return;
-      item.classList.remove('is-clicking');
-      void item.offsetWidth;
-      item.classList.add('is-clicking');
-      item.addEventListener('animationend', function() {
-        item.classList.remove('is-clicking');
-      }, { once: true });
-    });
-  })();
-  </script>
 
   {% include footer-scripts.html %}
   {{ page.footer_js }}

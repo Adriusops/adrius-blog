@@ -38,9 +38,8 @@
       if (a.classList.contains('glightbox')) return;
       try { if (new URL(href, location.href).origin !== location.origin) return; } catch(err) { return; }
 
-      e.preventDefault();
       overlay.classList.add('pt-out');
-      setTimeout(function() { location.href = href; }, 240);
+      location.href = href;
     });
   })();
 
