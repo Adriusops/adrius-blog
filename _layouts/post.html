@@ -15,6 +15,9 @@ body_class: page-blog-single
     </div>
     <div class="art-meta">
       <span class="art-date">{{ page.date | date: "%d.%m.%Y" }}</span>
+      {% if page.updated %}
+      <span class="art-updated">mis à jour le {{ page.updated | date: "%d.%m.%Y" }}</span>
+      {% endif %}
       {% for tag in page.tags %}
       <span class="tag">{{ tag }}</span>
       {% endfor %}
@@ -41,53 +44,30 @@ body_class: page-blog-single
     {{ content }}
   </div>
 
-  <!-- ── Commentaires Giscus ───────────────────────────────────────────── -->
-  <div class="giscus-wrap">
-    <div class="giscus-header">
-      <span class="giscus-prompt-char">❯</span>
-      <span class="giscus-prompt-path">~/adrius $</span>
-      <span class="giscus-prompt-cmd">cat commentaires</span>
+  {% if page.related_stub %}
+  {% assign related_posts = "" | split: "" %}
+  {% for stub in page.related_stub %}
+    {% for p in site.posts %}
+      {% assign p_slug = p.path | split: "/" | last | replace: ".md", "" | split: "-" | slice: 3, 100 | join: "-" %}
+      {% if p_slug == stub and p.url != page.url %}
+        {% assign related_posts = related_posts | push: p %}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+  {% if related_posts.size > 0 %}
+  <div class="related-posts">
+    <div class="related-label">// articles liés</div>
+    <div class="related-list">
+      {% for p in related_posts %}
+      <a href="{{ p.url }}" class="related-item">
+        <span class="related-title">{{ p.title }}</span>
+        {% if p.description %}<span class="related-desc">{{ p.description }}</span>{% endif %}
+      </a>
+      {% endfor %}
     </div>
-
-    <script src="https://giscus.app/client.js"
-      data-repo="Adriusops/adrius-blog"
-      data-repo-id="R_kgDOSPA4Eg"
-      data-category="General"
-      data-category-id="DIC_kwDOSPA4Es4C9oqh"
-      data-mapping="pathname"
-      data-strict="0"
-      data-reactions-enabled="1"
-      data-emit-metadata="0"
-      data-input-position="top"
-      data-theme="https://adrius.blog/css/giscus-light.css"
-      data-lang="fr"
-      data-loading="lazy"
-      crossorigin="anonymous"
-      async>
-    </script>
-    <script>
-    (function() {
-      function setGiscusTheme(dark) {
-        var theme = dark
-          ? 'https://adrius.blog/css/giscus-dark.css'
-          : 'https://adrius.blog/css/giscus-light.css';
-        var iframe = document.querySelector('iframe.giscus-frame');
-        if (iframe) {
-          iframe.contentWindow.postMessage(
-            { giscus: { setConfig: { theme: theme } } },
-            'https://giscus.app'
-          );
-        }
-      }
-      var mq = window.matchMedia('(prefers-color-scheme: dark)');
-      window.addEventListener('message', function(e) {
-        if (e.origin !== 'https://giscus.app') return;
-        if (e.data && e.data.giscus) setGiscusTheme(mq.matches);
-      }, { once: true });
-      mq.addEventListener('change', function(e) { setGiscusTheme(e.matches); });
-    })();
-    </script>
   </div>
+  {% endif %}
+  {% endif %}
 
 </div>
 
