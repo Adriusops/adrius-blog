@@ -34,7 +34,7 @@ The feed composes content silently. A dense article, a short one, a tech source,
 
 Flow is unchanged. It's been the only voluntary gesture in Still since the start, and it stays that way.
 
-My understanding of "less is more" changed doing this.
+My understanding of ["less is more"](/posts/less-is-more/) changed doing this.
 
 Before: remove features so the interface doesn't get crowded.
 
