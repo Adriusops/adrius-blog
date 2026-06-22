@@ -68,14 +68,19 @@
     });
 
     /* Code blocks — barre langue + copy */
-    document.querySelectorAll('.highlight').forEach(function(block) {
+    document.querySelectorAll('div.highlight').forEach(function(block) {
       if (block.querySelector('.code-header')) return;
+      if (block.querySelector('div.highlight')) return;
 
       var code = block.querySelector('code');
       var lang = '';
       if (code) {
         var m = code.className.match(/language-(\w+)/);
         lang = m ? m[1] : '';
+      }
+      if (!lang && block.parentElement) {
+        var pm = block.parentElement.className.match(/language-(\w+)/);
+        lang = pm ? pm[1] : '';
       }
       if (lang === 'fallback') lang = '';
 
