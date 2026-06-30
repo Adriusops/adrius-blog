@@ -44,6 +44,20 @@ body_class: page-blog-single
     {{ content }}
   </div>
 
+  {% if page.changelog %}
+  <div class="changelog-block">
+    <div class="changelog-label">// changelog</div>
+    <ul class="changelog-list">
+      {% for entry in page.changelog %}
+      <li class="changelog-entry">
+        <span class="changelog-date">{{ entry.date | date: "%d.%m.%Y" }}</span>
+        <span class="changelog-note">{{ entry.note }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
   {% if page.related_stub %}
   {% assign related_posts = "" | split: "" %}
   {% for stub in page.related_stub %}
